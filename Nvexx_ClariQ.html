@@ -181,23 +181,29 @@
 				color: #000000;
 				padding: 5px;
 				border-radius: 5px;
-				max-height: 280px;
+				/* max-height: 280px; */
 				overflow-y: auto;
 				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 				margin-bottom: 1px;
 				font-size: 12px !important;
+				min-height: 25px;
+				max-height: 515px;
 			}
 
 			h2.log-heading {
 				font-family: Open Sans, sans-serif;
 				font-style: italic;
 				text-indent: 1px;
-				margin-bottom: 0px;
+				/* margin-bottom: 0px; */
 				width: 80px;
 				background-color: #357ebd;
 				color: #ffffff;
 				width: auto;
 				display: inline-block;
+				/* new 01-05-2025 */
+				padding: 10px 40px !important;
+    		margin: .7rem;
+    		font-size: 1.1rem;
 			}
 
 			ol,
@@ -1153,7 +1159,7 @@
 	<body class="p-layout">
 		<script>
 			(function () {
-				console.warn("Nvexx ClariQ Preview - 1.0.0 @ 29-04-2025_0936");
+				console.warn("Nvexx ClariQ - 1.0.0 @ 01-05-2025_1113");
 				const d = new Date();
 				console.warn("Run date:", d);
 			})();
@@ -2085,7 +2091,7 @@
 					<span class="explanation">Debug mode</span>
 					<a href="#" class="p-btn-icon nvexx_ask" data-p-open-modal="#nvexx_modal_debugger">?</a>
 					<label class="p-form-switch" for="nvexx_debugmode">
-						<input type="checkbox" id="nvexx_debugmode" name="nvexx_debugmode" checked />
+						<input type="checkbox" id="nvexx_debugmode" name="nvexx_debugmode" checked disabled />
 						<span></span>
 					</label>
 					<span class="optionexplanation" id="nvexx_debugmodeinfo">Enable debug mode. This will log more information to the LOG</span>
@@ -6736,10 +6742,11 @@
 
 				<div class="grid-item-speakers" id="spk-img-FDRRR" style="visibility: hidden"></div>
 			</div>
-
+			<!--
 			<div id="LogSave" class="prompt-box" style="display: none">
 				<button type="button" id="logsaveButton" class="prompt-button p-btn p-btn-mob p-strawberry-300 p-white-color buttonfilters">(re)Save Log</button>
 			</div>
+			-->
 			<div class="button-container" id="button-container_ady" style="display: none">
 				<!--<button id="buttonady" class="p-btn p-btn-mob p-strawberry-300 p-white-color" onclick="updateAdy()" style="display: none" disabled>(re)Download .ady</button>-->
 				<button type="button" id="buttonady" class="p-btn p-btn-mob p-strawberry-300 p-white-color buttonfilters" onclick="RedownloadAdy()" style="display: none" disabled>(re)Download .ady</button>
@@ -6789,6 +6796,9 @@
 
 			<!-- LOG CONTAINER ! -->
 			<h2 class="log-heading buttonfilters" id="log-heading-id">Progress log:</h2>
+			<div id="LogSave" class="prompt-box" style="display: none">
+				<button type="button" id="logsaveButton" class="prompt-button p-btn p-btn-mob p-strawberry-300 p-white-color buttonfilters">(re)Save Log</button>
+			</div>
 			<pre id="logContainer"></pre>
 			<!--Catch it -->
 			<button id="emcee"></button>
@@ -6821,7 +6831,7 @@
 			   **/
 			const baseUrl = "http://localhost:4735/measurements";
 			// Nvexx version
-			const NvexxVersion = "Nvexx ClariQ Preview - 1.0.0 @ 29-04-2025_0936";
+			const NvexxVersion = "Nvexx ClariQ - 1.0.0";
 			document.getElementById("version-number").innerHTML = NvexxVersion;
 			// REW beta version tested
 			const rewmajorn = 5;
@@ -17205,10 +17215,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -17546,10 +17561,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -17658,10 +17678,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -17770,10 +17795,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -17882,10 +17912,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -17994,10 +18029,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -18106,10 +18146,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -18218,10 +18263,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -18330,10 +18380,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -18442,10 +18497,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -18767,10 +18827,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -18879,10 +18944,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -18991,10 +19061,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -19103,10 +19178,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -19215,10 +19295,15 @@
 				nvexx_global_subwoofer_options.classList.add("displaynone");
 				nvexx_global_subwoofer_options.style.display = "none";
 				// show global speaker options
+				// const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
+				// nvexx_global_speaker_options.classList.add("displayblock");
+				// nvexx_global_speaker_options.classList.remove("displaynone");
+				// nvexx_global_speaker_options.style.display = "block";
+				// hide global speaker options
 				const nvexx_global_speaker_options = document.getElementById("global_speaker_options");
-				nvexx_global_speaker_options.classList.add("displayblock");
-				nvexx_global_speaker_options.classList.remove("displaynone");
-				nvexx_global_speaker_options.style.display = "block";
+				nvexx_global_speaker_options.classList.remove("displayblock");
+				nvexx_global_speaker_options.classList.add("displaynone");
+				nvexx_global_speaker_options.style.display = "none";
 				// remove effects
 				removebuttoneffects();
 				// remove others
@@ -38116,7 +38201,7 @@
 							let baseMatchSettings = {
 								// startFrequency: Math.max(sw1_filterfreq_start, 10), // Ensure start frequency is at least 10Hz
 								startFrequency: Math.min(sw1_filterfreq_start, 20), // Ensure start frequency does not exceed 10Hz
-								endFrequency: Math.max(sw1_filterfreq_end, 200), // Ensure end frequency does not exceed 100Hz
+								endFrequency: Math.min(sw1_filterfreq_end, 150), // Ensure end frequency does not exceed 100Hz
 								individualMaxBoostdB: maxBoostSw1,
 								overallMaxBoostdB: maxBoostSw1,
 								flatnessTargetdB: 1,
@@ -38231,7 +38316,7 @@
 							let baseMatchSettings = {
 								// startFrequency: Math.max(sw1_filterfreq_start, 10), // Ensure start frequency is at least 10Hz
 								startFrequency: Math.min(sw1_filterfreq_start, 20), // Ensure start frequency does not exceed 10Hz
-								endFrequency: Math.max(sw1_filterfreq_end, 200), // Ensure end frequency does not exceed 100Hz
+								endFrequency: Math.min(sw1_filterfreq_end, 150), // Ensure end frequency does not exceed 100Hz
 								individualMaxBoostdB: maxBoostSw1,
 								overallMaxBoostdB: maxBoostSw1,
 								flatnessTargetdB: 1,
@@ -38343,7 +38428,7 @@
 							let baseMatchSettings = {
 								// startFrequency: Math.max(sw2_filterfreq_start, 10), // Ensure start frequency is at least 10Hz
 								startFrequency: Math.min(sw2_filterfreq_start, 20), // Ensure start frequency does not exceed 10Hz
-								endFrequency: Math.max(sw2_filterfreq_end, 200), // Ensure end frequency does not exceed 100Hz
+								endFrequency: Math.min(sw2_filterfreq_end, 150), // Ensure end frequency does not exceed 100Hz
 								individualMaxBoostdB: maxBoostSw2,
 								overallMaxBoostdB: maxBoostSw2,
 								flatnessTargetdB: 1,
@@ -38452,7 +38537,7 @@
 							let baseMatchSettings = {
 								// startFrequency: Math.max(sw3_filterfreq_start, 10), // Ensure start frequency is at least 10Hz
 								startFrequency: Math.min(sw3_filterfreq_start, 20), // Ensure start frequency does not exceed 10Hz
-								endFrequency: Math.max(sw3_filterfreq_end, 200), // Ensure end frequency does not exceed 100Hz
+								endFrequency: Math.min(sw3_filterfreq_end, 150), // Ensure end frequency does not exceed 100Hz
 								individualMaxBoostdB: maxBoostSw3,
 								overallMaxBoostdB: maxBoostSw3,
 								flatnessTargetdB: 1,
@@ -38561,7 +38646,7 @@
 							let baseMatchSettings = {
 								// startFrequency: Math.max(sw4_filterfreq_start, 10), // Ensure start frequency is at least 10Hz
 								startFrequency: Math.min(sw4_filterfreq_start, 20), // Ensure start frequency does not exceed 10Hz
-								endFrequency: Math.max(sw4_filterfreq_end, 200), // Ensure end frequency does not exceed 100Hz
+								endFrequency: Math.min(sw4_filterfreq_end, 150), // Ensure end frequency does not exceed 100Hz
 								individualMaxBoostdB: maxBoostSw4,
 								overallMaxBoostdB: maxBoostSw4,
 								flatnessTargetdB: 1,
@@ -41377,9 +41462,9 @@
 							console.warn(`Crossover frequency: ${freqIndex[i]}Hz, alignment not possible within delay limits!`);
 						} else {
 							if (!isInverted) {
-								console.log(`Crossover frequency: ${freqIndex[i]}Hz, required delay: ${-requiredDelay.toFixed(4)}ms, expected dip removal efficiency: ${(100 - excessPhase).toFixed(2)}%`);
+								console.log(`Crossover frequency: ${freqIndex[i]}Hz, required delay: ${-requiredDelay.toFixed(2)}ms, expected dip removal efficiency: ${(100 - excessPhase).toFixed(2)}%`);
 							} else {
-								console.log(`Crossover frequency: ${freqIndex[i]}Hz, required delay: ${-requiredDelay.toFixed(4)}ms (subwoofer polarity inverted), expected dip removal efficiency: ${(100 - excessPhase).toFixed(2)}%`);
+								console.log(`Crossover frequency: ${freqIndex[i]}Hz, required delay: ${-requiredDelay.toFixed(2)}ms (subwoofer polarity inverted), expected dip removal efficiency: ${(100 - excessPhase).toFixed(2)}%`);
 							}
 							smallPossible = true;
 							if (excessPhase < normDev) {
@@ -41972,7 +42057,7 @@
 					}
 
 					// Log alignment information
-					const delayMessage = isInverted ? `${-requiredDelay.toFixed(4)}ms (subwoofer polarity inverted)` : `${-requiredDelay.toFixed(4)}ms`;
+					const delayMessage = isInverted ? `${-requiredDelay.toFixed(2)}ms (subwoofer polarity inverted)` : `${-requiredDelay.toFixed(2)}ms`;
 
 					console.info(`Subwoofer LPF frequency: ${freqIndex[i]}Hz, required delay: ${delayMessage}, expected dip removal efficiency: ${(100 - excessPhase).toFixed(2)}%`);
 
@@ -42117,7 +42202,7 @@
 							let baseMatchSettings = {
 								// startFrequency: Math.max(sw1_filterfreq_start, 10), // Ensure start frequency is at least 10Hz
 								startFrequency: Math.min(sw1_filterfreq_start, 20), // Ensure start frequency does not exceed 10Hz
-								endFrequency: Math.max(sw1_filterfreq_end, 200), // Ensure end frequency does not exceed 100Hz
+								endFrequency: Math.min(sw1_filterfreq_end, 150), // Ensure end frequency does not exceed 100Hz
 								individualMaxBoostdB: maxBoostSw1,
 								overallMaxBoostdB: maxBoostSw1,
 								flatnessTargetdB: 1,
@@ -42246,7 +42331,7 @@
 							let baseMatchSettings = {
 								// startFrequency: Math.max(sw1_filterfreq_start, 10), // Ensure start frequency is at least 10Hz
 								startFrequency: Math.min(sw1_filterfreq_start, 20), // Ensure start frequency does not exceed 10Hz
-								endFrequency: Math.max(sw1_filterfreq_end, 200), // Ensure end frequency does not exceed 100Hz
+								endFrequency: Math.min(sw1_filterfreq_end, 150), // Ensure end frequency does not exceed 100Hz
 								individualMaxBoostdB: maxBoostSw1,
 								overallMaxBoostdB: maxBoostSw1,
 								flatnessTargetdB: 1,
@@ -42372,7 +42457,7 @@
 							let baseMatchSettings = {
 								// startFrequency: Math.max(sw2_filterfreq_start, 10), // Ensure start frequency is at least 10Hz
 								startFrequency: Math.min(sw2_filterfreq_start, 20), // Ensure start frequency does not exceed 10Hz
-								endFrequency: Math.max(sw2_filterfreq_end, 200), // Ensure end frequency does not exceed 100Hz
+								endFrequency: Math.min(sw2_filterfreq_end, 150), // Ensure end frequency does not exceed 100Hz
 								individualMaxBoostdB: maxBoostSw2,
 								overallMaxBoostdB: maxBoostSw2,
 								flatnessTargetdB: 1,
@@ -42498,7 +42583,7 @@
 							let baseMatchSettings = {
 								// startFrequency: Math.max(sw3_filterfreq_start, 10), // Ensure start frequency is at least 10Hz
 								startFrequency: Math.min(sw3_filterfreq_start, 20), // Ensure start frequency does not exceed 10Hz
-								endFrequency: Math.max(sw3_filterfreq_end, 200), // Ensure end frequency does not exceed 100Hz
+								endFrequency: Math.min(sw3_filterfreq_end, 150), // Ensure end frequency does not exceed 100Hz
 								individualMaxBoostdB: maxBoostSw3,
 								overallMaxBoostdB: maxBoostSw3,
 								flatnessTargetdB: 1,
@@ -42624,7 +42709,7 @@
 							let baseMatchSettings = {
 								// startFrequency: Math.max(sw4_filterfreq_start, 10), // Ensure start frequency is at least 10Hz
 								startFrequency: Math.min(sw4_filterfreq_start, 20), // Ensure start frequency does not exceed 10Hz
-								endFrequency: Math.max(sw4_filterfreq_end, 200), // Ensure end frequency does not exceed 100Hz
+								endFrequency: Math.min(sw4_filterfreq_end, 150), // Ensure end frequency does not exceed 100Hz
 								individualMaxBoostdB: maxBoostSw4,
 								overallMaxBoostdB: maxBoostSw4,
 								flatnessTargetdB: 1,
@@ -45030,6 +45115,19 @@
 				for (let q = 1; q <= mCount; q++) {
 					const name = measurements[q].title;
 					if (name.endsWith(" @ ")) {
+
+						if (REWRelease < 78) {
+								await postSafe(`http://localhost:4735/eq/default-target-settings`, { shape: "none" }, "Update processed");
+								await new Promise((resolve) => setTimeout(resolve, speedDelay));
+								await postSafe(`http://localhost:4735/measurements/${q}/target-settings`, { shape: "None" }, "Update processed");
+								await new Promise((resolve) => setTimeout(resolve, speedDelay));
+							} else if (REWRelease >= 78) {
+								await postSafe(`http://localhost:4735/eq/default-target-settings`, { shape: "none" }, "Update processed");
+								await new Promise((resolve) => setTimeout(resolve, speedDelay));
+								await postSafe(`http://localhost:4735/measurements/${q}/target-settings`, { shape: "None" }, "Update processed");
+								await new Promise((resolve) => setTimeout(resolve, speedDelay));
+						}
+
 						// console.error("FOUND FLAT CURVE!");
 						// Set target level
 						await fetch("http://localhost:4735/eq/default-target-level", {
@@ -45163,8 +45261,8 @@
 						} else {
 							centerPossible = true;
 							noInversion
-								? console.log(`Crossover frequency: ${freqIndex[i]}Hz, required delay: ${-requiredDelay.toFixed(4)}ms, expected dip removal efficiency: ${(100 - excessPhase).toFixed(2)}%`)
-								: console.log(`Crossover frequency: ${freqIndex[i]}Hz, required delay: ${-requiredDelay.toFixed(4)}ms (subwoofer polarity inverted) , expected dip removal efficiency: ${(100 - excessPhase).toFixed(2)}%`);
+								? console.log(`Crossover frequency: ${freqIndex[i]}Hz, required delay: ${-requiredDelay.toFixed(2)}ms, expected dip removal efficiency: ${(100 - excessPhase).toFixed(2)}%`)
+								: console.log(`Crossover frequency: ${freqIndex[i]}Hz, required delay: ${-requiredDelay.toFixed(2)}ms (subwoofer polarity inverted) , expected dip removal efficiency: ${(100 - excessPhase).toFixed(2)}%`);
 							if (excessPhase < normDev) {
 								normDev = excessPhase;
 								normXO = freqIndex[i];
@@ -46156,6 +46254,8 @@
 				// for (let i = 0; i < freqIndex.length; i++) {
 				// 29-04-2025 @ 09:39
 
+				// Search steps based on numSub
+				// We don't need billions of possibilities!
 				if (numSub === 1) {
 					var freqsteps = 1;
 				} else if (numSub === 2) {
@@ -46165,67 +46265,7 @@
 				} else {
 					var freqsteps = 1;
 				}
-				/*
-				for (checkFreq = 20; checkFreq <= 250; checkFreq += freqsteps) {
-					// First, get the result from postAlign
-					const postAlignResult = await postAlign("Align IRs", checkFreq);
 
-					// Process the result
-					let processedResult;
-					try {
-						// If postAlignResult is already an object, don't parse it
-						processedResult = typeof postAlignResult === "string" ? JSON.parse(postAlignResult) : postAlignResult;
-
-						// If the message property is a string, parse it
-						const messageObj = typeof processedResult.message === "string" ? JSON.parse(processedResult.message) : processedResult.message;
-
-						// Access the Delay B ms value
-						const delayBms = messageObj.results["0"]["Delay B ms"];
-						// console.log(delayBms);
-
-						// Check for delay too large
-						if (processedResult.message !== "Delay too large") {
-							// console.info(`Potential alignment @ ${checkFreq}Hz - required delay ${delayBms.toFixed(4)}ms`);
-							console.info(`Potential alignment @ ${checkFreq}Hz - required delay ${delayBms}ms`);
-							previousDelay = processedResult.delay;
-						}
-
-					} catch (error) {
-						console.error("Error processing alignment result:", error);
-						// Handle error appropriately
-					}
-        */
-
-				/* WORKING !!
-				for (checkFreq = 20; checkFreq <= 250; checkFreq += freqsteps) {
-					try {
-						// First, get the result from postAlign
-						const postAlignResult = await postAlign("Align IRs", checkFreq);
-						// let processedResult;
-						// If postAlignResult is already an object, don't parse it
-						const processedResult = typeof postAlignResult === "string" ? JSON.parse(postAlignResult) : postAlignResult;
-
-						// Check for "Delay too large" before attempting to parse message
-						if (processedResult.message === "Delay too large") {
-							console.warn(`Skipping potential alignment @ ${checkFreq}Hz - required delay is outside limits by ${processedResult.delay.toFixed(4)}ms`);
-							previousDelay = processedResult.delay;
-							continue;
-						}
-
-						// If the message property is a string, parse it
-						const messageObj = typeof processedResult.message === "string" ? JSON.parse(processedResult.message) : processedResult.message;
-
-						// Access the Delay B ms value
-						const delayBms = messageObj.results["0"]["Delay B ms"];
-
-						// Log the potential alignment
-						console.info(`Potential alignment @ ${checkFreq}Hz - required delay ${delayBms}ms`);
-						// previousDelay = processedResult.delay;
-					} catch (error) {
-						console.error(`Error processing alignment result at ${checkFreq}Hz:`, error);
-						// You might want to continue or handle specific errors differently
-					}
-          */
 				for (checkFreq = 20; checkFreq <= 250; checkFreq += freqsteps) {
 					magSum = 0;
 					try {
@@ -46241,7 +46281,7 @@
 							if (previousDelay !== processedResult.delay) {
 								const reason = processedResult.message === "Delay too large" ? "delay is outside limits" : "delay exceeds 20ms limit";
 
-								console.warn(`Skipping potential alignment @ ${checkFreq}Hz - ${reason} by ${processedResult.delay.toFixed(4)}ms`);
+								console.warn(`Skipping potential alignment @ ${checkFreq}Hz - ${reason} by ${processedResult.delay.toFixed(2)}ms`);
 								previousDelay = processedResult.delay;
 							} else {
 								previousDelay = processedResult.delay;
@@ -46258,26 +46298,17 @@
 
 						// Check if delay is within 20ms limit
 						if (Math.abs(delayBmsValue) >= 20) {
-							console.warn(`Skipping potential alignment @ ${checkFreq}Hz - delay exceeds 20ms limit: ${delayBms}ms`);
+							console.warn(`Skipping potential alignment @ ${checkFreq}Hz - delay exceeds 20ms limit: ${delayBmsValue.toFixed(2)}ms`);
 							previousDelay = delayBmsValue;
 							continue;
 						}
 
 						// If we get here, the delay is acceptable
-						console.info(`Potential alignment @ ${checkFreq}Hz - required delay ${delayBms}ms`);
+						console.info(`Potential alignment @ ${checkFreq}Hz - required delay ${delayBmsValue.toFixed(2)}ms`);
 						previousDelay = delayBmsValue;
 					} catch (error) {
 						console.error(`Error processing alignment result at ${checkFreq}Hz:`, error);
 					}
-
-					// Check for delay too large
-					/*
-					if (postAlignResult.message === "Delay too large") {
-						console.warn(`Skipping potential alignment @ ${checkFreq}Hz - required delay is outside limits by ${postAlignResult.delay.toFixed(4)}ms`);
-						previousDelay = postAlignResult.delay;
-						continue;
-					}
-          */
 
 					isInverted = await fetchAlign("invert-b");
 					if (noInversion && isInverted) {
@@ -46377,6 +46408,8 @@
 				// Scan through frequency index for best alignment
 				// for (let i = 0; i < freqIndex.length; i++) {
 
+				// Search steps based on numSub
+				// We don't need billions of possibilities!
 				if (numSub === 1) {
 					var freqsteps = 1;
 				} else if (numSub === 2) {
@@ -46386,85 +46419,6 @@
 				} else {
 					var freqsteps = 1;
 				}
-
-				/*
-				for (checkFreq = 20; checkFreq <= 250; checkFreq += freqsteps) {
-					magSum = 0;
-					// checkFreq = freqIndex[i];
-					// console.info(`Commencing in-depth frequency and SPL analysis @ ${checkFreq}Hz`);
-
-					// First, get the result from postAlign
-					const postAlignResult = await postAlign("Align IRs", checkFreq);
-
-					// Process the result
-					let processedResult;
-					try {
-						// If postAlignResult is already an object, don't parse it
-						processedResult = typeof postAlignResult === "string" ? JSON.parse(postAlignResult) : postAlignResult;
-
-						// If the message property is a string, parse it
-						const messageObj = typeof processedResult.message === "string" ? JSON.parse(processedResult.message) : processedResult.message;
-
-						// Access the Delay B ms value
-						const delayBms = messageObj.results["0"]["Delay B ms"];
-						// console.log(delayBms);
-
-						// Check for delay too large
-						if (processedResult.message !== "Delay too large") {
-							// console.info(`Potential alignment @ ${checkFreq}Hz - required delay ${delayBms.toFixed(4)}ms`);
-							console.info(`Potential alignment @ ${checkFreq}Hz - required delay ${delayBms}ms`);
-							previousDelay = processedResult.delay;
-						}
-					} catch (error) {
-						console.error("Error processing alignment result:", error);
-						// Handle error appropriately
-					}
-
-          // Check for delay too large
-          if (postAlignResult.message === "Delay too large" && previousDelay != postAlignResult.delay) {
-							// console.infoUpdate(`Skipping potential alignment @ ${checkFreq}Hz - required delay is outside limits by ${postAlignResult.delay.toFixed(4)}ms`);
-							console.warn(`Skipping potential alignment @ ${checkFreq}Hz - required delay is outside limits by ${postAlignResult.delay.toFixed(4)}ms`);
-							previousDelay = postAlignResult.delay;
-							continue;
-					}
-        */
-
-				/* WORKS !!
-				for (checkFreq = 20; checkFreq <= 250; checkFreq += freqsteps) {
-					magSum = 0;
-					try {
-						// First, get the result from postAlign
-						const postAlignResult = await postAlign("Align IRs", checkFreq);
-						// let processedResult;
-
-						// If postAlignResult is already an object, don't parse it
-						const processedResult = typeof postAlignResult === "string" ? JSON.parse(postAlignResult) : postAlignResult;
-
-						// Check for "Delay too large" before attempting to parse message
-						if (processedResult.message === "Delay too large") {
-							// Only log and continue if the delay has changed from previous
-							if (previousDelay !== processedResult.delay) {
-								console.warn(`Skipping potential alignment @ ${checkFreq}Hz - required delay is outside limits by ${processedResult.delay.toFixed(4)}ms`);
-								previousDelay = processedResult.delay;
-							} else {
-								previousDelay = processedResult.delay;
-							}
-							continue;
-						}
-
-						// If the message property is a string, parse it
-						const messageObj = typeof processedResult.message === "string" ? JSON.parse(processedResult.message) : processedResult.message;
-
-						// Access the Delay B ms value
-						const delayBms = messageObj.results["0"]["Delay B ms"];
-
-						// Log the potential alignment
-						console.info(`Potential alignment @ ${checkFreq}Hz - required delay ${delayBms}ms`);
-						// previousDelay = processedResult.delay;
-					} catch (error) {
-						console.error(`Error processing alignment result at ${checkFreq}Hz:`, error);
-					}
-          */
 
 				for (checkFreq = 20; checkFreq <= 250; checkFreq += freqsteps) {
 					magSum = 0;
@@ -46481,7 +46435,7 @@
 							if (previousDelay !== processedResult.delay) {
 								const reason = processedResult.message === "Delay too large" ? "delay is outside limits" : "delay exceeds 20ms limit";
 
-								console.warn(`Skipping potential alignment @ ${checkFreq}Hz - ${reason} by ${processedResult.delay.toFixed(4)}ms`);
+								console.warn(`Skipping potential alignment @ ${checkFreq}Hz - ${reason} by ${processedResult.delay.toFixed(2)}ms`);
 								previousDelay = processedResult.delay;
 							} else {
 								previousDelay = processedResult.delay;
@@ -46498,27 +46452,18 @@
 
 						// Check if delay is within 20ms limit
 						if (Math.abs(delayBmsValue) >= 20) {
-							console.warn(`Skipping potential alignment @ ${checkFreq}Hz - delay exceeds 20ms limit: ${delayBms}ms`);
+							console.warn(`Skipping potential alignment @ ${checkFreq}Hz - delay exceeds 20ms limit: ${delayBmsValue.toFixed(2)}ms`);
 							previousDelay = delayBmsValue;
 							continue;
 						}
 
 						// If we get here, the delay is acceptable
-						console.info(`Potential alignment @ ${checkFreq}Hz - required delay ${delayBms}ms`);
+						console.info(`Potential alignment @ ${checkFreq}Hz - required delay ${delayBmsValue.toFixed(2)}ms`);
 						previousDelay = delayBmsValue;
 					} catch (error) {
 						console.error(`Error processing alignment result at ${checkFreq}Hz:`, error);
 					}
 
-					/*
-					if (postAlignResult.message === "Delay too large" && previousDelay != postAlignResult.delay) {
-						// console.infoUpdate(`Skipping potential alignment @ ${checkFreq}Hz - required delay is outside limits by ${postAlignResult.delay.toFixed(4)}ms`);
-						console.warn(`Skipping potential alignment @ ${checkFreq}Hz - required delay is outside limits by ${postAlignResult.delay.toFixed(4)}ms`);
-						previousDelay = postAlignResult.delay;
-						continue;
-					}
-        
-          */
 					isInverted = await fetchAlign("invert-b");
 					if (noInversion && isInverted) {
 						isPossibleI = false;
@@ -46575,101 +46520,6 @@
 						bestFreq = checkFreq;
 					}
 				}
-				// }
-
-				/*
-				// Alternative alignment with noInversionForce enabled
-				if (Nvexx_noInversionForce === true) {
-					console.warn("RUNNING: > Nvexx_noInversionForce > PATH");
-					// Fine-grained frequency sweep for better precision
-					// for (checkFreq = 250; checkFreq >= 20; checkFreq -= 0.5) {
-					// Frequency sweep using whole numbers only
-					// for (checkFreq = 250; checkFreq >= 20; checkFreq--) {
-
-					if (numSub === 1) {
-						var freqsteps = 1;
-					} else if (numSub === 2) {
-						var freqsteps = 2;
-					} else if (numSub > 2) {
-						var freqsteps = 5;
-					} else {
-						var freqsteps = 1;
-					}
-
-					for (checkFreq = 20; checkFreq <= 250; checkFreq += freqsteps) {
-						magSum = 0;
-						// console.infoUpdate("Checking frequency:", checkFreq);
-						// console.infoUpdate("Commencing in-depth frequency and SPL analysis", checkFreq);
-						console.info(`Commencing in-depth frequency and SPL analysis @ ${checkFreq}Hz`);
-
-						const postAlignResult = await postAlign("Align IRs", checkFreq);
-						// More stringent delay threshold for precision
-						if (postAlignResult.message === "Delay too large" && postAlignResult.delay <= 0.005) {
-							console.warn(`Skipping possible alignment @ ${checkFreq}Hz - required delay is outside limits: ${(-postAlignResult.delay).toFixed(4)}ms`);
-							previousDelay = postAlignResult.delay;
-							continue;
-						}
-
-						isInverted = await fetchAlign("invert-b");
-						if (noInversion && isInverted) {
-							isPossibleI = false;
-							continue;
-						}
-
-						isPossibleI = true;
-
-						// Analyze frequency response
-						const tempSum = await fetchAlign("aligned-frequency-response");
-						let startFreq = parseFloat(tempSum.startFreq);
-
-						// Define frequency range based on number of subwoofers
-						let k1 = 31,
-							k2 = 120;
-						if (numSub === 1) {
-							k1 = 31;
-							k2 = 120;
-						} else if (numSub === 2) {
-							k1 = 23;
-							k2 = 120;
-						} else if (numSub > 2) {
-							k1 = 20;
-							k2 = 120;
-						}
-
-						// Calculate frequency indices with higher precision
-						if ("freqStep" in tempSum) {
-							let freqStep = parseFloat(tempSum.freqStep);
-							k1 = Math.round((k1 - startFreq) / freqStep);
-							k2 = Math.round((k2 - startFreq) / freqStep);
-						} else if ("ppo" in tempSum) {
-							const ppo = parseInt(tempSum.ppo);
-							k1 = Math.round(Math.log2(k1 / startFreq) * ppo);
-							k2 = Math.round(Math.log2(k2 / startFreq) * ppo);
-						}
-
-						samples = k2 - k1 + 1;
-
-						// Process magnitude data
-						const bytes = Uint8Array.from(atob(tempSum.magnitude), (c) => c.charCodeAt(0));
-						const buffer = bytes.buffer;
-						const data = new DataView(buffer);
-
-						// Calculate weighted sum of magnitudes for better alignment
-						for (let k = k1; k <= k2; k++) {
-							const sumMagnitude = data.getFloat32(k * 4);
-							// Apply weighting to favor lower frequencies where phase alignment is more critical
-							const freqWeight = 1.0 - Math.min(0.4, ((k - k1) / (k2 - k1)) * 0.4);
-							magSum += sumMagnitude * freqWeight;
-						}
-
-						// Update best frequency if current sum is greater
-						if (magSum > maxSum) {
-							maxSum = magSum;
-							bestFreq = checkFreq;
-						}
-					}
-				}
-        */
 
 				// Process best alignment found
 				if (isPossibleI) {
