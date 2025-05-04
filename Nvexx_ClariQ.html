@@ -1189,7 +1189,7 @@
 <body class="p-layout">
 	<script>
 		(function () {
-			console.warn("Nvexx ClariQ - 1.0.1 @ 02-05-2025_1917");
+			console.warn("Nvexx ClariQ - 1.0.1 @ 04-05-2025_2124");
 			const d = new Date();
 			console.warn("Run date:", d);
 		})();
@@ -15234,15 +15234,6 @@
 						document.getElementById("redownloadversion").innerHTML =
 							"Old version of REW detected! <ul style='margin-top: 0.5em;'><li>Please download the latest REW Beta version: <a href='https://www.avnirvana.com/threads/rew-api-beta-releases.12981/' target='_blank'>here</a></li></ul>";
 						setTimeout(() => { }, 150);
-						/* } else if (REWMajor < rewmajorn || REWMinor < rewminorn || REWRelease > 72) {
-						setTimeout(() => {}, 250);
-						// Pre setup
-						const rewversioninfo = document.getElementById("redownloadversion");
-						rewversioninfo.classList.add("error");
-						console.error("PROBLEMATIC version of REW detected!");
-						document.getElementById("redownloadversion").innerHTML =
-							"A version that is known to have problems with the current version of ClariQ detected! <ul style='margin-top: 0.5em;'><li>Please download a version BEFORE Beta 73! (71/72) <a href='https://roomeqwizard.com/installers/' target='_blank'>here</a></li></ul>";
-						setTimeout(() => {}, 150); */
 					} else {
 						// Pre setup
 						setTimeout(() => { }, 250);
@@ -38745,79 +38736,6 @@
 		// ##################################
 		// async function optimizeLevels() ##
 		// ##################################
-		/*
-		async function optimizeLevels() {
-			// console.log("Function: async function optimizeLevels()");
-			speedDelay = 206;
-			console.info(`Aligning each speaker's volume to precisely ${Number(nvexx_ReferenceLevel_SPK).toFixed(1)}dB at the listening position...`);
-
-			// Pre-convert hardware limits for efficiency and consistency.
-			const limitHigh = Number(Nvexx_highestTrimAdjustment);
-			const limitLow = Number(Nvexx_lowestTrimAdjustment);
-			const centerBoostdB = Number(Nvexx_CenterLeveldB);
-
-			for (let i = 1; i < nSpeakers; i++) {
-				let CenterCanBoost = true;
-				// Convert the current custom level once to maximize precision.
-				let level = Number(customLevel[i]);
-				const speakerId = commandId[i];
-
-				// Enforce hardware limits.
-				if (level > limitHigh) {
-					level = limitHigh;
-					console.warn(`${speakerId} required volume adjustment above hardware limits and is maxed out!`);
-					console.error(`Final results will be compromised`);
-					CenterCanBoost = false;
-				}
-				if (level < limitLow) {
-					level = limitLow;
-					console.warn(`${speakerId} required volume adjustment below hardware limits and is set as low as possible!`);
-					console.error(`Final results will be compromised`);
-					CenterCanBoost = false;
-				}
-
-				// NVEXX CENTER BOOST - apply only if conditions are met.
-				if (Nvexx_CenterLevel === true && CenterCanBoost === true && speakerId === "C") {
-					// Calculate the boosted level precisely.
-					const centerBoost = level + centerBoostdB;
-
-					// Check the boosted value against hardware limits.
-					if (centerBoost > limitHigh) {
-						level = limitHigh;
-						console.warn(`${speakerId} required volume adjustment above hardware limits and is maxed out!`);
-						console.error(`Center Level Boost - Final results will be compromised`);
-						CenterCanBoost = false;
-					} else if (centerBoost < limitLow) {
-						level = limitLow;
-						console.warn(`${speakerId} required volume adjustment below hardware limits and is set as low as possible!`);
-						console.error(`Center Level Boost - Final results will be compromised`);
-						CenterCanBoost = false;
-					} else {
-						console.warn("Nvexx applied Center Level Boost", centerBoostdB.toFixed(1) + "dB");
-						level = centerBoost;
-						console.warn("Nvexx adjusted Center Level after Boost:", level.toFixed(1) + "dB");
-					}
-				}
-
-				// Update the custom level with the precise level.
-				customLevel[i] = level;
-				console.log(`${speakerId} - applied adjustment: ${level.toFixed(1)}dB`);
-
-				await postNext("Add SPL offset", i, { offset: level });
-			}
-
-			if (numSub === 1) {
-				customLevel[nSpeakers] = 0;
-			}
-
-			const subOffset = await rmsVolume(nSpeakers);
-			for (let i = nSpeakers; i < nSpeakers + numSub; i++) {
-				customLevel[i] += subOffset;
-			}
-
-			speedDelay = 128;
-		}
-		*/
 		async function optimizeLevels() {
 			speedDelay = 206;
 			console.info(`Aligning each speaker's volume to precisely ${Number(nvexx_ReferenceLevel_SPK).toFixed(1)}dB at the listening position...`);
@@ -38829,18 +38747,6 @@
 			const roundToHalf = (val) => Math.round(val * 2) / 2;
 
 			for (let i = 1; i < nSpeakers; i++) {
-				/*
-				// Speaker path
-				await fetch("http://localhost:4735/eq/default-target-level", {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: Number(nvexx_ReferenceLevel_SPK).toFixed(1),
-				});
-				await fetchSafe("target-level", i,
-					Number(nvexx_ReferenceLevel_SPK).toFixed(1),
-					"Target level set");
-				console.debug("target-level > Speakers");
-				*/
 
 				let level = roundToHalf(Number(customLevel[i]));
 				const speakerId = commandId[i];
@@ -38887,18 +38793,7 @@
 			}
 			const subOffset = await rmsVolume(nSpeakers);
 			for (let i = nSpeakers; i < nSpeakers + numSub; i++) {
-				/*
-								// Subwoofer path
-								await fetch("http://localhost:4735/eq/default-target-level", {
-									method: "POST",
-									headers: { "Content-Type": "application/json" },
-									body: Number(nvexx_ReferenceLevel_SW).toFixed(1),
-								});
-								await fetchSafe("target-level", i,
-									Number(nvexx_ReferenceLevel_SW).toFixed(1),
-									"Target level set");
-								console.debug("target-level > Subwoofer(s)");
-				*/
+
 				customLevel[i] = roundToHalf(customLevel[i] + subOffset);
 			}
 
@@ -46470,7 +46365,6 @@
 		// async function multipleSubs(configSub) ##
 		//##########################################
 		async function multipleSubs(configSub) {
-			// console.log("Function: async function multipleSubs(configSub)");
 			// Use a constant instead of reassigning the variable
 			const INITIAL_SPEED_DELAY = 128;
 			const FINAL_SPEED_DELAY = 206;
