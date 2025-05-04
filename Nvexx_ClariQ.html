@@ -1189,7 +1189,7 @@
 <body class="p-layout">
 	<script>
 		(function () {
-			console.warn("Nvexx ClariQ - 1.0.0 @ 01-05-2025_1113");
+			console.warn("Nvexx ClariQ - 1.0.1 @ 02-05-2025_1917");
 			const d = new Date();
 			console.warn("Run date:", d);
 		})();
@@ -6861,7 +6861,7 @@
 			 **/
 		const baseUrl = "http://localhost:4735/measurements";
 		// Nvexx version
-		const NvexxVersion = "Nvexx ClariQ - 1.0.0";
+		const NvexxVersion = "Nvexx ClariQ - 1.0.1";
 		document.getElementById("version-number").innerHTML = NvexxVersion;
 		// REW beta version tested
 		const rewmajorn = 5;
@@ -38745,6 +38745,7 @@
 		// ##################################
 		// async function optimizeLevels() ##
 		// ##################################
+		/*
 		async function optimizeLevels() {
 			// console.log("Function: async function optimizeLevels()");
 			speedDelay = 206;
@@ -38812,6 +38813,93 @@
 			const subOffset = await rmsVolume(nSpeakers);
 			for (let i = nSpeakers; i < nSpeakers + numSub; i++) {
 				customLevel[i] += subOffset;
+			}
+
+			speedDelay = 128;
+		}
+		*/
+		async function optimizeLevels() {
+			speedDelay = 206;
+			console.info(`Aligning each speaker's volume to precisely ${Number(nvexx_ReferenceLevel_SPK).toFixed(1)}dB at the listening position...`);
+
+			const limitHigh = Number(Nvexx_highestTrimAdjustment);
+			const limitLow = Number(Nvexx_lowestTrimAdjustment);
+			const centerBoostdB = Number(Nvexx_CenterLeveldB);
+
+			const roundToHalf = (val) => Math.round(val * 2) / 2;
+
+			for (let i = 1; i < nSpeakers; i++) {
+				/*
+				// Speaker path
+				await fetch("http://localhost:4735/eq/default-target-level", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: Number(nvexx_ReferenceLevel_SPK).toFixed(1),
+				});
+				await fetchSafe("target-level", i,
+					Number(nvexx_ReferenceLevel_SPK).toFixed(1),
+					"Target level set");
+				console.debug("target-level > Speakers");
+				*/
+
+				let level = roundToHalf(Number(customLevel[i]));
+				const speakerId = commandId[i];
+
+				// Apply center boost *before* clamping, if eligible
+				if (Nvexx_CenterLevel === true && speakerId === "C") {
+					const boosted = roundToHalf(level + centerBoostdB);
+
+					if (boosted > limitHigh) {
+						level = limitHigh;
+						console.warn(`${speakerId} center boost exceeds hardware max. Maxed out.`);
+						console.error(`Center Level Boost - Final results will be compromised`);
+					} else if (boosted < limitLow) {
+						level = limitLow;
+						console.warn(`${speakerId} center boost below hardware min. Set to minimum.`);
+						console.error(`Center Level Boost - Final results will be compromised`);
+					} else {
+						level = boosted;
+						console.warn(`Nvexx applied Center Level Boost: +${centerBoostdB.toFixed(1)}dB`);
+						console.warn(`Center Level after boost: ${level.toFixed(1)}dB`);
+					}
+				}
+
+				// Enforce hardware limits
+				if (level > limitHigh) {
+					level = limitHigh;
+					console.warn(`${speakerId} level above hardware max. Maxed out.`);
+					console.error(`Final results will be compromised`);
+				}
+				if (level < limitLow) {
+					level = limitLow;
+					console.warn(`${speakerId} level below hardware min. Set to minimum.`);
+					console.error(`Final results will be compromised`);
+				}
+
+				customLevel[i] = level;
+				console.log(`${speakerId} - applied adjustment: ${level.toFixed(1)}dB`);
+				await postNext("Add SPL offset", i, { offset: level });
+			}
+
+			// Subwoofer processing
+			if (numSub === 1) {
+				customLevel[nSpeakers] = 0;
+			}
+			const subOffset = await rmsVolume(nSpeakers);
+			for (let i = nSpeakers; i < nSpeakers + numSub; i++) {
+				/*
+								// Subwoofer path
+								await fetch("http://localhost:4735/eq/default-target-level", {
+									method: "POST",
+									headers: { "Content-Type": "application/json" },
+									body: Number(nvexx_ReferenceLevel_SW).toFixed(1),
+								});
+								await fetchSafe("target-level", i,
+									Number(nvexx_ReferenceLevel_SW).toFixed(1),
+									"Target level set");
+								console.debug("target-level > Subwoofer(s)");
+				*/
+				customLevel[i] = roundToHalf(customLevel[i] + subOffset);
 			}
 
 			speedDelay = 128;
@@ -39534,7 +39622,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyC >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -39670,7 +39758,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyF >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -39805,7 +39893,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyFW >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -39940,7 +40028,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencySur >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -40075,7 +40163,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencySurB >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -40210,7 +40298,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyFH >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -40345,7 +40433,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencySH >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -40480,7 +40568,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyRH >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -40615,7 +40703,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyTF >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -40750,7 +40838,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyTM >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -40885,7 +40973,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyTR >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -41020,7 +41108,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyFD >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -41155,7 +41243,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencySD >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -41290,7 +41378,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyBD >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -41420,7 +41508,7 @@
 								flatnessTargetdB: ClariQ_flatnessTargetdB,
 								allowNarrowFiltersBelow200Hz: true,
 								// varyQAbove200Hz: false,
-								varyQAbove200Hz: false,
+								varyQAbove200Hz: endFrequencySurBS >= endFrequency ? true : false,
 								allowLowShelf: false,
 								allowHighShelf: false,
 							},
@@ -41550,7 +41638,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyTS >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -41679,7 +41767,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyCH >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -43619,7 +43707,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyC >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -43754,7 +43842,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyF >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -43889,7 +43977,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyFW >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -44024,7 +44112,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencySur >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -44159,7 +44247,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencySurB >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -44294,7 +44382,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyFH >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -44430,7 +44518,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencySH >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -44565,7 +44653,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyRH >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -44700,7 +44788,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyTF >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -44835,7 +44923,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyTM >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -44970,7 +45058,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyTR >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -45105,7 +45193,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyFD >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -45240,7 +45328,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencySD >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -45375,7 +45463,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyBD >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -45505,7 +45593,7 @@
 								flatnessTargetdB: ClariQ_flatnessTargetdB,
 								allowNarrowFiltersBelow200Hz: true,
 								// varyQAbove200Hz: false,
-								varyQAbove200Hz: false,
+								varyQAbove200Hz: endFrequencySurBS >= endFrequency ? true : false,
 								allowLowShelf: false,
 								allowHighShelf: false,
 							},
@@ -45635,7 +45723,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyTS >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -45764,7 +45852,7 @@
 							flatnessTargetdB: ClariQ_flatnessTargetdB,
 							allowNarrowFiltersBelow200Hz: true,
 							// varyQAbove200Hz: false,
-							varyQAbove200Hz: false,
+							varyQAbove200Hz: endFrequencyCH >= endFrequency ? true : false,
 							allowLowShelf: false,
 							allowHighShelf: false,
 						},
@@ -46513,327 +46601,384 @@
 		// async function tectonic() ##
 		//#############################
 		async function tectonic() {
-			// console.log("Function: async function tectonic()");
-			// Define conversion factor and SPL offset option flag
-			const delayConversionFactor = 1000.33; // Verify this factor matches your system requirements
-			const useOriginalOffset = true; // Set to true to use the original offset (-numSub * 3), false for maximum SPL (0 offset)
+			// Configuration constants
+			const DELAY_CONVERSION_FACTOR = 1000.33;
+			const USE_ORIGINAL_OFFSET = true; // true: use -numSub * 3 offset, false: use 0 offset for maximum SPL
+			const SPEED_DELAY = 128;
 
-			speedDelay = 128;
+			// Initialize tracking variables
+			let msecMinSub = Infinity;
+			let msecMaxSub = -Infinity;
+			let maxSubVolume = 0;
+			let minSubVolume = 0;
 
-			let isPossibleI = false,
-				requiredDelayI = NaN,
-				isInverted = false,
-				excessPhaseI = NaN,
-				msecMinSub = Infinity,
-				msecMaxSub = -Infinity;
-			let maxSubVolume = 0,
-				minSubVolume = 0;
-			for (let i = nSpeakers; i <= nSpeakers + numSub - 1; i++) {
-				// Use different frequencies for LPF based on subLPF flag
-				subLPF[i - nSpeakers] ? await genSub(250, i) : await genSub(120, i);
-			}
-			console.info("Matching subwoofer volumes...");
-			for (let i = nSpeakers; i <= nSpeakers + numSub - 1; i++) {
-				console.info(`Subwoofer #${i - nSpeakers + 1}:`);
-				customLevel[i] = await rmsVolume(i);
-				// Nvexx 0.0.20 - Volume Clamping
-				if (customLevel[i] < Nvexx_lowestTrimAdjustment) {
-					console.warn(`SW${i - nSpeakers + 1} volume is too high and can only be decreased by -12dB (hardware limit). Optimization will not be optimal!`);
-					customLevel[i] = Nvexx_lowestTrimAdjustment;
-					if (NvexxManualSteps.indexOf(`SW${i - nSpeakers + 1} volume is too high and can only be decreased by -12dB (hardware limit). Optimization will not be optimal!`) === -1) {
-						NvexxManualSteps.push(`SW${i - nSpeakers + 1} volume is too high and can only be decreased by -12dB (hardware limit). Optimization will not be optimal!`);
+			try {
+				// 1. Generate test signals for each subwoofer
+				console.info("Generating subwoofer test signals...");
+				for (let i = nSpeakers; i <= nSpeakers + numSub - 1; i++) {
+					// Apply different LPF frequencies based on subLPF configuration
+					const lpfFrequency = subLPF[i - nSpeakers] ? 250 : 120;
+					await genSub(lpfFrequency, i);
+				}
+
+				// 2. Match subwoofer volumes
+				console.info("Matching subwoofer volumes...");
+				for (let i = nSpeakers; i <= nSpeakers + numSub - 1; i++) {
+					const subIndex = i - nSpeakers + 1;
+
+					// Set target reference level for subwoofer
+					await fetch("http://localhost:4735/eq/default-target-level", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: Number(nvexx_ReferenceLevel_SW).toFixed(1),
+					});
+
+					await fetchSafe(
+						"target-level",
+						i,
+						Number(nvexx_ReferenceLevel_SW).toFixed(1),
+						"Target level set"
+					);
+
+					// Measure subwoofer volume
+					console.info(`Subwoofer #${subIndex}:`);
+					customLevel[i] = await rmsVolume(i);
+
+					// Apply volume clamping (hardware limits)
+					if (customLevel[i] < Nvexx_lowestTrimAdjustment) {
+						const warningMsg = `SW${subIndex} volume is too high and can only be decreased by ${Nvexx_lowestTrimAdjustment}dB (hardware limit). Optimization will not be optimal!`;
+						console.warn(warningMsg);
+						addUniqueMessage(NvexxManualSteps, warningMsg);
+
+						const ignoreMsg = `SW${subIndex} the above msg can be ignored..`;
+						console.warn(ignoreMsg);
+						addUniqueMessage(NvexxManualSteps, ignoreMsg);
+
+						customLevel[i] = Nvexx_lowestTrimAdjustment;
 					}
-					console.warn(`SW${i - nSpeakers + 1} the above msg can be ignored..`);
-					if (NvexxManualSteps.indexOf(`SW${i - nSpeakers + 1} the above msg can be ignored..`) === -1) {
-						NvexxManualSteps.push(`SW${i - nSpeakers + 1} the above msg can be ignored..`);
+
+					if (customLevel[i] > Nvexx_highestTrimAdjustment) {
+						const warningMsg = `SW${subIndex} volume is too low and can only be increased by ${Nvexx_highestTrimAdjustment}dB (hardware limit). Optimization will not be optimal!`;
+						console.warn(warningMsg);
+						addUniqueMessage(NvexxManualSteps, warningMsg);
+
+						const ignoreMsg = `SW${subIndex} the above msg can be ignored..`;
+						console.warn(ignoreMsg);
+						addUniqueMessage(NvexxManualSteps, ignoreMsg);
+
+						customLevel[i] = Nvexx_highestTrimAdjustment;
 					}
-				}
-				if (customLevel[i] > Nvexx_highestTrimAdjustment) {
-					console.warn(`SW${i - nSpeakers + 1} volume is too low and can only be increased by +12dB (hardware limit). Optimization will not be optimal!`);
-					customLevel[i] = Nvexx_highestTrimAdjustment;
-					if (NvexxManualSteps.indexOf(`SW${i - nSpeakers + 1} volume is too low and can only be increased by +12dB (hardware limit). Optimization will not be optimal!`) === -1) {
-						NvexxManualSteps.push(`SW${i - nSpeakers + 1} volume is too low and can only be increased by +12dB (hardware limit). Optimization will not be optimal!`);
-					}
-					console.warn(`SW${i - nSpeakers + 1} the above msg can be ignored..`);
-					if (NvexxManualSteps.indexOf(`SW${i - nSpeakers + 1} the above msg can be ignored..`) === -1) {
-						NvexxManualSteps.push(`SW${i - nSpeakers + 1} the above msg can be ignored..`);
-					}
+
+					// Track min/max volumes
+					maxSubVolume = Math.max(maxSubVolume, customLevel[i]);
+					minSubVolume = Math.min(minSubVolume, customLevel[i]);
 				}
 
-				if (customLevel[i] > maxSubVolume) {
-					maxSubVolume = customLevel[i];
-				}
-				if (customLevel[i] < minSubVolume) {
-					minSubVolume = customLevel[i];
-				}
-			}
-			subLO -= minSubVolume;
-			subHI -= maxSubVolume;
-			for (i = nSpeakers + 2 * numSub - 1; i > nSpeakers + numSub - 1; i--) {
-				await postDelete(i);
-			}
+				// Adjust subwoofer level offsets
+				subLO -= minSubVolume;
+				subHI -= maxSubVolume;
 
-			// Generate dynamic subwoofer orders based on numSub
-			console.info("Aligning multiple subs between each other for best bass performance...");
-			function getPermutations(arr) {
-				if (arr.length === 0) return [[]];
-				const result = [];
-				for (let i = 0; i < arr.length; i++) {
-					const current = arr[i];
-					const remaining = arr.slice(0, i).concat(arr.slice(i + 1));
-					const remainingPerms = getPermutations(remaining);
-					// console.info("current", current);
-					for (let perm of remainingPerms) {
-						result.push([current, ...perm]);
-					}
-				}
-				return result;
-			}
-			const subIndices = Array.from({ length: numSub }, (_, i) => i);
-			const subOrder = getPermutations(subIndices);
-
-			let finalIndices = [];
-			let finalResults = [];
-			for (const configSub of subOrder) {
-				const result = await multipleSubs(configSub);
-				const { finalIndex, alignmentResults } = result;
-				if (finalIndex === null) {
-					console.warn("No alignment possible for this configuration:", configSub);
-				} else {
-					console.info(`Sub array: [${configSub}]`);
-					finalIndices.push(finalIndex);
-					finalResults.push(finalIndex, configSub, alignmentResults);
-				}
-			}
-
-			if (finalIndices.every((element) => element === false)) {
-				console.warn("All attempts to align your subwoofers between each other have failed!");
-				console.error("Optimization cannot continue!");
-				console.log("Please identify the reason and fix excessive delays in one or more of your subs then repeat Audyssey calibration!");
-				console.warn("Please run the script with the 'Avoid sub polarity inversion'!");
-
-				clearCommands;
-				enableGraph;
-				throw new Error();
-			}
-			let bestEP = Infinity,
-				bestI,
-				iCount = 1,
-				bestCount = null;
-			for (const index of finalIndices) {
-				if (index !== null) {
-					const rawEpSum = await calcEP(index, 50);
-					// console.log(`Raw calcEP output for index ${index}:`, rawEpSum, `Type:`, typeof rawEpSum);
-
-					const epSum = parseFloat(rawEpSum);
-					if (isNaN(epSum)) {
-						console.error(`calcEP returned NaN for index ${index}`);
-					} else {
-						console.info(`Configuration #${iCount} average bass region excess phase: ${epSum.toFixed(2)}°`);
-						if (epSum < bestEP) {
-							bestEP = epSum;
-							bestI = index;
-							bestCount = iCount;
-						}
-					}
-					iCount++;
-				}
-			}
-			const targetIndex = finalResults.indexOf(bestI);
-			const configurationArray = finalResults[targetIndex + 1];
-			console.log(`Optimal selection: Configuration #${bestCount} [${configurationArray}] with ${bestEP.toFixed(2)}° average excess phase.`);
-			invertSub[nSpeakers + configurationArray[0]] = false;
-			for (let i = 0; i < numSub - 1; i++) {
-				const requiredDelayIValue = finalResults[targetIndex + 2][i].requiredDelayI;
-				const newsubI = nSpeakers + configurationArray[i + 1];
-				invertSub[newsubI] = finalResults[targetIndex + 2][i].isInverted;
-				// Calculate new timing using the conversion factor
-				let adjustedDelay = requiredDelayIValue / delayConversionFactor;
-				if (mSec[newsubI] + adjustedDelay < msecMinSub) {
-					msecMinSub = mSec[newsubI] + adjustedDelay;
-				}
-				if (mSec[newsubI] + adjustedDelay > msecMaxSub) {
-					msecMaxSub = mSec[newsubI] + adjustedDelay;
-				}
-				mSec[newsubI] = mSec[newsubI] + adjustedDelay;
-			}
-			msecMinSub = Math.min(msecMinSub, mSec[nSpeakers + configurationArray[0]]);
-			msecMaxSub = Math.max(msecMaxSub, mSec[nSpeakers + configurationArray[0]]);
-			await fetch_mREW(bestI, "PUT", { title: "SW1o" });
-			await fetch_mREW(nSpeakers, "PUT", { title: "tempSub" });
-			const measurements = await fetch_mREW();
-			const mCount = Object.keys(measurements).length;
-			for (i = mCount; i >= nSpeakers; i--) {
-				const title = measurements[i].title;
-				if (title != "SW1o") {
+				// Clean up extra measurements
+				for (let i = nSpeakers + 2 * numSub - 1; i > nSpeakers + numSub - 1; i--) {
 					await postDelete(i);
 				}
+
+				// 3. Find optimal subwoofer configuration through permutation testing
+				console.info("Aligning multiple subs between each other for best bass performance...");
+				const subIndices = Array.from({ length: numSub }, (_, i) => i);
+				const subConfigurations = getPermutations(subIndices);
+
+				// Test each possible subwoofer configuration
+				const configurationResults = [];
+				for (const configSub of subConfigurations) {
+					const result = await multipleSubs(configSub);
+					if (result.finalIndex !== null) {
+						console.info(`Sub array: [${configSub}]`);
+						configurationResults.push({
+							configIndex: result.finalIndex,
+							configuration: configSub,
+							alignmentData: result.alignmentResults
+						});
+					} else {
+						console.warn("No alignment possible for configuration:", configSub);
+					}
+				}
+
+				// Handle case where no configurations work
+				if (configurationResults.length === 0) {
+					throw new Error("All attempts to align your subwoofers between each other have failed! " +
+						"Please identify the reason and fix excessive delays in one or more of your subs " +
+						"then repeat Audyssey calibration! Try running with 'Avoid sub polarity inversion'.");
+				}
+
+				// 4. Select the best configuration based on excess phase
+				let bestExcessPhase = Infinity;
+				let bestConfig = null;
+				let bestConfigNum = 0;
+
+				for (let i = 0; i < configurationResults.length; i++) {
+					const { configIndex } = configurationResults[i];
+					const rawExcessPhase = await calcEP(configIndex, 50);
+					const excessPhase = parseFloat(rawExcessPhase);
+
+					if (isNaN(excessPhase)) {
+						console.error(`calcEP returned NaN for index ${configIndex}`);
+						continue;
+					}
+
+					console.info(`Configuration #${i + 1} average bass region excess phase: ${excessPhase.toFixed(2)}°`);
+
+					if (excessPhase < bestExcessPhase) {
+						bestExcessPhase = excessPhase;
+						bestConfig = configurationResults[i];
+						bestConfigNum = i + 1;
+					}
+				}
+
+				// 5. Apply the best configuration
+				const { configIndex, configuration, alignmentData } = bestConfig;
+				console.log(`Optimal selection: Configuration #${bestConfigNum} [${configuration}] with ${bestExcessPhase.toFixed(2)}° average excess phase.`);
+
+				// Set first subwoofer in the optimal configuration as non-inverted reference
+				invertSub[nSpeakers + configuration[0]] = false;
+
+				// Apply delays and inversions to remaining subwoofers
+				for (let i = 0; i < numSub - 1; i++) {
+					const subIndex = nSpeakers + configuration[i + 1];
+					const { requiredDelayI, isInverted } = alignmentData[i];
+
+					// Set polarity
+					invertSub[subIndex] = isInverted;
+
+					// Calculate and apply delay
+					const adjustedDelay = requiredDelayI / DELAY_CONVERSION_FACTOR;
+					mSec[subIndex] += adjustedDelay;
+
+					// Track min/max subwoofer delays
+					msecMinSub = Math.min(msecMinSub, mSec[subIndex]);
+					msecMaxSub = Math.max(msecMaxSub, mSec[subIndex]);
+				}
+
+				// Update min/max with first subwoofer
+				const firstSubIndex = nSpeakers + configuration[0];
+				msecMinSub = Math.min(msecMinSub, mSec[firstSubIndex]);
+				msecMaxSub = Math.max(msecMaxSub, mSec[firstSubIndex]);
+
+				// 6. Finalize measurements and apply SPL offset
+				await fetch_mREW(configIndex, "PUT", { title: "SW1o" });
+				await fetch_mREW(nSpeakers, "PUT", { title: "tempSub" });
+
+				// Clean up measurements
+				const measurements = await fetch_mREW();
+				const mCount = Object.keys(measurements).length;
+				for (let i = mCount; i >= nSpeakers; i--) {
+					const title = measurements[i].title;
+					if (title !== "SW1o") {
+						await postDelete(i);
+					}
+				}
+
+				// 7. Apply SPL offset based on configuration
+				const splOffset = USE_ORIGINAL_OFFSET ? -numSub * 3 : 0;
+				await postNext("Add SPL offset", nSpeakers, { offset: splOffset });
+
+				// 8. Calculate final delay differences
+				maxNegative = (msecMin - msecMinSub) * DELAY_CONVERSION_FACTOR;
+				maxPositive = (msecMax - msecMaxSub) * DELAY_CONVERSION_FACTOR;
+
+				// Set final speed delay
+				speedDelay = SPEED_DELAY;
+
+				console.info("Subwoofer alignment completed successfully.");
+
+			} catch (error) {
+				console.error("Error in tectonic function:", error.message);
+				clearCommands;
+				enableGraph;
+				throw error;
+			}
+		}
+
+		// Helper function to add a message to an array only if it doesn't already exist
+		function addUniqueMessage(array, message) {
+			if (array.indexOf(message) === -1) {
+				array.push(message);
+			}
+		}
+
+		// Helper function to generate all permutations of an array
+		function getPermutations(arr) {
+			if (arr.length === 0) return [[]];
+
+			const result = [];
+			for (let i = 0; i < arr.length; i++) {
+				const current = arr[i];
+				const remaining = [...arr.slice(0, i), ...arr.slice(i + 1)];
+				const remainingPerms = getPermutations(remaining);
+
+				for (const perm of remainingPerms) {
+					result.push([current, ...perm]);
+				}
 			}
 
-			// SPL Offset Options:
-			// Option 1: Original offset for better calibration (e.g. -numSub * 3)
-			// Option 2: Maximum SPL output (offset = 0)
-			const splOffset = useOriginalOffset ? -numSub * 3 : 0;
-			await postNext("Add SPL offset", nSpeakers, { offset: splOffset });
-
-			// Calculate maximum positive and negative differences based on mSec values
-			maxNegative = (msecMin - msecMinSub) * delayConversionFactor;
-			maxPositive = (msecMax - msecMaxSub) * delayConversionFactor;
-
-			speedDelay = 206;
+			return result;
 		}
 
 		//#################################
 		// async function rmsVolume(noM) ##
 		//#################################
+		const HALF_OCT_FACTOR = 2 ** (Math.SQRT2 / 2);
+
 		async function rmsVolume(noM) {
-			// console.log("Function: async function rmsVolume(noM)");
-			// Determine subwoofer mode and log appropriate messages
+			// Preserve original sub count
+			const numSubSave = numSub;
 			const subwooferModes = {
 				1: { name: "Dolby standard", range: [31, 120] },
 				2: { name: "IMAX", range: [23, 120] },
 				3: { name: "THX", range: [20, 120] },
-				4: { name: "THX", range: [20, 120] },
+				4: { name: "THX", range: [20, 120] }
 			};
-
-			// fix for SWMIX?
-			let numSubSave = numSub;
-			// console.error("numSubSave", numSubSave);
-			// console.error("numSub", numSub);
-			// console.error("NvexxIsSubwoofer", NvexxIsSubwoofer);
-			// fix for SWMIX?
-
+			// Log subwoofer mode
 			if (NvexxIsSubwoofer > numSub) {
 				numSub = NvexxIsSubwoofer;
-				if (subwooferModes[numSub]) {
-					console.warn(`SWMIX (${subwooferModes[numSub].name}) subwoofer mode active`);
-					console.info(
-						`Aligning ${numSub} subwoofer(s) volume to best track the target curve between ` +
-						`${subwooferModes[numSub].range[0]}Hz - ${subwooferModes[numSub].range[1]}Hz ` +
-						`at ${Number(nvexx_ReferenceLevel_SW).toFixed(1)}dB`,
-					);
-				}
+				subwooferModes[numSub] && console.warn(`SWMIX (${subwooferModes[numSub].name}) subwoofer mode active`);
 			} else {
-				if (subwooferModes[numSub]) {
-					console.warn(`(${subwooferModes[numSub].name}) subwoofer mode active`);
-					console.info(
-						`Aligning ${numSub} subwoofer(s) volume to best track the target curve between ` +
-						`${subwooferModes[numSub].range[0]}Hz - ${subwooferModes[numSub].range[1]}Hz ` +
-						`at ${Number(nvexx_ReferenceLevel_SW).toFixed(1)}dB`,
-					);
-				}
+				subwooferModes[numSub] && console.warn(`(${subwooferModes[numSub].name}) subwoofer mode active`);
 			}
-			// fix for SWMIX?
 			numSub = numSubSave;
-			// console.error("numSub", numSub);
-			// console.error("numSubSave", numSubSave);
-			// console.error("NvexxIsSubwoofer", NvexxIsSubwoofer);
-			// fix for SWMIX?
 
-			// Fetch measurements
+			// Fetch and prepare measurements
 			const measurements = await fetch_mREW();
 			const mCount = Object.keys(measurements).length;
 			await postNext("Smooth", noM, { smoothing: "None" });
 
-			// Set target level
-			await fetchSafe("target-level", noM, Number(nvexx_ReferenceLevel_SW).toFixed(1), "Target level set");
+			// await fetchSafe("target-level", noM, Number(nvexx_ReferenceLevel_SW).toFixed(1), "Target level set");
 			await postNext("Generate target measurement", noM);
 
-			// Helper function to fetch and extract SPL data
-			async function fetchSPL(noM, index) {
-				// console.log("Function: async function rmsVolume(noM) || async function fetchSPL(noM, index)");
-				const response = await fetchSafe("frequency-response?smoothing=1%2F48&ppo=96", index);
-				const startFreq = parseFloat(response.startFreq);
-				const ppo = parseInt(response.ppo);
-				const oct = Math.pow(2, Math.sqrt(2) / 2);
+			// Helper: get SPL bins for half-octave around BassFlatHz
+			async function fetchSPL(index) {
+				const resp = await fetchSafe("frequency-response?smoothing=1%2F48&ppo=96", index);
+				const startFreq = parseFloat(resp.startFreq);
+				const ppo = parseInt(resp.ppo, 10);
+				const lowFreq = Nvexx_BassFlatHz / HALF_OCT_FACTOR;
+				const highFreq = Nvexx_BassFlatHz * HALF_OCT_FACTOR;
+				const k1 = Math.round(Math.log2(lowFreq / startFreq) * ppo);
+				const k2 = Math.round(Math.log2(highFreq / startFreq) * ppo);
 
-				let k1 = Math.round(Math.log2(Nvexx_BassFlatHz / oct / startFreq) * ppo);
-				let k2 = Math.round(Math.log2((Nvexx_BassFlatHz * oct) / startFreq) * ppo);
-
-				const bytes = Uint8Array.from(atob(response.magnitude), (c) => c.charCodeAt(0));
-				const data = new DataView(bytes.buffer);
-
-				return Array.from({ length: k2 - k1 + 1 }, (_, i) => data.getFloat32((k1 + i) * 4));
+				const bytes = Uint8Array.from(atob(resp.magnitude), c => c.charCodeAt(0));
+				const view = new DataView(bytes.buffer);
+				const binCount = k2 - k1 + 1;
+				const out = new Float32Array(binCount);
+				for (let i = 0; i < binCount; i++) {
+					out[i] = view.getFloat32((k1 + i) * 4, false);
+				}
+				console.debug(`fetchSPL idx=${index}, k1=${k1}, k2=${k2}, bins=${binCount}, first=${out[0].toFixed(2)}`);
+				return out;
 			}
 
-			// Fetch subwoofer response and target response
-			const subArray = await fetchSPL(noM, noM);
-			const targetVolumeArray = await fetchSPL(noM, mCount + 1);
+			// Collect SPL arrays
+			const subArray = await fetchSPL(noM);
+			const targetArray = await fetchSPL(mCount + 1);
 
-			// RMS Error Calculation
-			const calculateRmsError = (offset) => {
-				const sumOfSquares = subArray.reduce((sum, spl, i) => sum + Math.pow(spl + offset - targetVolumeArray[i], 2), 0);
-				return Math.sqrt(sumOfSquares / subArray.length);
-			};
-
-			// Find best SPL adjustment offset
-			let bestOffset = null;
-			let lowestRmsError = Infinity;
-
-			for (let offset = Nvexx_lowestTrimAdjustment; offset <= Nvexx_highestTrimAdjustment; offset += 0.5) {
-				const rmsError = calculateRmsError(offset);
-				if (rmsError < lowestRmsError) {
-					lowestRmsError = rmsError;
-					bestOffset = offset;
+			// Compute optimal offset analytically
+			let sumDiff = 0, count = 0;
+			const N = Math.min(subArray.length, targetArray.length);
+			for (let i = 0; i < N; i++) {
+				const s = subArray[i], t = targetArray[i];
+				if (isFinite(s) && isFinite(t)) {
+					sumDiff += (t - s);
+					count++;
 				}
 			}
+			if (!count) return { offset: Nvexx_lowestTrimAdjustment, binsUsed: 0, rmsError: null };
 
-			/*
-			if (bestOffset !== null && bestOffset < 12) {
-				bestOffset = Math.min(bestOffset + 0.5, 12);
+			let rawOffset = sumDiff / count;
+			let bestOffset = Math.round(rawOffset * 2) / 2;
+			bestOffset = Math.max(Nvexx_lowestTrimAdjustment, Math.min(Nvexx_highestTrimAdjustment, bestOffset));
+
+			// Calculate RMS error for fit
+			let rmsSumSq = 0;
+			for (let i = 0; i < N; i++) {
+				const s = subArray[i], t = targetArray[i];
+				if (isFinite(s) && isFinite(t)) {
+					const diff = (s + bestOffset) - t;
+					rmsSumSq += diff * diff;
+				}
 			}
-			*/
+			const rmsError = Math.sqrt(rmsSumSq / count);
 
-			// Apply the best offset
+			// Apply with postNext & postDelete to preserve expected flow
 			await postNext("Add SPL offset", noM, { offset: bestOffset });
 			await postDelete(mCount + 1);
 			console.log(`Subwoofer - applied adjustment: ${bestOffset.toFixed(1)}dB`);
 
+			console.debug("binsUsed:", count);
+			console.debug("rmsError:", rmsError);
 			return bestOffset;
 		}
 
 		//################################
 		// async function rmsError(noM) ##
 		//################################
-		// Optimizing crossover frequencies for the remaining speakers
-		// expected dip removal efficiency:
 		async function rmsError(noM) {
-			// console.log("Function: async function rmsError(noM)");
+			console.log("Starting rmsError calculation for measurement", noM);
+
+			// Fetch frequency response
 			const freqResponse = await fetchSafe("frequency-response?smoothing=1%2F48&ppo=96", noM);
-			let startFreq = parseFloat(freqResponse.startFreq);
-			let k1 = 20,
-				k2 = 250;
-			let ppo = parseInt(freqResponse.ppo);
-			k1 = Math.round(Math.log2(k1 / startFreq) * ppo);
-			k2 = Math.round(Math.log2(k2 / startFreq) * ppo);
+			const startFreq = parseFloat(freqResponse.startFreq);
+			const ppo = parseInt(freqResponse.ppo, 10);
+			console.log(`Base frequency: ${startFreq}Hz, Points per octave: ${ppo}`);
 
-			// Keep the original binary data handling approach
-			const bytes = Uint8Array.from(atob(freqResponse.magnitude), (c) => c.charCodeAt(0));
-			const buffer = bytes.buffer;
-			const data = new DataView(buffer);
+			// Compute bin indices for 20–250 Hz
+			// const k1Range = 20, k2Range = 250;
+			const k1Range = 40, k2Range = 250;
+			const k1 = Math.round(Math.log2(k1Range / startFreq) * ppo);
+			const k2 = Math.round(Math.log2(k2Range / startFreq) * ppo);
+			console.log(`Frequency range: ${k1Range}Hz to ${k2Range}Hz`);
+			console.log(`Bin range: k1=${k1}, k2=${k2}`);
 
-			// Pre-calculate array length
-			const arrayLength = k2 - k1 + 1;
-			const aSumArray = new Array(arrayLength);
-
-			// Populate array
-			for (let i = 0; i < arrayLength; i++) {
-				aSumArray[i] = data.getFloat32((k1 + i) * 4);
+			// Helper: extract SPL bins from resp between k1…k2
+			function extractBins(resp, k1, k2) {
+				const bytes = Uint8Array.from(atob(resp.magnitude), c => c.charCodeAt(0));
+				const view = new DataView(bytes.buffer);
+				const count = k2 - k1 + 1;
+				const arr = new Float32Array(count);
+				for (let i = 0; i < count; i++) {
+					arr[i] = view.getFloat32((k1 + i) * 4, false);
+				}
+				return arr;
 			}
 
-			// Calculate RMS error in a single pass
-			let sumOfSquares = 0;
-			let count = 0;
+			// Decode bins and log first/last values
+			const aSumArray = extractBins(freqResponse, k1, k2);
+			console.log(`First 5 SPL values: ${aSumArray.slice(0, 5).map(v => v.toFixed(2)).join(', ')}`);
+			console.log(`Last  5 SPL values: ${aSumArray.slice(-5).map(v => v.toFixed(2)).join(', ')}`);
 
-			for (let i = 0; i < arrayLength; i++) {
-				if (aSumArray[i] < targetArray[i]) {
-					const diff = targetArray[i] - aSumArray[i];
+			// Validate targetArray presence
+			if (!Array.isArray(targetArray) && !ArrayBuffer.isView(targetArray)) {
+				console.warn("targetArray is not defined or not a Float32Array!");
+			} else {
+				console.log(`Target array length: ${targetArray.length}, Measurement array length: ${aSumArray.length}`);
+				console.log(`First 5 target SPL values: ${targetArray.slice(0, 5).map(v => v.toFixed(2)).join(', ')}`);
+			}
+
+			// Compute RMS error only where measured < target
+			let sumOfSquares = 0, count = 0, belowTargetCount = 0;
+			const N = Math.min(aSumArray.length, (targetArray || []).length);
+			for (let i = 0; i < N; i++) {
+				const m = aSumArray[i], t = targetArray[i];
+				if (isFinite(m) && isFinite(t) && m < t) {
+					const diff = t - m;
 					sumOfSquares += diff * diff;
-					count++;
+					count++; belowTargetCount++;
 				}
 			}
 
-			return count > 0 ? Math.sqrt(sumOfSquares / count) : 0;
+			const result = count > 0 ? Math.sqrt(sumOfSquares / count) : 0;
+			console.log(`Bins total: ${N}, Bins below target: ${belowTargetCount}, Bins used: ${count}`);
+			console.log(`RMS Error: ${result.toFixed(4)}dB`);
+
+			return result;
 		}
 
 		//######################################
@@ -47384,6 +47529,7 @@
 		// async function genSub(freq, i = null) ##
 		//#########################################
 		async function genSub(freq, i = null) {
+
 			// console.log("Function: async function genSub(freq, i = null)");
 			if (i === null) {
 				i = nSpeakers * 3;
@@ -47574,6 +47720,7 @@
 		// async function genSpeaker(i, freq) ##
 		//######################################
 		async function genSpeaker(i, freq) {
+
 			// console.log("Function: async function genSpeaker(i, freq)");
 			let slope = freq === 20 ? 24 : 12;
 
@@ -68047,6 +68194,7 @@
 					const resultData = await resultResponse.json();
 					// console.warn("resultData", resultData);
 					console.warn("The range over which EQ could be applied is too narrow");
+					console.warn("No extra filtering was needed.");
 					// console.warn("Try using a higher Filter end Frequency");
 					return resultData;
 				} else if (data.message && data.message.includes("ompleted")) {
