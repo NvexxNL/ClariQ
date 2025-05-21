@@ -11,12 +11,12 @@ jobs:
     - name: Send a request to webhook
       run: |
         RESPONSE=$(curl -H "Content-Type: application/json" -X POST -d '{
-        "username": "GitHub Dev Tree",
+        "username": "GitHub",
         "content": "@ClariQ",
         "embeds": [
           {
             "type": "rich",
-            "title": "ClariQ Dev Build Update",
+            "title": "ClariQ Update",
             "description": "New changes on ClariQ Dev Build Update repository by ${{ github.actor }}",
             "color": ff5557,
             "thumbnail": {
