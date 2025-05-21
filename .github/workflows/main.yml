@@ -49,8 +49,8 @@ jobs:
           {
             "type": "rich",
             "title": "ClariQ Update",
-            "description": "New changes on ClariQ Dev Build Update repository by ${{ github.actor }}",
-            "color": ff5557,
+            "description": "A new release version of ClariQ has been released by ${{ github.actor }}",
+            "color": 16733527,
             "thumbnail": {
               "url": "https://cdn.discordapp.com/icons/638026397650255912/7ca39fba389cd228fe0b800cae41436f.webp"
             },
@@ -59,7 +59,7 @@ jobs:
               "url": "https://github.com/${{ github.actor_id }}",
               "icon_url": "https://avatars.githubusercontent.com/u/${{ github.actor_id }}?v=4"
             },
-            "url": "https://github.com/NvexxNL/ClariQ/tree/dev"
+            "url": "https://github.com/NvexxNL/ClariQ"
           }
         ]
         }' ${{ secrets.WEBHOOK_URL }})
