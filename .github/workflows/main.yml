@@ -6,33 +6,53 @@ on:
   milestone:
     branches: 
     - main
+    branches-ignore:
+    - dev
   create:
     branches: 
     - main
+    branches-ignore:
+    - dev
   delete:
     branches: 
     - main
+    branches-ignore:
+    - dev
   fork:
     branches: 
     - main
+    branches-ignore:
+    - dev
   issues:
     branches: 
     - main
+    branches-ignore:
+    - dev
   member:
     branches: 
     - main
+    branches-ignore:
+    - dev
   pull_request:
     branches: 
     - main
+    branches-ignore:
+    - dev
   pull_request_review:
     branches: 
     - main
+    branches-ignore:
+    - dev
   issue_comment:
     branches: 
     - main
+    branches-ignore:
+    - dev
   push:
     branches: 
     - main
+    branches-ignore:
+    - dev
 # Valid
 jobs:
   # ID of our job
@@ -48,7 +68,7 @@ jobs:
         "embeds": [
           {
             "type": "rich",
-            "title": "ClariQ Dev Update",
+            "title": "ClariQ Update",
             "description": "New changes on ClariQ Dev Tree repository by ${{ github.actor }}",
             "color": 16733527,
             "thumbnail": {
@@ -63,4 +83,4 @@ jobs:
           }
         ]
         }' ${{ secrets.WEBHOOK_URL }})
-        echo "Webhook server response: $RESPONSE"
+# echo "Webhook server response: $RESPONSE"
