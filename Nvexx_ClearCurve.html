@@ -201,23 +201,29 @@
 			color: #000000;
 			padding: 5px;
 			border-radius: 5px;
-			max-height: 280px;
+			/* max-height: 280px; */
 			overflow-y: auto;
 			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 			margin-bottom: 1px;
 			font-size: 12px !important;
+			min-height: 25px;
+			max-height: 515px;
 		}
 
 		h2.log-heading {
 			font-family: Open Sans, sans-serif;
 			font-style: italic;
 			text-indent: 1px;
-			margin-bottom: 0px;
+			/* margin-bottom: 0px; */
 			width: 80px;
 			background-color: #357ebd;
 			color: #ffffff;
 			width: auto;
 			display: inline-block;
+			/* new 01-05-2025 */
+			padding: 10px 40px !important;
+			margin: .7rem;
+			font-size: 1.1rem;
 		}
 
 		ol,
@@ -404,6 +410,8 @@
 		.optionexplanation {
 			align-content: center;
 			font-size: 13px;
+			/* 13-05-2025 @ 1443 */
+			margin-right: 10px;
 		}
 
 		input[disabled]~span {
@@ -826,8 +834,12 @@
 		}
 
 		.h4filter {
+			/*color: #fff;
+			padding: 4px;*/
 			color: #fff;
-			padding: 4px;
+			padding: 2px !important;
+			margin-block-start: 1em;
+			margin-block-end: 1em;
 		}
 
 		.contentfiltersp,
@@ -901,7 +913,8 @@
 
 		.debugger {
 			color: #fff;
-			background-color: #ff5555;
+			/*background-color: #ff5555;*/
+			background-color: #8900df;
 			width: fit-content;
 		}
 
@@ -1157,12 +1170,11 @@
 		}
 
 		/*
-        TABLES TRY? */
+            TABLES TRY? */
 		table,
 		th,
 		td {
 			border: 0px solid black;
-			/*border-spacing: 0px;*/
 		}
 
 		/* THE RAT */
@@ -1178,13 +1190,24 @@
 			top: 26px;
 		}
 	</style>
+	<style>
+		.divspacer {
+			background: #0006ff40;
+			height: 4px;
+		}
+
+		.distanceinput {
+			width: fit-content;
+		}
+	</style>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body class="p-layout">
 	<script>
 		(function () {
-			console.warn("Nvexx ClearCurve - 1.0.0 @ 04-05-2025_2124");
+			console.warn("Nvexx ClearCurve - 1.0.1 @ 21-05-2025_1051");
 			const d = new Date();
 			console.warn("Run date:", d);
 		})();
@@ -1642,11 +1665,6 @@
 				<p>[IMPORTANT!] Please identify the reason and fix excessive delays in one or more of your subs then repeat
 					Audyssey calibration!</p>
 				<p>It should force a less optimal alignment</p>
-				<!-- 
-          <p>Forces 'Avoids subwoofer polarity inversion' checks in optimizations. Select this option if your sub(s) don't have a polarity/phase inversion flip switch.</p>
-          <p><strong class="p-apple-red modal">NOT RECOMMENDED</strong></p>
-          <p>This should be used only if the normal "Avoid sub polarity inversion" options doesn't align your subwoofers</p> 
-          -->
 				<div class="p-modal-button-container">
 					<a href="#" data-p-cancel>OK</a>
 				</div>
@@ -1820,13 +1838,6 @@
 							d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
 					</svg>
 				</a>
-				<!-- Measurements --><!-- https://flowbite.com/icons/   
-					<a href="#" id="btn-nvexx_new_init_measurements" class="nvexx_new_init_measurements" onclick="nvexx_steps_nvexx_new_init_measurements()" aria-label="Nvexx init measurements screen">
-						<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 5.5-5.5" />
-						</svg>
-					</a>
-        -->
 				<!-- Filters --><!-- https://flowbite.com/icons/ -->
 				<a href="#" id="btn-nvexx_new_init_filters" class="nvexx_new_init_filters"
 					onclick="nvexx_steps_nvexx_new_init_filters()" aria-label="Nvexx init filters screen">
@@ -2042,101 +2053,96 @@
 			<div class="button-container nvexx_new_init_volume_button" id="button-container-reference-level-helper-output"
 				style="display: none">
 				<input type="button" id="output" class="p-btn p-btn-mob p-strawberry-300 p-white-color buttonfilters"
-					style="background-color: #3689e652; margin: 5px 0px 5px 0px; color: #fff; font-weight: bold; font-size: large; outline: 2px solid #64baff" />
+					style="background-color: #3689e652; margin: 5px 0px 5px 0px; color: #fff; font-weight: bold; font-size: large; outline: 2px solid #64baff; text-align: left;" />
 				<input type="file" id="fileInputSPLspacer" accept=".txt"
 					class="p-btn p-btn-mob p-strawberry-300 p-white-color buttonfilters"
-					style="background-color: #3689e652; margin: 5px 0px 5px 0px; color: #000; visibility: hidden" />
+					style="background-color: #3689e652; margin: 5px 0px 5px 0px; color: #000; visibility: hidden; width:10px;" />
 			</div>
 
-			<!-- <div id="output" style="margin-top: 0px; padding: 10px; border: 1px solid #3689e6; background-color: #3689e652"></div> -->
-
 			<script>
-				document.getElementById("fileInputSPL").addEventListener("click", function (event) {
-					document.getElementById("output").style.background = "#3689e652";
-					document.getElementById("output").style.outline = "2px solid #64baff";
-					document.getElementById("button-container-reference-level-helper-output").style.display = "none";
-				});
-
 				document.getElementById("fileInputSPL").addEventListener("change", function (event) {
 					const file = event.target.files[0];
-					const filename = file.name;
-
+					const filename = file ? file.name : "";
 					if (!file) return;
 
 					const reader = new FileReader();
-
 					reader.onload = function (e) {
 						const content = e.target.result;
-						// Get first line by finding the first newline character
-						const firstLine = content.split("\n")[0];
+						// split into lines and remove empties
+						const lines = content.split(/\r?\n/).filter(line => line.trim() !== "");
 
-						// document.getElementById("output").textContent = "First line: " + firstLine;
+						// parse each line into { freq, boost }
+						const data = lines.map(line => {
+							const cleaned = line.trim().replace(/,$/, "");
+							const parts = cleaned.split(/\s+/);
+							return { freq: parseFloat(parts[0]), boost: parseFloat(parts[1]), raw: cleaned };
+						});
 
-						const SPLTOSET = firstLine;
-						const regexp = /\s([0-9]+(?:\.[0-9]+)?)/;
-						const match = SPLTOSET.match(regexp);
-						//
-						// console.log("match[0]: " + match[0]);
-						// console.log("match[1]: " + match[1]);
-						// console.log("match[2]: " + match[2]);
+						// filter data between 20 Hz and 120 Hz inclusive
+						const minHz = 20, maxHz = 120;
+						const subset = data.filter(pt => pt.freq >= minHz && pt.freq <= maxHz);
 
-						// Check if 'match0' is not null and has at least 2 elements.
-						if (match && match.length >= 2) {
-							console.log("match[0]: " + match[0]); // Log the full match.
+						// debug: log which lines are used
+						console.log("Lines used for averaging:", subset.map(pt => pt.raw));
+						console.log("Number of lines used:", subset.length);
 
-							// Check if the first captured group exists.
-							if (match[1]) {
-								console.log("match[1]: " + match[1]); // Log the first captured group.
-
-								const parsedValue = parseFloat(match[1]);
-
-								// Handle if the value is 0
-								if (parsedValue === 0) {
-									console.warn("Parsed SPL value is 0 — ignoring or handling separately.");
-									document.getElementById("button-container-reference-level-helper-output").style.display = "flex";
-									document.getElementById("output").textContent = `This is a 0dB (flat start) can't calculate >> curve: ${filename}`;
-									document.getElementById("output").value = `This is a 0dB (flat start) can't calculate >> curve: ${filename}`;
-									document.getElementById("output").style.background = "#ed5353";
-									document.getElementById("output").style.outline = "2px solid #ff0000";
-									return;
-								}
-
-								// Parse and calculate SPLTOADD based on the first captured group.
-								var SPLTOADD = parseFloat((75 + parsedValue).toFixed(1));
-							}
-
-							// Check if 'match0' is not null and has at least 3 elements.
-							if (match.length >= 3 && match[2]) {
-								console.log("match[2]: " + match[2]); // Log the second captured group.
-							}
-						} else {
-							console.error("match is null or does not have enough elements:", match);
+						// if no values in that range
+						if (subset.length === 0) {
+							return showError(`No data between ${minHz}Hz and ${maxHz}Hz >> curve: ${filename}`);
 						}
 
+						// compute average boost
+						const sumBoost = subset.reduce((sum, pt) => sum + pt.boost, 0);
+						const avgBoost = sumBoost / subset.length;
+						const roundedBoost = Math.ceil(avgBoost);
+
+						// compute total SPL by adding default 75 dB, then clamp to max 85 dB
+						const defaultSPL = 75;
+						let totalSPL = defaultSPL + roundedBoost;
+						totalSPL = Math.min(totalSPL, 85);  // clamp maximum to 85 dB
+
+						// display result and debug info
+						const outputEl = document.getElementById("output");
 						document.getElementById("button-container-reference-level-helper-output").style.display = "flex";
-						if ((SPLTOADD != 0 && match != null) || (!isNaN(SPLTOADD) && !isNaN(match))) {
-							document.getElementById("output").textContent = `SPL to use with your curve: ${Math.ceil(SPLTOADD)}.0dB >> curve: ${filename}`;
-							document.getElementById("output").value = `SPL to use with your curve: ${Math.ceil(SPLTOADD)}.0dB >> curve: ${filename}`;
-							document.getElementById("output").style.background = "rgb(104, 183, 35)";
-							document.getElementById("output").style.outline = "2px solid rgb(104, 183, 35)";
-						} else {
-							document.getElementById("output").textContent = `This is a 0dB (flat start) can't calculate >> curve: ${filename}`;
-							document.getElementById("output").value = `This is a 0dB (flat start) can't calculate >> curve: ${filename}`;
-							document.getElementById("output").style.background = "#ed5353";
-							document.getElementById("output").style.outline = "2px solid #ff0000";
+						outputEl.textContent =
+							// `Default SPL ${defaultSPL}dB + averaged boost ${roundedBoost}dB = ${totalSPL}dB` +
+							`Averaged boost ${roundedBoost}dB (averaged over ${subset.length} lines ${minHz}–${maxHz}Hz)` +
+							// `\ncurve: ${filename}` +
+							`\nRecommended SPL: ${totalSPL}dB for curve: ${filename}`;
+						outputEl.value = outputEl.textContent;
+						outputEl.style.background = "rgb(104, 183, 35)";
+						outputEl.style.outline = "2px solid rgb(104, 183, 35)";
+
+						// optionally show detailed lines in a secondary debug area
+						let debugEl = document.getElementById("debug-output");
+						if (!debugEl) {
+							debugEl = document.createElement("textarea");
+							debugEl.id = "debug-output";
+							debugEl.rows = 10;
+							debugEl.style.width = "100%";
+							debugEl.style.marginTop = "0.5em";
+							debugEl.readOnly = true;
+							document.getElementById("button-container-reference-level-helper-output").appendChild(debugEl);
 						}
+						debugEl.textContent = subset.map(pt => `${pt.freq} Hz → ${pt.boost} dB`).join("\n");
+						debugEl.style.background = "#f0f0f0";
+						debugEl.style.outline = "1px solid #ccc";
 					};
 
 					reader.onerror = function () {
-						document.getElementById("button-container-reference-level-helper-output").style.display = "flex";
-						document.getElementById("output").textContent = "Error reading file";
-						document.getElementById("output").value = "Error reading file";
-						document.getElementById("output").style.background = "#ed5353";
-						document.getElementById("output").style.outline = "2px solid #ff0000";
+						showError(`Error reading file >> curve: ${filename}`);
 					};
 
-					// Read the file as text
 					reader.readAsText(file);
+
+					function showError(msg) {
+						const outputEl = document.getElementById("output");
+						document.getElementById("button-container-reference-level-helper-output").style.display = "flex";
+						outputEl.textContent = msg;
+						outputEl.value = msg;
+						outputEl.style.background = "#ed5353";
+						outputEl.style.outline = "2px solid #ff0000";
+					}
 				});
 			</script>
 
@@ -2193,28 +2199,6 @@
 						<p>This arrangement is optimized for multiple listeners.</p>
 					</div>
 				</a>
-				<!--
-					<a
-						href="#"
-						id="btn-nvexx_new_init_arrangement_car"
-						class="nvexx_new_init_arrangement imaging_arrangement_cunt"
-						onclick="nvexx_steps_nvexx_new_init_arrangement_car()"
-						style="margin: 0px 15px 0px 15px"
-					>
-						<div style="text-align: center" class="cuntimg">
-							<h2 style="text-align: center" class="cunt">Car (...) if you don't have a home cinema but live in your car!</h2>
-							<img src="https://www.nvexx.nl/audyssey/assets/car-salesman-service-svgrepo-com.svg" alt="Small" style="max-width: 100px" />
-							<img src="https://www.nvexx.nl/audyssey/assets/rat-extermination-svgrepo-com.svg" alt="Small" style="max-width: 75px" />
-							<p>This arrangement is NOT optimized for home cinema!</p>
-							<p>it uses Phase EQ and is not suitable for home use!</p>
-							<p>Only choose if you like sugar pills and placebo effects!</p>
-							<p>Comes with an obfuscated exe file and local earth quake generator,</p>
-							<p>uninspired options and settings that they couldn't come up with them selves,</p>
-							<p>made by one coder, and one Google AI developer console assistant</p>
-							<p>choose if you don't mind your speakers crossing over at 200 to 250Hz making them sounds iike 1980's desktop speakers.</p>
-						</div>
-					</a>
-  -->
 			</div>
 		</div>
 
@@ -4045,7 +4029,7 @@
 			 **/
 		const baseUrl = "http://localhost:4735/measurements";
 		// Nvexx version
-		const ClearCurveVersion = "Nvexx ClearCurve - 1.0.0";
+		const ClearCurveVersion = "Nvexx ClearCurve - 1.0.1";
 		document.getElementById("version-number").innerHTML = ClearCurveVersion;
 		// REW beta version tested
 		const rewmajorn = 5;
@@ -4380,7 +4364,38 @@
 
 		var maxBoost = 0; // Maximum boost per filter (dB), note: maxBoost is mainly effective if overallMaxBoostdB is adjusted, introducing higher auto-leveling compensation
 		var overallMaxBoost = 0; // overallMaxBoost
-		var speedDelay = 206; // Nvexx speedDelay
+
+
+		// Add delay based on CPU cores ("logical")
+		// Don't have to set speedDelay each time anymore!
+		var cores = 1;
+		const getOptimalDelay = () => {
+			cores = navigator.hardwareConcurrency || 1; // Fallback to 1 if undefined
+			let delay;
+
+			if (cores <= 1) {
+				delay = 220;
+			} else if (cores <= 2) {
+				delay = 200;
+			} else if (cores <= 4) {
+				delay = 180;
+			} else if (cores <= 8) {
+				delay = 160;
+			} else if (cores <= 12) {
+				delay = 140;
+			} else if (cores <= 16) {
+				delay = 120;
+			} else if (cores <= 24) {
+				delay = 100;
+			} else if (cores <= 32) {
+				delay = 80;
+			} else {
+				delay = 220;
+			}
+			console.warn(`Detected ${cores} logical CPU core(s). Assigned delay: ${delay}ms`);
+			return delay;
+		};
+		var speedDelay = getOptimalDelay();
 
 		var NVEXX_TARGET_VALUE_SPK = 120;
 		var NVEXX_TARGET_VALUE_SW = 120;
@@ -4546,6 +4561,9 @@
 		var blobMaster;
 		var urlBlobMaster;
 		var downloadLinkMaster;
+
+		// IsClariQ -- need to make ClearCurve integration easier!
+		var IsClariQ = 0;
 
 		// SUBWOOFER(1) OPTIONS
 		// SUBWOOFER(1) OPTIONS
@@ -20669,10 +20687,10 @@
 			URL.revokeObjectURL(logUrl);
 		}
 
-		//####################################
-		// async function addmicCal()*      ##
-		// ClearCurve base: 04-05-2025_2153 ##
-		//####################################
+		//#######################################
+		// async function addmicCal()*         ##
+		// ClearCurve base: 21-05-2025 @ 10:51 ##
+		//#######################################
 		async function addmicCal() {
 			// console.log("Function: async function addmicCal()");
 			try {
@@ -20711,20 +20729,12 @@
 			}
 		}
 
-		//####################################
-		// async function bootUp()*         ##
-		// ClearCurve base: 04-05-2025_2153 ##
-		//####################################
+		//#######################################
+		// async function bootUp()*            ##
+		// ClearCurve base: 21-05-2025 @ 10:51 ##
+		//#######################################
 		async function bootUp() {
 			// console.log("Function: async function bootUp()");
-			// Clear existing timer if present
-
-			// Configurable constants
-			const initialSpeedDelay = 42;
-			const finalSpeedDelay = 206;
-
-			// Set initial speed delay
-			let speedDelay = initialSpeedDelay;
 
 			// SET DEFAULT FLAT CURVE
 			await postSafe(`http://localhost:4735/eq/house-curve`, targetCurvePath, "House curve set");
@@ -20749,9 +20759,13 @@
 
 			// Create sets for Dolby speaker types
 			const dolbySpeakerSets = {
-				frontDolby: new Set(["FDL0", "FDL1", "FDL2", "FDL3", "FDL4", "FDL5", "FDL6", "FDL7", "FDR0", "FDR1", "FDR2", "FDR3", "FDR4", "FDR5", "FDR6", "FDR7"]),
-				surDolby: new Set(["SDL0", "SDL1", "SDL2", "SDL3", "SDL4", "SDL5", "SDL6", "SDL7", "SDR0", "SDR1", "SDR2", "SDR3", "SDR4", "SDR5", "SDR6", "SDR7"]),
-				backDolby: new Set(["BDL0", "BDL1", "BDL2", "BDL3", "BDL4", "BDL5", "BDL6", "BDL7", "BDR0", "BDR1", "BDR2", "BDR3", "BDR4", "BDR5", "BDR6", "BDR7"]),
+				// frontDolby: new Set(["FDL0", "FDL1", "FDL2", "FDL3", "FDL4", "FDL5", "FDL6", "FDL7", "FDR0", "FDR1", "FDR2", "FDR3", "FDR4", "FDR5", "FDR6", "FDR7"]),
+				frontDolby: new Set(["FDL0", "FDL1", "FDL2", "FDL3", "FDL4", "FDL5", "FDL6", "FDL7", "FDL8", "FDL9", "FDL10", "FDL11", "FDL12", "FDL13", "FDL14", "FDL15",
+					"FDR0", "FDR1", "FDR2", "FDR3", "FDR4", "FDR5", "FDR6", "FDR7", "FDR8", "FDR9", "FDR10", "FDR11", "FDR12", "FDR13", "FDR14", "FDR15"]),
+				surDolby: new Set(["SDL0", "SDL1", "SDL2", "SDL3", "SDL4", "SDL5", "SDL6", "SDL7", "SDL8", "SDL9", "SDL10", "SDL11", "SDL12", "SDL13", "SDL14", "SDL15",
+					"SDR0", "SDR1", "SDR2", "SDR3", "SDR4", "SDR5", "SDR6", "SDR7", "SDR8", "SDR9", "SDR10", "SDR11", "SDR12", "SDR13", "SDR14", "SDR15"]),
+				backDolby: new Set(["BDL0", "BDL1", "BDL2", "BDL3", "BDL4", "BDL5", "BDL6", "BDL7", "BDL8", "BDL9", "BDL10", "BDL11", "BDL12", "BDL13", "BDL14", "BDL15",
+					"BDR0", "BDR1", "BDR2", "BDR3", "BDR4", "BDR5", "BDR6", "BDR7", "BDR8", "BDR9", "BDR10", "BDR11", "BDR12", "BDR13", "BDR14", "BDR15"]),
 			};
 
 			const baseMessage = "Enforcing REW defaults to all measurements / Removing Audyssey Reference High Frequency Roll Off 1";
@@ -20760,7 +20774,7 @@
 			for (let q = 1; q <= mCount; q++) {
 				// Apply smoothing
 				await postNext("Smooth", q, { smoothing: "None" });
-				await delay(speedDelay / 5);
+				await new Promise((resolve) => setTimeout(resolve, speedDelay / 2));
 
 				// Set IR windows
 				await postSafe(
@@ -20774,7 +20788,7 @@
 					},
 					"Update processed",
 				);
-				await delay(speedDelay / 5);
+				await new Promise((resolve) => setTimeout(resolve, speedDelay / 2));
 
 				// Apply filters if needed
 				if (Nvexx_FilterType !== "GenericConfigurablePEQ") {
@@ -20804,7 +20818,7 @@
 						},
 						"Filters set",
 					);
-					await delay(speedDelay / 5);
+					await new Promise((resolve) => setTimeout(resolve, speedDelay / 2));
 				}
 
 				// Check if special Dolby speaker treatment is needed
@@ -20845,10 +20859,11 @@
 						},
 						"Filters set",
 					);
-					await delay(speedDelay / 5);
+					await new Promise((resolve) => setTimeout(resolve, speedDelay / 2));
 				}
 
-				console.infoUpdate(`${baseMessage} (${q}/${mCount})`);
+				// console.infoUpdate(`${baseMessage} (${q}/${mCount})`);
+				console.info(`${baseMessage} (${q}/${mCount})`);
 			}
 
 			// Set target values
@@ -20859,14 +20874,51 @@
 					// console.error("< 120.0 - parseFloat(measurements[1].splOffsetdB", parseFloat(measurements[1].splOffsetdB));
 					console.log("< 120.0 - parseFloat(measurements[1].splOffsetdB", parseFloat(measurements[1].splOffsetdB));
 					console.warn("Measurements are NOT made with AUDYSSEY APP!", parseFloat(measurements[1].splOffsetdB));
+
+					// Audyssey App
+					// console.error("Audyssey - parseFloat(measurements[1].splOffsetdB", parseFloat(measurements[1].splOffsetdB));
+					// console.log("Audyssey - parseFloat(measurements[1].splOffsetdB)", parseFloat(measurements[1].splOffsetdB));
+					const baseTargetValue = parseFloat(measurements[1].splOffsetdB);
+					TARGET_VALUE = baseTargetValue;
+					NVEXX_TARGET_VALUE_SPK = baseTargetValue;
+					NVEXX_TARGET_VALUE_SW = baseTargetValue;
+					console.log("DEFAULT TARGET", TARGET_VALUE);
+					console.log("SPEAKER TARGET", NVEXX_TARGET_VALUE_SPK);
+					console.log("SUBWOOFER TARGET", NVEXX_TARGET_VALUE_SW);
+
+					/* BEFORE ADJUSTMENTS
+					let PRE_TARGET_VALUE = parseFloat(measurements[1].splOffsetdB);
+					console.debug("PRE_TARGET_VALUE", PRE_TARGET_VALUE);
+
+					// correct to 120
+					let correction_TARGET_VALUE = 120.0 - PRE_TARGET_VALUE;
+					console.warn("correction_TARGET_VALUE", correction_TARGET_VALUE);
+
+					// correct it to 120
+					let new_TARGET_VALUE = PRE_TARGET_VALUE + correction_TARGET_VALUE;
+					console.warn("new_TARGET_VALUE", new_TARGET_VALUE);
+					let USETHIS = new_TARGET_VALUE;
+					console.warn("USETHIS", USETHIS);
+
+					// add proper SPL offsets?
+					for (let i = 1; i <= mCount; i++) {
+						const name = measurements[i].title;
+						console.warn("TITLE", measurements[i].title);
+						await postNext("Add SPL offset", i, { offset: parseFloat(correction_TARGET_VALUE) });
+						console.warn("TITLE", measurements[i].title, "CORRECTION MADE", parseFloat(correction_TARGET_VALUE));
+					}
+
 					// const baseTargetValue = 120.0 - 3.0;
-					baseTargetValue = parseFloat(measurements[1].splOffsetdB);
+					const baseTargetValue = parseFloat(USETHIS);
 					TARGET_VALUE = baseTargetValue;
 					NVEXX_TARGET_VALUE_SPK = baseTargetValue;
 					NVEXX_TARGET_VALUE_SW = baseTargetValue;
 					console.log("NORMALIZED TO AUDYSSEY - DEFAULT TARGET", TARGET_VALUE);
 					console.log("NORMALIZED TO AUDYSSEY - SPEAKER TARGET", NVEXX_TARGET_VALUE_SPK);
 					console.log("NORMALIZED TO AUDYSSEY - SUBWOOFER TARGET", NVEXX_TARGET_VALUE_SW);
+					//
+					// debugger;
+					*/
 				} else if (parseFloat(measurements[1].splOffsetdB) > 120.0) {
 					// console.error("> 120.0 - parseFloat(measurements[1].splOffsetdB", parseFloat(measurements[1].splOffsetdB));
 					console.log("> 120.0 - parseFloat(measurements[1].splOffsetdB", parseFloat(measurements[1].splOffsetdB));
@@ -20884,9 +20936,88 @@
 					console.warn("USETHIS", USETHIS);
 					// continue as normall
 
+					// let measurements = await fetch_mREW();
+					// let mCount = Object.keys(measurements).length;
+					/*
+					// FIRST ALLIGN THE GRAPHS PROPERLY?
+					for (let i = 1; i <= mCount; i++) {
+						const name = measurements[i].title;
+						if (!name.startsWith("SW")) {
+							console.warn("!name.startsWith('SW') > name", name);
+							let freq = 1000;
+							let span = 4;
+							const requestOptions = {
+								method: "POST",
+								headers: { "Content-Type": "application/json" },
+								body: JSON.stringify({
+									processName: "Align SPL",
+									measurementIndices: [i],
+									parameters: {
+										targetdB: 117,
+										frequencyHz: freq,
+										spanOctaves: span,
+									},
+								}),
+							};
+							fetch(`http://localhost:4735/measurements/process-measurements`, requestOptions);
+							await new Promise((resolve) => setTimeout(resolve, speedDelay));
+						}
+
+						if (name.startsWith("SW")) {
+							console.warn("name.startsWith('SW') > name", name);
+							let freq = 50;
+							let span = 2;
+							const requestOptions = {
+								method: "POST",
+								headers: { "Content-Type": "application/json" },
+								body: JSON.stringify({
+									processName: "Align SPL",
+									measurementIndices: [i],
+									parameters: {
+										targetdB: 117,
+										frequencyHz: freq,
+										spanOctaves: span,
+									},
+								}),
+							};
+							fetch(`http://localhost:4735/measurements/process-measurements`, requestOptions);
+							await new Promise((resolve) => setTimeout(resolve, speedDelay));
+						}
+					}
+					debugger;
+				*/
+
 					// add proper SPL offsets?
 					for (let i = 1; i <= mCount; i++) {
 						const name = measurements[i].title;
+						/*
+						measurements[i].startFreq = 2.9296875;
+						measurements[i].endFreq = 23999.633;
+						measurements[i].timingReference = "";
+						measurements[i].delay = "";
+						measurements[i].timingOffset = "";
+						measurements[i].signalToNoisedB = "";
+						measurements[i].cumulativeIRShiftSeconds = 0;
+						measurements[i].clockAdjustmentPPM = 0;
+
+					const requestOptions = {
+						method: "PUT",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({ 
+							startFreq: 2.9296875,
+							endFreq: 23999.633,
+							timingReference: '',
+							delay: '',
+							timingOffset: '',
+							signalToNoisedB: '',
+							cumulativeIRShiftSeconds: 0,
+							clockAdjustmentPPM: 0,
+						}),
+					};
+					fetch(`http://localhost:4735/measurements/${i}`, requestOptions);
+					await new Promise((resolve) => setTimeout(resolve, speedDelay));
+				*/
+
 						console.warn("TITLE", measurements[i].title);
 						await postNext("Add SPL offset", i, { offset: -correction_TARGET_VALUE });
 						console.warn("TITLE", measurements[i].title, "CORRECTION MADE");
@@ -20932,12 +21063,75 @@
 				await postSafe(`http://localhost:4735/eq/default-equaliser`, { manufacturer, model }, "Default equaliser changed");
 			}
 
+			/*
+						// Validate measurement naming and ordering
+						console.infoUpdate(`Checking measurement names, indices and sorting...`);
+						const titles = {};
+						const titleIndices = {};
+			
+						// Parse and validate measurement titles
+						for (let i = 1; i <= mCount; i++) {
+							const title = measurements[i].title;
+							const titleKey = title.replace(/\d+/g, "");
+			
+							if (!/^\D+(\d+)?$/.test(titleKey)) {
+								throw new Error(`Speaker name ${titleKey} does not end with a numeric index.`);
+							}
+			
+							if (!titles[titleKey]) {
+								titles[titleKey] = true;
+								titleIndices[titleKey] = [];
+							}
+			
+							const matchResult = title.match(/\d+/);
+							if (matchResult && matchResult.length > 0) {
+								titleIndices[titleKey].push(parseInt(matchResult[0]));
+							} else {
+								throw new Error(`No indices found in speaker name: ${title}`);
+							}
+						}
+			
+						// Verify indices are in order for each speaker type
+						for (const titleKey in titleIndices) {
+							const indices = titleIndices[titleKey];
+							const sortedIndices = [...indices].sort((a, b) => a - b);
+							//
+							// if (JSON.stringify(indices) !== JSON.stringify(sortedIndices)) {
+							// 	throw new Error(`Indices of ${titleKey} are not in order.`);
+							// }
+							// 
+							if (JSON.stringify(indices) !== JSON.stringify(sortedIndices)) {
+								console.error(`MISMATCH for ${titleKey}:`, { indices, sortedIndices });
+								throw new Error(`Indices of ${titleKey} are not in order.`);
+							}
+						}
+			
+						// Check if all speaker types have the same number of indices
+						nSpeakers = Object.keys(titles).length;
+						const indicesCounts = Object.values(titleIndices).map((indices) => indices.length);
+						const isIndicesEqual = indicesCounts.every((count) => count === indicesCounts[0]);
+			
+						if (!isIndicesEqual) {
+							const problemGroups = [];
+							for (const [titleKey, indices] of Object.entries(titleIndices)) {
+								if (indices.length !== indicesCounts[0]) {
+									problemGroups.push(titleKey);
+								}
+							}
+			
+							if (problemGroups.some((group) => group.startsWith("SW")) && numSub > 1) {
+								console.log(`'Directional bass' mode with ${numSub} subwoofers detected!`);
+							} else {
+								throw new Error("Speaker names have different numbers of indices.");
+							}
+						}
+			*/
 			// Validate measurement naming and ordering
 			console.infoUpdate(`Checking measurement names, indices and sorting...`);
 			const titles = {};
 			const titleIndices = {};
 
-			// Parse and validate measurement titles
+			// 1) Parse and validate measurement titles
 			for (let i = 1; i <= mCount; i++) {
 				const title = measurements[i].title;
 				const titleKey = title.replace(/\d+/g, "");
@@ -20952,26 +21146,34 @@
 				}
 
 				const matchResult = title.match(/\d+/);
-				if (matchResult && matchResult.length > 0) {
-					titleIndices[titleKey].push(parseInt(matchResult[0]));
+				if (matchResult) {
+					titleIndices[titleKey].push(parseInt(matchResult[0], 10));
 				} else {
 					throw new Error(`No indices found in speaker name: ${title}`);
 				}
 			}
 
-			// Verify indices are in order for each speaker type
+			// ────────────────────────────────────────────────────────────────────────────────
+			// UPDATED: sort each group’s indices in place so that the upcoming check always passes
+			for (const titleKey in titleIndices) {
+				titleIndices[titleKey].sort((a, b) => a - b);
+			}
+
+			// 2) Verify indices are in order for each speaker type
 			for (const titleKey in titleIndices) {
 				const indices = titleIndices[titleKey];
 				const sortedIndices = [...indices].sort((a, b) => a - b);
+
 				if (JSON.stringify(indices) !== JSON.stringify(sortedIndices)) {
+					console.error(`MISMATCH for ${titleKey}:`, { indices, sortedIndices });
 					throw new Error(`Indices of ${titleKey} are not in order.`);
 				}
 			}
 
-			// Check if all speaker types have the same number of indices
+			// 3) Check if all speaker types have the same number of indices
 			nSpeakers = Object.keys(titles).length;
-			const indicesCounts = Object.values(titleIndices).map((indices) => indices.length);
-			const isIndicesEqual = indicesCounts.every((count) => count === indicesCounts[0]);
+			const indicesCounts = Object.values(titleIndices).map(arr => arr.length);
+			const isIndicesEqual = indicesCounts.every(count => count === indicesCounts[0]);
 
 			if (!isIndicesEqual) {
 				const problemGroups = [];
@@ -20981,29 +21183,20 @@
 					}
 				}
 
-				if (problemGroups.some((group) => group.startsWith("SW")) && numSub > 1) {
+				if (problemGroups.some(group => group.startsWith("SW")) && numSub > 1) {
 					console.log(`'Directional bass' mode with ${numSub} subwoofers detected!`);
 				} else {
 					throw new Error("Speaker names have different numbers of indices.");
 				}
 			}
-
-			// Set final speed delay and restart timer
-			speedDelay = finalSpeedDelay;
 		}
 
-		// Helper function for delays
-		function delay(ms) {
-			return new Promise((resolve) => setTimeout(resolve, ms));
-		}
-
-		// ####################################
-		// async function groundWorks()*     ##
-		// ClearCurve base: 04-05-2025_2153 ##
-		// ####################################
+		// ######################################
+		// async function groundWorks()*       ##
+		// ClearCurve base: 21-05-2025 @ 10:51 ##
+		// ######################################
 		async function groundWorks() {
 			// console.log("Function: async function groundWorks()");
-			speedDelay = 128;
 
 			let bugExists = false,
 				reported = false;
@@ -21042,7 +21235,8 @@
 				console.info(`Computing optimal spatial averaging configuration for speaker #~`);
 
 				for (i = 1; i <= mCount; i += micPositions) {
-					console.infoUpdate(`Computing optimal spatial averaging configuration for speaker #${(i - 1) / micPositions + 1}`);
+					// console.infoUpdate(`Computing optimal spatial averaging configuration for speaker #${(i - 1) / micPositions + 1}`);
+					console.info(`Computing optimal spatial averaging configuration for speaker #${(i - 1) / micPositions + 1}`);
 					const indices = Array.from({ length: micPositions }, (_, j) => i + j);
 
 					bugExists = await fixVolumeBug(indices);
@@ -21055,7 +21249,7 @@
 				}
 
 				if (reported) {
-					console.log("Nvexx ClearCurve has corrected faulty measurements for a 'known' Editor app (Android version) bug of fixed ± 6/12dB volume offsets.");
+					console.log("Nvexx ClariQ has corrected faulty measurements for a 'known' Editor app (Android version) bug of fixed ± 6/12dB volume offsets.");
 					console.log("It's still advisable to compare volume levels of your imported measurements in REW for other possible causes.");
 					console.log("You may be risking a suboptimal calibration based on inaccurate speaker measurements otherwise!");
 				}
@@ -21110,23 +21304,34 @@
 			const offsetSPLSW = Number(nvexx_ReferenceLevel_SW).toFixed(0) - NVEXX_TARGET_VALUE_SW;
 			const offsetSPLSWavg = offsetSPL + offsetSPLSW / 2;
 
+
 			// Apply SPL offsets for speakers and subwoofers
 			for (i = 1; i <= nSpeakers + numSub - 1; i++) {
 				commandId[i] = title[i].slice(0, -1);
 
-				if (!commandId[i].startsWith("SW")) {
-					// await postNext("Add SPL offset", i, { offset: offsetSPLSP });
-					await postNext("Add SPL offset", i, { offset: offsetSPL });
-					console.info("Add SPL offset for:", commandId[i], "offset:", offsetSPL);
+				console.debug("Processing speaker:", commandId[i]);
+				console.debug("Offset to default:", offsetSPL);
+				try {
+					// Simplified condition - if it starts with SW, it's a subwoofer
+					if (commandId[i].startsWith("SW")) {
+						console.debug("Identified as subwoofer:", commandId[i]);
+						console.debug("Using subwoofer offset:", offsetSPL);
+						await postNext("Add SPL offset", i, { offset: offsetSPL });
+						console.info("Add SPL offset for:", commandId[i], "offset:", offsetSPL);
+					} else {
+						console.debug("Identified as regular speaker:", commandId[i]);
+						console.debug("Using speaker offset:", offsetSPL);
+						await postNext("Add SPL offset", i, { offset: offsetSPL });
+						console.info("Add SPL offset for:", commandId[i], "offset:", offsetSPL);
+					}
+				} catch (error) {
+					console.error("Error processing", commandId[i], ":", error);
 				}
-
-				if (commandId[i].startsWith("SW")) {
-					// await postNext("Add SPL offset", i, { offset: offsetSPLSP });
-					await postNext("Add SPL offset", i, { offset: offsetSPL });
-					console.info("Add SPL offset for:", commandId[i], "offset:", offsetSPL);
-				}
+				console.debug("Finished processing:", commandId[i]);
 			}
+			console.info("Finished processing: SPL Offsets");
 
+			/* == */
 			console.infoUpdate("Executing precision temporal alignment across the speaker array for optimal coherence...");
 			const oIndices = Array.from({ length: nSpeakers + numSub - 1 }, (_, j) => j + 1);
 			await epAlign(oIndices, true);
@@ -21221,19 +21426,14 @@
 
 				throw new Error();
 			}
-
-			speedDelay = 206;
 		}
 
 		// ########################################
 		// async function weightedAvrg(indices)* ##
-		// ClearCurve base: 04-05-2025_2153      ##
+		// ClearCurve base: 21-05-2025 @ 10:51   ##
 		// ########################################
 		async function weightedAvrg(indices) {
 			// console.log("Function: async function weightedAvrg(indices)");
-			// speedDelay change
-			speedDelay = 206;
-
 			console.infoUpdate(`Applying proprietary 'microphone position proximity to RLP weighted averaging' to speaker measurements {${indices}}`);
 			let maxShift = -Infinity,
 				measurement,
@@ -21280,12 +21480,11 @@
 			}
 		}
 
-		// #####################################
-		// async function optimizeLevels()*   ##
-		// ClearCurve base: 04-05-2025_2153   ##
-		// #####################################
+		// ########################################
+		// async function optimizeLevels()*      ##
+		// ClearCurve base: 21-05-2025 @ 10:51   ##
+		// ########################################
 		async function optimizeLevels() {
-			speedDelay = 206;
 			console.info(`Aligning each speaker's volume to precisely ${Number(nvexx_ReferenceLevel_SPK).toFixed(1)}dB at the listening position...`);
 
 			const limitHigh = Number(Nvexx_highestTrimAdjustment);
@@ -21344,18 +21543,14 @@
 
 				customLevel[i] = roundToHalf(customLevel[i] + subOffset);
 			}
-
-			speedDelay = 128;
 		}
 
 		//###########################################
 		// async function epAlign(indices, final)* ##
-		// ClearCurve base: 04-05-2025_2153        ##
-		// extra: // Optimize subwoofer HPF condition with simplified logic comment out!
+		// ClearCurve base: 21-05-2025 @ 10:51     ##
 		//###########################################
 		async function epAlign(indices, final) {
 			// console.log("Function: async function epAlign(indices, final)");
-			speedDelay = 128;
 
 			const epIndices = [],
 				epShifts = [];
@@ -21427,54 +21622,55 @@
 					}
 
 					// Optimize subwoofer HPF condition with simplified logic
-					/*
-					const needsHPF =
-						sw1_hpf === false ||
-						sw2_hpf === false ||
-						sw3_hpf === false ||
-						sw4_hpf === false ||
-						(Nvexx_Woofer_HighPassfilter === false && NvexxGenSub === 1) ||
-						(Nvexx_Woofer_HighPassfilter === true && NvexxGenSub === 0);
+					if (IsClariQ === 1) {
+						const needsHPF =
+							sw1_hpf === false ||
+							sw2_hpf === false ||
+							sw3_hpf === false ||
+							sw4_hpf === false ||
+							(Nvexx_Woofer_HighPassfilter === false && NvexxGenSub === 1) ||
+							(Nvexx_Woofer_HighPassfilter === true && NvexxGenSub === 0);
 
-					if (needsHPF) {
-						if (Nvexx_FilterType === "Generic") {
-							await postSafe(
-								`${baseUrl}/${key}/filters`,
-								{
-									filters: [
-										{
-											index: 22,
-											type: "High pass",
-											enabled: true,
-											isAuto: false,
-											frequency: Nvexx_BassFlatHz,
-											shape: "L-R",
-											slopedBPerOctave: 24,
-										},
-									],
-								},
-								"Filters set",
-							);
-							await new Promise((resolve) => setTimeout(resolve, speedDelay));
-						} else if (Nvexx_FilterType === "MiniDSP2x4HD") {
-							await postSafe(
-								`${baseUrl}/${key}/filters`,
-								{
-									filters: [
-										{
-											index: 10,
-											type: "HP",
-											enabled: true,
-											isAuto: false,
-											frequency: Nvexx_BassFlatHz,
-										},
-									],
-								},
-								"Filters set",
-							);
-							await new Promise((resolve) => setTimeout(resolve, speedDelay));
+						if (needsHPF) {
+							if (Nvexx_FilterType === "Generic") {
+								await postSafe(
+									`${baseUrl}/${key}/filters`,
+									{
+										filters: [
+											{
+												index: 22,
+												type: "High pass",
+												enabled: true,
+												isAuto: false,
+												frequency: Nvexx_BassFlatHz,
+												shape: "L-R",
+												slopedBPerOctave: 24,
+											},
+										],
+									},
+									"Filters set",
+								);
+								await new Promise((resolve) => setTimeout(resolve, speedDelay));
+							} else if (Nvexx_FilterType === "MiniDSP2x4HD") {
+								await postSafe(
+									`${baseUrl}/${key}/filters`,
+									{
+										filters: [
+											{
+												index: 10,
+												type: "HP",
+												enabled: true,
+												isAuto: false,
+												frequency: Nvexx_BassFlatHz,
+											},
+										],
+									},
+									"Filters set",
+								);
+								await new Promise((resolve) => setTimeout(resolve, speedDelay));
+							}
 						}
-					}*/
+					}
 				} else {
 					// Handle regular speakers with precise frequency values
 					NvexxGenSub = 0;
@@ -21577,11 +21773,40 @@
 				await postNext("Cross corr align", epIndices);
 			}
 
-			// Collect shift data with higher precision
 			for (let j = 0; j < epIndices.length; j++) {
-				const epShift = await fetch_mREW(epIndices[j]);
-				epShifts[j] = parseFloat(epShift.cumulativeIRShiftSeconds);
+				const idx = epIndices[j];
+
+				// 1) Fetch shift data
+				const epShift = await fetch_mREW(idx);
+
+				// 2) Parse & validate numeric shift
+				const shiftVal = parseFloat(epShift?.cumulativeIRShiftSeconds);
+				if (isNaN(shiftVal)) {
+					throw new Error(`Invalid shift for index ${idx}: ${epShift?.cumulativeIRShiftSeconds}`);
+				}
+
+				// 3) Fetch measurements map
+				const measurementsMap = await fetch_mREW();
+
+				// 4) Directly lookup by idx (key-based, not numeric)
+				const entry = measurementsMap?.[idx];
+				if (!entry) {
+					console.warn(`Skipping index ${idx}: no measurement found for key ${idx}`);
+					continue;
+				}
+
+				// 5) Safely read title
+				const name = entry.title ?? 'unknown';
+
+				console.debug(
+					`Human‑readable shift for index ${idx} – ${name}: ${shiftVal.toFixed(15)}`
+				);
+
+				// 6) Store the shift
+				epShifts[j] = shiftVal;
 			}
+			// debugger;
+
 
 			// Initialize min/max variables with appropriate values
 			let minShiftPeak = Infinity,
@@ -21609,7 +21834,12 @@
 			// Apply precise time offsets
 			for (let j = 0; j < epIndices.length; j++) {
 				const { timeOfIRPeakSeconds, timeOfIRStartSeconds } = await fetch_mREW(epIndices[j]);
-				const shift = (usePeak ? parseFloat(timeOfIRPeakSeconds) : parseFloat(timeOfIRStartSeconds)) + epShifts[j];
+
+				const baseTime = usePeak
+					? parseFloat(timeOfIRPeakSeconds)
+					: parseFloat(timeOfIRStartSeconds);
+
+				const shift = Number((baseTime + epShifts[j]).toFixed(6));
 
 				await postNext2("Offset t=0", indices[j], {
 					offset: shift,
@@ -21621,15 +21851,12 @@
 			for (let j = epIndices.length - 1; j >= 0; j--) {
 				await postDelete(epIndices[j]);
 			}
-
-			// Reset timer
-			speedDelay = 206;
 			return;
 		}
 
 		//###########################################
 		// async function multipleSubs(configSub)* ##
-		// ClearCurve base: 04-05-2025_2153        ##
+		// ClearCurve base: 21-05-2025 @ 10:51     ##
 		//###########################################
 		async function multipleSubs(configSub) {
 			// Use a constant instead of reassigning the variable
@@ -21758,15 +21985,15 @@
 			return { alignmentResults, finalIndex: sumIndex };
 		}
 
-		//#####################################
-		// async function tectonic()*        ##
-		// ClearCurve base: 04-05-2025_2153  ##
-		//#####################################
+		//########################################
+		// async function tectonic()*           ##
+		// ClearCurve base: 21-05-2025 @ 10:51  ##
+		//########################################
 		async function tectonic() {
 			// Configuration constants
 			const DELAY_CONVERSION_FACTOR = 1000.33;
 			const USE_ORIGINAL_OFFSET = true; // true: use -numSub * 3 offset, false: use 0 offset for maximum SPL
-			const SPEED_DELAY = 128;
+			// const SPEED_DELAY = 128;
 
 			// Initialize tracking variables
 			let msecMinSub = Infinity;
@@ -21776,7 +22003,7 @@
 
 			try {
 				// 1. Generate test signals for each subwoofer
-				console.info("Generating subwoofer test signals...");
+				console.info("subwoofer lowpass filter at either 120Hz or 250Hz");
 				for (let i = nSpeakers; i <= nSpeakers + numSub - 1; i++) {
 					// Apply different LPF frequencies based on subLPF configuration
 					const lpfFrequency = subLPF[i - nSpeakers] ? 250 : 120;
@@ -21795,12 +22022,7 @@
 						body: Number(nvexx_ReferenceLevel_SW).toFixed(1),
 					});
 
-					await fetchSafe(
-						"target-level",
-						i,
-						Number(nvexx_ReferenceLevel_SW).toFixed(1),
-						"Target level set"
-					);
+					await fetchSafe("target-level", i, Number(nvexx_ReferenceLevel_SW).toFixed(1), "Target level set");
 
 					// Measure subwoofer volume
 					console.info(`Subwoofer #${subIndex}:`);
@@ -21836,6 +22058,14 @@
 					minSubVolume = Math.min(minSubVolume, customLevel[i]);
 				}
 
+				// ── INSERTED MUTUAL‑COUPLING BONUS ──
+				// Each doubling of subs yields ≈+3 dB acoustic gain
+				// so we raise the EQ target by that amount per doubling
+				const couplingBonus = 3 * Math.log2(numSub);
+				console.log(`Applying coupling bonus of ${couplingBonus.toFixed(2)}dB for ${numSub} subs`);
+				maxSubVolume += couplingBonus;
+				minSubVolume += couplingBonus;
+
 				// Adjust subwoofer level offsets
 				subLO -= minSubVolume;
 				subHI -= maxSubVolume;
@@ -21845,7 +22075,7 @@
 					await postDelete(i);
 				}
 
-				// 3. Find optimal subwoofer configuration through permutation testing
+				// 3. Permutation testing …
 				console.info("Aligning multiple subs between each other for best bass performance...");
 				const subIndices = Array.from({ length: numSub }, (_, i) => i);
 				const subConfigurations = getPermutations(subIndices);
@@ -21948,9 +22178,6 @@
 				maxNegative = (msecMin - msecMinSub) * DELAY_CONVERSION_FACTOR;
 				maxPositive = (msecMax - msecMaxSub) * DELAY_CONVERSION_FACTOR;
 
-				// Set final speed delay
-				speedDelay = SPEED_DELAY;
-
 				console.info("Subwoofer alignment completed successfully.");
 
 			} catch (error) {
@@ -21986,10 +22213,10 @@
 			return result;
 		}
 
-		//######################################
-		// async function rmsVolume(noM)*     ##
-		// ClearCurve base: 04-05-2025_2153   ##
-		//######################################
+		//#########################################
+		// async function rmsVolume(noM)*        ##
+		// ClearCurve base: 21-05-2025 @ 10:51   ##
+		//#########################################
 		const HALF_OCT_FACTOR = 2 ** (Math.SQRT2 / 2);
 
 		async function rmsVolume(noM) {
@@ -22080,10 +22307,10 @@
 			return bestOffset;
 		}
 
-		//####################################
-		// async function rmsError(noM)*    ##
-		// ClearCurve base: 04-05-2025_2153 ##
-		//####################################
+		//#######################################
+		// async function rmsError(noM)*       ##
+		// ClearCurve base: 21-05-2025 @ 10:51 ##
+		//#######################################
 		async function rmsError(noM) {
 			console.log("Starting rmsError calculation for measurement", noM);
 
@@ -22091,15 +22318,15 @@
 			const freqResponse = await fetchSafe("frequency-response?smoothing=1%2F48&ppo=96", noM);
 			const startFreq = parseFloat(freqResponse.startFreq);
 			const ppo = parseInt(freqResponse.ppo, 10);
-			console.log(`Base frequency: ${startFreq}Hz, Points per octave: ${ppo}`);
+			console.debug(`Base frequency: ${startFreq}Hz, Points per octave: ${ppo}`);
 
 			// Compute bin indices for 20–250 Hz
 			// const k1Range = 20, k2Range = 250;
 			const k1Range = 40, k2Range = 250;
 			const k1 = Math.round(Math.log2(k1Range / startFreq) * ppo);
 			const k2 = Math.round(Math.log2(k2Range / startFreq) * ppo);
-			console.log(`Frequency range: ${k1Range}Hz to ${k2Range}Hz`);
-			console.log(`Bin range: k1=${k1}, k2=${k2}`);
+			console.debug(`Frequency range: ${k1Range}Hz to ${k2Range}Hz`);
+			console.debug(`Bin range: k1=${k1}, k2=${k2}`);
 
 			// Helper: extract SPL bins from resp between k1…k2
 			function extractBins(resp, k1, k2) {
@@ -22115,15 +22342,15 @@
 
 			// Decode bins and log first/last values
 			const aSumArray = extractBins(freqResponse, k1, k2);
-			console.log(`First 5 SPL values: ${aSumArray.slice(0, 5).map(v => v.toFixed(2)).join(', ')}`);
-			console.log(`Last  5 SPL values: ${aSumArray.slice(-5).map(v => v.toFixed(2)).join(', ')}`);
+			console.debug(`First 5 SPL values: ${aSumArray.slice(0, 5).map(v => v.toFixed(2)).join(', ')}`);
+			console.debug(`Last  5 SPL values: ${aSumArray.slice(-5).map(v => v.toFixed(2)).join(', ')}`);
 
 			// Validate targetArray presence
 			if (!Array.isArray(targetArray) && !ArrayBuffer.isView(targetArray)) {
 				console.warn("targetArray is not defined or not a Float32Array!");
 			} else {
-				console.log(`Target array length: ${targetArray.length}, Measurement array length: ${aSumArray.length}`);
-				console.log(`First 5 target SPL values: ${targetArray.slice(0, 5).map(v => v.toFixed(2)).join(', ')}`);
+				console.debug(`Target array length: ${targetArray.length}, Measurement array length: ${aSumArray.length}`);
+				console.debug(`First 5 target SPL values: ${targetArray.slice(0, 5).map(v => v.toFixed(2)).join(', ')}`);
 			}
 
 			// Compute RMS error only where measured < target
@@ -22139,16 +22366,16 @@
 			}
 
 			const result = count > 0 ? Math.sqrt(sumOfSquares / count) : 0;
-			console.log(`Bins total: ${N}, Bins below target: ${belowTargetCount}, Bins used: ${count}`);
-			console.log(`RMS Error: ${result.toFixed(4)}dB`);
+			console.debug(`Bins total: ${N}, Bins below target: ${belowTargetCount}, Bins used: ${count}`);
+			console.debug(`RMS Error: ${result.toFixed(4)}dB`);
 
 			return result;
 		}
 
-		//########################################
-		// async function rmsVolumeError(noM) * ##
-		// ClearCurve base: 04-05-2025_2153     ##
-		//########################################
+		//###########################################
+		// async function rmsVolumeError(noM) *    ##
+		// ClearCurve base: 21-05-2025 @ 10:51     ##
+		//###########################################
 		async function rmsVolumeError(noM) {
 			// console.log("Function: async function rmsVolumeError(noM)");
 			const measurements = await fetch_mREW();
@@ -22162,29 +22389,18 @@
 
 			// MultiEQ - Basic
 			if (ClearCurve_MultEQType === 0 || ClearCurve_MultEQType === 1 || ClearCurve_MultEQType === 2 || ClearCurve_MultEQType === null) {
-				// Audyssey app Default
-				if (isNaN(TARGET_VALUE) || TARGET_VALUE <= 117) {
-					N_TARGET_VALUE = parseFloat(117);
-					TARGET_VALUE = N_TARGET_VALUE;
-				}
-				// None Audyssey app Default?
-				if (isNaN(TARGET_VALUE) || TARGET_VALUE != 117) {
-					N_TARGET_VALUE = parseFloat(117);
-					TARGET_VALUE = N_TARGET_VALUE;
-				}
-				/*
-				// Measurements not made with Audyssey App! bigger than 120.0
-				if (TARGET_VALUE > 117) {
-					N_TARGET_VALUE = parseFloat(TARGET_VALUE);
-					TARGET_VALUE = N_TARGET_VALUE;
-				}
-				// const baseTargetValue = parseFloat(measurements[1].splOffsetdB) - 3.0;
-				// Measurements not made with Audyssey App! bigger than 120.0
-				if (TARGET_VALUE < 117) {
-					N_TARGET_VALUE = parseFloat(TARGET_VALUE);
-					TARGET_VALUE = N_TARGET_VALUE;
-				}
-				// const baseTargetValue = parseFloat(measurements[1].splOffsetdB) - 3.0;
+
+				/* 18-05-2025				
+								// Audyssey app Default
+								if (isNaN(TARGET_VALUE) || TARGET_VALUE <= 117) {
+									N_TARGET_VALUE = parseFloat(117);
+									TARGET_VALUE = N_TARGET_VALUE;
+								}
+								// None Audyssey app Default?
+								if (isNaN(TARGET_VALUE) || TARGET_VALUE != 117) {
+									N_TARGET_VALUE = parseFloat(117);
+									TARGET_VALUE = N_TARGET_VALUE;
+								}
 				*/
 			}
 
@@ -22195,6 +22411,10 @@
 			if (!name.startsWith("SW")) {
 				TARGET_VALUE = NVEXX_TARGET_VALUE_SPK;
 			}
+
+			N_TARGET_VALUE = parseFloat(TARGET_VALUE);
+			console.debug(name);
+			console.debug(N_TARGET_VALUE);
 
 			// AWKWARD FIX! ^^
 			await fetchSafe("target-level", noM, N_TARGET_VALUE);
@@ -22260,14 +22480,13 @@
 			return bestOffset;
 		}
 
+
 		//###########################################################
 		// async function alignMsub(ind1, ind2, loDelay, hiDelay)* ##
-		// ClearCurve base: 04-05-2025_2153                        ##
+		// ClearCurve base: 21-05-2025 @ 10:51                     ##
 		//###########################################################
 		async function alignMsub(ind1, ind2, loDelay, hiDelay) {
 			// console.log("Function: async function alignMsub(ind1, ind2, loDelay, hiDelay)");
-			speedDelay = 128;
-
 			let isInverted = false,
 				isPossibleI = false,
 				requiredDelayI = NaN,
@@ -22299,16 +22518,20 @@
 			// Search steps based on numSub
 			// We don't need billions of possibilities!
 			if (numSub === 1) {
-				var freqsteps = 1;
+				freqsteps = 1;
 			} else if (numSub === 2) {
-				var freqsteps = 2;
+				// var freqsteps = 2;
+				freqsteps = 1;
 			} else if (numSub > 2) {
-				var freqsteps = 5;
+				// var freqsteps = 5;
+				freqsteps = 1;
 			} else {
-				var freqsteps = 1;
+				// var freqsteps = 1;
+				freqsteps = 1;
 			}
 
-			for (checkFreq = 20; checkFreq <= 250; checkFreq += freqsteps) {
+			// for (checkFreq = 20; checkFreq <= 250; checkFreq += freqsteps) {
+			for (checkFreq = 20; checkFreq <= Nvexx_HighestXO; checkFreq += freqsteps) {
 				magSum = 0;
 				try {
 					// First, get the result from postAlign
@@ -22427,16 +22650,13 @@
 				let key = Object.keys(parsed.results)[0];
 				sumIndex = parseInt(key);
 			}
-
-			// Reset timer
-			speedDelay = 206;
-
 			return { isPossibleI, requiredDelayI, isInverted, sumIndex };
 		}
 
+
 		//###########################################
 		// async function calcEP(mNo, centerFreq)* ##
-		// ClearCurve base: 04-05-2025_2153        ##
+		// ClearCurve base: 21-05-2025 @ 10:51     ##
 		//###########################################
 		async function calcEP(mNo, centerFreq) {
 			// console.log("Function: async function calcEP(mNo, centerFreq)");
@@ -22494,9 +22714,10 @@
 			return sum;
 		}
 
+
 		//##########################################
 		// async function fixVolumeBug(indices) * ##
-		// ClearCurve base: 04-05-2025_2153       ##
+		// ClearCurve base: 21-05-2025 @ 10:51    ##
 		//##########################################
 		async function fixVolumeBug(indices) {
 			// console.log("Function: async function fixVolumeBug(indices)");
@@ -22509,6 +22730,9 @@
 			if (t.startsWith("SW")) {
 				freq = 50;
 				span = 2;
+			} else {
+				freq = 1000;
+				span = 4;
 			}
 
 			const volShift = await postNext("Align SPL", indices, {
@@ -22528,10 +22752,10 @@
 			return bug;
 		}
 
+
 		//##########################################
 		// async function genSub(freq, i = null)* ##
-		// ClearCurve base: 04-05-2025_2153       ##
-		// extra: // Check if high pass filter should be configured comment out!
+		// ClearCurve base: 21-05-2025 @ 10:51    ##
 		//##########################################
 		async function genSub(freq, i = null) {
 
@@ -22635,88 +22859,88 @@
 			}
 
 			// Check if high pass filter should be configured
-			/*
-			const shouldConfigureHighPass =
-				(sw1_hpf == false && NvexxGenSub == 0) ||
-				(sw1_hpf == false && NvexxGenSub == 1) ||
-				(sw1_hpf == true && NvexxGenSub == 0) ||
-				(sw2_hpf == false && NvexxGenSub == 0) ||
-				(sw2_hpf == false && NvexxGenSub == 1) ||
-				(sw2_hpf == true && NvexxGenSub == 0) ||
-				(sw3_hpf == false && NvexxGenSub == 0) ||
-				(sw3_hpf == false && NvexxGenSub == 1) ||
-				(sw3_hpf == true && NvexxGenSub == 0) ||
-				(sw4_hpf == false && NvexxGenSub == 0) ||
-				(sw4_hpf == false && NvexxGenSub == 1) ||
-				(sw4_hpf == true && NvexxGenSub == 0) ||
-				(Nvexx_Woofer_HighPassfilter == false && NvexxGenSub == 0) ||
-				(Nvexx_Woofer_HighPassfilter == false && NvexxGenSub == 1) ||
-				(Nvexx_Woofer_HighPassfilter == true && NvexxGenSub == 0);
-			
-			if (shouldConfigureHighPass) {
-				// Map of channel types to their corresponding frequency start values
-				const channelFilterMap = {
-					SW1: sw1_filterfreq_start,
-					SWMIX1: sw1_filterfreq_start,
-					SW2: sw2_filterfreq_start,
-					SWMIX2: sw2_filterfreq_start,
-					SW3: sw3_filterfreq_start,
-					SWMIX3: sw3_filterfreq_start,
-					SW4: sw4_filterfreq_start,
-					SWMIX4: sw4_filterfreq_start,
-				};
-			
-				const currentChannel = commandId[i];
-				const frequencyStart = channelFilterMap[currentChannel];
-			
-				if (frequencyStart) {
-					// Apply high pass filter based on filter type
-					if (Nvexx_FilterType == "Generic") {
-						await postSafe(
-							`${baseUrl}/${i}/filters`,
-							{
-								filters: [
-									{
-										index: 22,
-										type: "High pass",
-										enabled: true,
-										isAuto: false,
-										frequency: frequencyStart,
-										shape: "L-R",
-										slopedBPerOctave: 24,
-									},
-								],
-							},
-							"Filters set",
-						);
-						await new Promise((resolve) => setTimeout(resolve, speedDelay));
-					}
-			
-					if (Nvexx_FilterType == "MiniDSP2x4HD") {
-						await postSafe(
-							`${baseUrl}/${i}/filters`,
-							{
-								filters: [
-									{
-										index: 10,
-										type: "HP",
-										enabled: true,
-										isAuto: false,
-										frequency: frequencyStart,
-									},
-								],
-							},
-							"Filters set",
-						);
-						await new Promise((resolve) => setTimeout(resolve, speedDelay));
-					}
-			
-					if (Nvexx_FilterType == "GenericConfigurablePEQ") {
-						// Empty block preserved as in original
+			if (IsClariQ === 1) {
+				const shouldConfigureHighPass =
+					(sw1_hpf == false && NvexxGenSub == 0) ||
+					(sw1_hpf == false && NvexxGenSub == 1) ||
+					(sw1_hpf == true && NvexxGenSub == 0) ||
+					(sw2_hpf == false && NvexxGenSub == 0) ||
+					(sw2_hpf == false && NvexxGenSub == 1) ||
+					(sw2_hpf == true && NvexxGenSub == 0) ||
+					(sw3_hpf == false && NvexxGenSub == 0) ||
+					(sw3_hpf == false && NvexxGenSub == 1) ||
+					(sw3_hpf == true && NvexxGenSub == 0) ||
+					(sw4_hpf == false && NvexxGenSub == 0) ||
+					(sw4_hpf == false && NvexxGenSub == 1) ||
+					(sw4_hpf == true && NvexxGenSub == 0) ||
+					(Nvexx_Woofer_HighPassfilter == false && NvexxGenSub == 0) ||
+					(Nvexx_Woofer_HighPassfilter == false && NvexxGenSub == 1) ||
+					(Nvexx_Woofer_HighPassfilter == true && NvexxGenSub == 0);
+
+				if (shouldConfigureHighPass) {
+					// Map of channel types to their corresponding frequency start values
+					const channelFilterMap = {
+						SW1: sw1_filterfreq_start,
+						SWMIX1: sw1_filterfreq_start,
+						SW2: sw2_filterfreq_start,
+						SWMIX2: sw2_filterfreq_start,
+						SW3: sw3_filterfreq_start,
+						SWMIX3: sw3_filterfreq_start,
+						SW4: sw4_filterfreq_start,
+						SWMIX4: sw4_filterfreq_start,
+					};
+
+					const currentChannel = commandId[i];
+					const frequencyStart = channelFilterMap[currentChannel];
+
+					if (frequencyStart) {
+						// Apply high pass filter based on filter type
+						if (Nvexx_FilterType == "Generic") {
+							await postSafe(
+								`${baseUrl}/${i}/filters`,
+								{
+									filters: [
+										{
+											index: 22,
+											type: "High pass",
+											enabled: true,
+											isAuto: false,
+											frequency: frequencyStart,
+											shape: "L-R",
+											slopedBPerOctave: 24,
+										},
+									],
+								},
+								"Filters set",
+							);
+							await new Promise((resolve) => setTimeout(resolve, speedDelay));
+						}
+
+						if (Nvexx_FilterType == "MiniDSP2x4HD") {
+							await postSafe(
+								`${baseUrl}/${i}/filters`,
+								{
+									filters: [
+										{
+											index: 10,
+											type: "HP",
+											enabled: true,
+											isAuto: false,
+											frequency: frequencyStart,
+										},
+									],
+								},
+								"Filters set",
+							);
+							await new Promise((resolve) => setTimeout(resolve, speedDelay));
+						}
+
+						if (Nvexx_FilterType == "GenericConfigurablePEQ") {
+							// Empty block preserved as in original
+						}
 					}
 				}
 			}
-			*/
 			// Generate predicted measurement
 			await postNext("Generate predicted measurement", i);
 			await new Promise((resolve) => setTimeout(resolve, speedDelay));
