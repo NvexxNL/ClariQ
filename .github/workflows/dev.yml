@@ -33,7 +33,7 @@ on:
   push:
     branches: 
     - dev
-# Valid
+#jobs
 jobs:
   # ID of our job
   webhook-request:
@@ -43,14 +43,14 @@ jobs:
     - name: Send a request to webhook
       run: |
         RESPONSE=$(curl -H "Content-Type: application/json" -X POST -d '{
-        "username": "GitHub",
-        "content": "@ClariQ",
+        "username": "Nvexx",
+        "content": "<@&1359519063600271542>",
         "embeds": [
           {
             "type": "rich",
             "title": "ClariQ Dev Build Update",
-            "description": "New changes on ClariQ Dev Build Update repository by ${{ github.actor }}",
-            "color": ff5557,
+            "description": "New changes on - ClariQ Dev Build - repository by ${{ github.actor }}",
+            "color": 16733527,
             "thumbnail": {
               "url": "https://cdn.discordapp.com/icons/638026397650255912/7ca39fba389cd228fe0b800cae41436f.webp"
             },
@@ -63,4 +63,4 @@ jobs:
           }
         ]
         }' ${{ secrets.WEBHOOK_URL }})
-        echo "Webhook server response: $RESPONSE"
+# echo "Webhook server response: $RESPONSE"
