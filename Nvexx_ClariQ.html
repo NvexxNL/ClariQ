@@ -201,7 +201,6 @@
 			color: #000000;
 			padding: 5px;
 			border-radius: 5px;
-			/* max-height: 280px; */
 			overflow-y: auto;
 			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 			margin-bottom: 1px;
@@ -214,13 +213,11 @@
 			font-family: Open Sans, sans-serif;
 			font-style: italic;
 			text-indent: 1px;
-			/* margin-bottom: 0px; */
 			width: 80px;
 			background-color: #357ebd;
 			color: #ffffff;
 			width: auto;
 			display: inline-block;
-			/* new 01-05-2025 */
 			padding: 10px 40px !important;
 			margin: .7rem;
 			font-size: 1.1rem;
@@ -834,8 +831,6 @@
 		}
 
 		.h4filter {
-			/*color: #fff;
-			padding: 4px;*/
 			color: #fff;
 			padding: 2px !important;
 			margin-block-start: 1em;
@@ -913,7 +908,6 @@
 
 		.debugger {
 			color: #fff;
-			/*background-color: #ff5555;*/
 			background-color: #8900df;
 			width: fit-content;
 		}
@@ -1086,20 +1080,15 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			/*background-color: #f8f8f8;*/
-			/*height: 100vh;*/
 		}
 
 		.loading-bars {
-			/*width: 160px;*/
-			/*height: 80px;*/
 			height: 52px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 
 			.line {
-				/*width: 10px;*/
 				width: 6px;
 				height: 10%;
 				border-radius: 5px;
@@ -1109,13 +1098,11 @@
 				animation: alternate 1s upHeigh infinite;
 
 				&.line-1 {
-					/*background-color: #005091;*/
 					background-color: #ed5353;
 					animation-delay: 0.2s;
 				}
 
 				&.line-2 {
-					/*background-color: #007ade;*/
 					background-color: #ed5050;
 					animation-delay: 0.4s;
 				}
@@ -1126,13 +1113,11 @@
 				}
 
 				&.line-4 {
-					/*background-color: #005eab;*/
 					background-color: #ed5050;
 					animation-delay: 0.8s;
 				}
 
 				&.line-5 {
-					/*background-color: #0088f7;*/
 					background-color: #ed5353;
 					animation-delay: 1s;
 				}
@@ -1169,8 +1154,7 @@
 			}
 		}
 
-		/*
-            TABLES TRY? */
+		/* TABLES TRY? */
 		table,
 		th,
 		td {
@@ -1207,7 +1191,7 @@
 <body class="p-layout">
 	<script>
 		(function () {
-			console.warn("Nvexx ClariQ - 1.0.1 @ 21-05-2025_1051");
+			console.warn("Nvexx ClariQ - 1.0.1 @ 22-05-2025 @ 15:31");
 			const d = new Date();
 			console.warn("Run date:", d);
 		})();
@@ -13294,7 +13278,6 @@
 		- show debug values
 		**/
 		function nvexx_steps_nvexx_new_init_pre() {
-			// console.log("Screen: function nvexx_steps_nvexx_new_init_pre()");
 			// Pre setup
 			active_step1_nvexx_new_init_pre();
 			// Pre setup
@@ -13333,6 +13316,8 @@
 					localStorage.removeItem("last_forceImax");
 					console.warn("Remove old IMAX setting");
 				}
+				console.warn("");
+
 
 				console.warn("== CURVES,ZIP,NVEXX: ==");
 				console.warn("last_nvexxdebugger =", localStorage.getItem("last_nvexxdebugger"));
@@ -13342,6 +13327,8 @@
 				console.warn("last_speakerscurvedirectory =", localStorage.getItem("last_speakerscurvedirectory"));
 				console.warn("last_subwoofercurvedirectory =", localStorage.getItem("last_subwoofercurvedirectory"));
 				console.warn("last_nvexx_c_untlover =", localStorage.getItem("last_nvexx_c_untlover"));
+				console.warn("");
+
 
 				console.warn("== VOLUME SETTINGS: ==");
 				if (JSON.parse(localStorage.getItem("last_nvexx_ReferenceLevel")) == null || JSON.parse(localStorage.getItem("last_nvexx_ReferenceLevel")) == "null") {
@@ -13352,6 +13339,8 @@
 				console.warn("last_nvexx_ReferenceLevel =", JSON.parse(localStorage.getItem("last_nvexx_ReferenceLevel")));
 				console.warn("last_nvexx_ReferenceLevel_SPK =", JSON.parse(localStorage.getItem("last_nvexx_ReferenceLevel_SPK")));
 				console.warn("last_nvexx_ReferenceLevel_SW =", JSON.parse(localStorage.getItem("last_nvexx_ReferenceLevel_SW")));
+				console.warn("");
+
 
 				console.warn("== GENERAL: ==");
 				console.warn("last_THX =", JSON.parse(localStorage.getItem("last_THX")));
@@ -13360,638 +13349,571 @@
 					console.warn("forceWeak =", JSON.parse(forceWeak));
 				}
 				console.warn("last_arrangement =", localStorage.getItem("last_arrangement"));
+				console.warn("");
+
 
 				console.warn("== CENTER SETTINGS: ==");
-				console.warn("last_nvexx_crosscenter_type_cbox_v =", JSON.parse(localStorage.getItem("last_nvexx_crosscenter_type_cbox_v")));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crosscenter_type_cbox_v")) != null) {
-					nvexx_crosscenter_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crosscenter_type_cbox_v"));
-					console.warn("nvexx_crosscenter_type_cbox_v =", JSON.parse(nvexx_crosscenter_type_cbox_v));
+				const CenterkeysMap = {
+					"last_nvexx_crosscenter_type_cbox_v": "nvexx_crosscenter_type_cbox_v",
+					"last_crossCFrequency": "crossCFrequency",
+					"last_crossCFrequency_range": "crossCFrequency_range",
+					"last_startFrequencyC": "startFrequencyC",
+					"last_endFrequencyC": "endFrequencyC",
+					"last_MaxBoostCenter": "MaxBoostCenter",
+					"last_Nvexx_CenterLevel": "Nvexx_CenterLevel",
+					"last_Nvexx_CenterLeveldB": "Nvexx_CenterLeveldB",
+					"last_Nvexx_hearinglossfilter_center": "Nvexx_hearinglossfilter_center",
+					"last_Nvexx_hearinglossfilterdbcenter": "Nvexx_hearinglossfilterdbcenter",
+					"last_forceLargeCenter": "forceLargeCenter"
+				};
+				for (const [storageKey, varName] of Object.entries(CenterkeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostCenter") {
+								window.overallMaxBoostCenter = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossCFrequency =", localStorage.getItem("last_crossCFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossCFrequency")) != null) {
-					crossCFrequency = JSON.parse(localStorage.getItem("last_crossCFrequency"));
-					console.warn("crossCFrequency =", JSON.parse(crossCFrequency));
-				}
-				console.warn("last_crossCFrequency_range =", localStorage.getItem("last_crossCFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossCFrequency_range")) != null) {
-					crossCFrequency_range = JSON.parse(localStorage.getItem("last_crossCFrequency_range"));
-					console.warn("crossCFrequency_range =", JSON.parse(crossCFrequency_range));
-				}
-				console.warn("last_startFrequencyC =", localStorage.getItem("last_startFrequencyC"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencyC")) != null) {
-					startFrequencyC = JSON.parse(localStorage.getItem("last_startFrequencyC"));
-					console.warn("startFrequencyC =", JSON.parse(startFrequencyC));
-				}
-				console.warn("last_endFrequencyC =", localStorage.getItem("last_endFrequencyC"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencyC")) != null) {
-					endFrequencyC = JSON.parse(localStorage.getItem("last_endFrequencyC"));
-					console.warn("endFrequencyC =", JSON.parse(endFrequencyC));
-				}
-				console.warn("last_MaxBoostCenter =", localStorage.getItem("last_MaxBoostCenter"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostCenter")) != null) {
-					MaxBoostCenter = JSON.parse(localStorage.getItem("last_MaxBoostCenter"));
-					overallMaxBoostCenter = JSON.parse(localStorage.getItem("last_MaxBoostCenter"));
-					console.warn("MaxBoostCenter =", JSON.parse(MaxBoostCenter));
-				}
-				console.warn("last_Nvexx_CenterLevel =", localStorage.getItem("last_Nvexx_CenterLevel"));
-				if (JSON.parse(localStorage.getItem("last_Nvexx_CenterLevel")) != null) {
-					Nvexx_CenterLevel = JSON.parse(localStorage.getItem("last_Nvexx_CenterLevel"));
-					console.warn("Nvexx_CenterLevel =", JSON.parse(Nvexx_CenterLevel));
-				}
-				console.warn("last_Nvexx_CenterLeveldB =", localStorage.getItem("last_Nvexx_CenterLeveldB"));
-				if (JSON.parse(localStorage.getItem("last_Nvexx_CenterLeveldB")) != null) {
-					Nvexx_CenterLeveldB = JSON.parse(localStorage.getItem("last_Nvexx_CenterLeveldB"));
-					console.warn("Nvexx_CenterLeveldB =", JSON.parse(Nvexx_CenterLeveldB));
-				}
-				console.warn("last_Nvexx_hearinglossfilter_center =", localStorage.getItem("last_Nvexx_hearinglossfilter_center"));
-				if (JSON.parse(localStorage.getItem("last_Nvexx_hearinglossfilter_center")) != null) {
-					Nvexx_hearinglossfilter_center = JSON.parse(localStorage.getItem("last_Nvexx_hearinglossfilter_center"));
-					console.warn("Nvexx_hearinglossfilter_center =", JSON.parse(Nvexx_hearinglossfilter_center));
-				}
-				console.warn("last_Nvexx_hearinglossfilterdbcenter =", localStorage.getItem("last_Nvexx_hearinglossfilterdbcenter"));
-				if (JSON.parse(localStorage.getItem("last_Nvexx_hearinglossfilterdbcenter")) != null) {
-					Nvexx_hearinglossfilterdbcenter = JSON.parse(localStorage.getItem("last_Nvexx_hearinglossfilterdbcenter"));
-					console.warn("Nvexx_hearinglossfilterdbcenter =", JSON.parse(Nvexx_hearinglossfilterdbcenter));
-				}
-				console.warn("last_forceLargeCenter =", localStorage.getItem("last_forceLargeCenter"));
-				if (JSON.parse(localStorage.getItem("last_forceLargeCenter")) != null) {
-					forceLargeCenter = JSON.parse(localStorage.getItem("last_forceLargeCenter"));
-					console.warn("forceLargeCenter =", JSON.parse(forceLargeCenter));
-				}
-				console.warn("last_center_nvexx_curvedirectory =", localStorage.getItem("last_center_nvexx_curvedirectory"));
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirCenter = localStorage.getItem("last_center_nvexx_curvedirectory");
+				console.warn("last_center_nvexx_curvedirectory =", CurveDirCenter);
 				console.warn("");
 
-				console.warn("== FRONT L+R SETTINGS: ==");
-				console.warn("last_nvexx_crossmain_type_cbox_v =", localStorage.getItem("last_nvexx_crossmain_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crossmain_type_cbox_v")) != null) {
-					nvexx_crossmain_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crossmain_type_cbox_v"));
-					console.warn("nvexx_crossmain_type_cbox_v =", JSON.parse(nvexx_crossmain_type_cbox_v));
+
+				console.warn("== FRONT LEFT & FRONT RIGHT SETTINGS: ==");
+				const FrontskeysMap = {
+					"last_nvexx_crossmain_type_cbox_v": "nvexx_crossmain_type_cbox_v",
+					"last_crossMainsFrequency": "crossMainsFrequency",
+					"last_crossMainsFrequency_range": "crossMainsFrequency_range",
+					"last_startFrequencyF": "startFrequencyF",
+					"last_endFrequencyF": "endFrequencyF",
+					"last_maxBoostFronts": "maxBoostFronts",
+					"last_Nvexx_hearinglossfilter": "Nvexx_hearinglossfilter",
+					"last_Nvexx_hearinglossfilterdb": "Nvexx_hearinglossfilterdb",
+					"last_forceLarge": "forceLarge"
+				};
+				for (const [storageKey, varName] of Object.entries(FrontskeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_maxBoostFronts") {
+								window.overallmaxBoostFronts = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossMainsFrequency =", localStorage.getItem("last_crossMainsFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossMainsFrequency")) != null) {
-					crossMainsFrequency = JSON.parse(localStorage.getItem("last_crossMainsFrequency"));
-					console.warn("crossMainsFrequency =", JSON.parse(crossMainsFrequency));
-				}
-				console.warn("last_crossMainsFrequency_range =", localStorage.getItem("last_crossMainsFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossMainsFrequency_range")) != null) {
-					crossMainsFrequency_range = JSON.parse(localStorage.getItem("last_crossMainsFrequency_range"));
-					console.warn("crossMainsFrequency_range =", JSON.parse(crossMainsFrequency_range));
-				}
-				console.warn("last_startFrequencyF =", localStorage.getItem("last_startFrequencyF"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencyF")) != null) {
-					startFrequencyF = JSON.parse(localStorage.getItem("last_startFrequencyF"));
-					console.warn("startFrequencyF =", JSON.parse(startFrequencyF));
-				}
-				console.warn("last_endFrequencyF =", localStorage.getItem("last_endFrequencyF"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencyF")) != null) {
-					endFrequencyF = JSON.parse(localStorage.getItem("last_endFrequencyF"));
-					console.warn("endFrequencyF =", JSON.parse(endFrequencyF));
-				}
-				console.warn("last_maxBoostFronts =", localStorage.getItem("last_maxBoostFronts"));
-				if (JSON.parse(localStorage.getItem("last_maxBoostFronts")) != null) {
-					maxBoostFronts = JSON.parse(localStorage.getItem("last_maxBoostFronts"));
-					overallMaxBoostFronts = JSON.parse(localStorage.getItem("last_maxBoostFronts"));
-					console.warn("maxBoostFronts =", JSON.parse(maxBoostFronts));
-				}
-				console.warn("last_Nvexx_hearinglossfilter =", localStorage.getItem("last_Nvexx_hearinglossfilter"));
-				if (JSON.parse(localStorage.getItem("last_Nvexx_hearinglossfilter")) != null) {
-					Nvexx_hearinglossfilter = JSON.parse(localStorage.getItem("last_Nvexx_hearinglossfilter"));
-					console.warn("Nvexx_hearinglossfilter =", JSON.parse(Nvexx_hearinglossfilter));
-				}
-				console.warn("last_Nvexx_hearinglossfilterdb =", localStorage.getItem("last_Nvexx_hearinglossfilterdb"));
-				if (JSON.parse(localStorage.getItem("last_Nvexx_hearinglossfilterdb")) != null) {
-					Nvexx_hearinglossfilterdb = JSON.parse(localStorage.getItem("last_Nvexx_hearinglossfilterdb"));
-					console.warn("Nvexx_hearinglossfilterdb =", JSON.parse(Nvexx_hearinglossfilterdb));
-				}
-				console.warn("last_forceLarge =", localStorage.getItem("last_forceLarge"));
-				if (JSON.parse(localStorage.getItem("last_forceLarge")) != null) {
-					forceLarge = JSON.parse(localStorage.getItem("last_forceLarge"));
-					console.warn("forceLarge =", JSON.parse(forceLarge));
-				}
-				console.warn("last_front_left_nvexx_curvedirectory =", localStorage.getItem("last_front_left_nvexx_curvedirectory"));
-				console.warn("last_front_right_nvexx_curvedirectory =", localStorage.getItem("last_front_right_nvexx_curvedirectory"));
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirFrontLeft = localStorage.getItem("last_front_left_nvexx_curvedirectory");
+				console.warn("last_front_left_nvexx_curvedirectory =", CurveDirFrontLeft);
+				const CurveDirFrontRight = localStorage.getItem("last_front_right_nvexx_curvedirectory");
+				console.warn("last_front_right_nvexx_curvedirectory =", CurveDirFrontRight);
 				console.warn("");
 
-				console.warn("== SURROUND L+R SETTINGS: ==");
-				console.warn("last_nvexx_crosssurround_type_cbox_v =", localStorage.getItem("last_nvexx_crosssurround_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crosssurround_type_cbox_v")) != null) {
-					nvexx_crosssurround_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crosssurround_type_cbox_v"));
-					console.warn("nvexx_crosssurround_type_cbox_v =", JSON.parse(nvexx_crosssurround_type_cbox_v));
+
+				console.warn("== SURROUND LEFT & SURROUND RIGHT SETTINGS: ==");
+				const SurroundskeysMap = {
+					"last_nvexx_crosssurround_type_cbox_v": "nvexx_crosssurround_type_cbox_v",
+					"last_crossSurroundFrequency": "crossSurroundFrequency",
+					"last_crossSurroundFrequency_range": "crossSurroundFrequency_range",
+					"last_startFrequencySur": "startFrequencySur",
+					"last_endFrequencySur": "endFrequencySur",
+					"last_MaxBoostSurround": "MaxBoostSurround",
+					"last_forceLargeSurrounds": "forceLargeSurrounds"
+				};
+				for (const [storageKey, varName] of Object.entries(SurroundskeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostSurround") {
+								window.overallMaxBoostSurround = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossSurroundFrequency =", localStorage.getItem("last_crossSurroundFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossSurroundFrequency")) != null) {
-					crossSurroundFrequency = JSON.parse(localStorage.getItem("last_crossSurroundFrequency"));
-					console.warn("crossSurroundFrequency =", JSON.parse(crossSurroundFrequency));
-				}
-				console.warn("last_crossSurroundFrequency_range =", localStorage.getItem("last_crossSurroundFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossSurroundFrequency_range")) != null) {
-					crossSurroundFrequency_range = JSON.parse(localStorage.getItem("last_crossSurroundFrequency_range"));
-					console.warn("crossSurroundFrequency_range =", JSON.parse(crossSurroundFrequency_range));
-				}
-				console.warn("last_startFrequencySur =", localStorage.getItem("last_startFrequencySur"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencySur")) != null) {
-					startFrequencySur = JSON.parse(localStorage.getItem("last_startFrequencySur"));
-					console.warn("startFrequencySur =", JSON.parse(startFrequencySur));
-				}
-				console.warn("last_endFrequencySur =", localStorage.getItem("last_endFrequencySur"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencySur")) != null) {
-					endFrequencySur = JSON.parse(localStorage.getItem("last_endFrequencySur"));
-					console.warn("endFrequencySur =", JSON.parse(endFrequencySur));
-				}
-				console.warn("last_MaxBoostSurround =", localStorage.getItem("last_MaxBoostSurround"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostSurround")) != null) {
-					MaxBoostSurround = JSON.parse(localStorage.getItem("last_MaxBoostSurround"));
-					overallMaxBoostSurround = JSON.parse(localStorage.getItem("last_MaxBoostSurround"));
-					console.warn("MaxBoostSurround =", JSON.parse(MaxBoostSurround));
-				}
-				console.warn("last_forceLargeSurrounds =", localStorage.getItem("last_forceLargeSurrounds"));
-				if (JSON.parse(localStorage.getItem("last_forceLargeSurrounds")) != null) {
-					forceLargeSurrounds = JSON.parse(localStorage.getItem("last_forceLargeSurrounds"));
-					console.warn("forceLargeSurrounds =", JSON.parse(forceLargeSurrounds));
-				}
-				console.warn("last_surround_left_nvexx_curvedirectory =", localStorage.getItem("last_surround_left_nvexx_curvedirectory"));
-				console.warn("last_surround_right_nvexx_curvedirectory =", localStorage.getItem("last_surround_right_nvexx_curvedirectory"));
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirSurroundLeft = localStorage.getItem("last_surround_left_nvexx_curvedirectory");
+				console.warn("last_surround_left_nvexx_curvedirectory =", CurveDirSurroundLeft);
+				const CurveDirSurroundRight = localStorage.getItem("last_surround_right_nvexx_curvedirectory");
+				console.warn("last_surround_right_nvexx_curvedirectory =", CurveDirSurroundRight);
 				console.warn("");
 
-				console.warn("== SURROUND REAR L+R SETTINGS: ==");
-				console.warn("last_nvexx_crosssurroundrear_type_cbox_v =", localStorage.getItem("last_nvexx_crosssurroundrear_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crosssurroundrear_type_cbox_v")) != null) {
-					nvexx_crosssurroundrear_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crosssurroundrear_type_cbox_v"));
-					console.warn("nvexx_crosssurroundrear_type_cbox_v =", JSON.parse(nvexx_crosssurroundrear_type_cbox_v));
+
+				console.warn("== SURROUND REAR LEFT & SURROUND REAR RIGHT SETTINGS: ==");
+				const SurroundsRearkeysMap = {
+					"last_nvexx_crosssurroundrear_type_cbox_v": "nvexx_crosssurroundrear_type_cbox_v",
+					"last_crossSurroundBacksFrequency": "crossSurroundBacksFrequency",
+					"last_crossSurroundBacksFrequency_range": "crossSurroundBacksFrequency_range",
+					"last_startFrequencySurB": "startFrequencySurB",
+					"last_endFrequencySurB": "endFrequencySurB",
+					"last_MaxBoostSurroundRear": "MaxBoostSurroundRear",
+					"last_forceLargeRearSurrounds": "forceLargeRearSurrounds"
+				};
+				for (const [storageKey, varName] of Object.entries(SurroundsRearkeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostSurroundRear") {
+								window.overallMaxBoostSurroundRear = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossSurroundBacksFrequency =", localStorage.getItem("last_crossSurroundBacksFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossSurroundBacksFrequency")) != null) {
-					crossSurroundBacksFrequency = JSON.parse(localStorage.getItem("last_crossSurroundBacksFrequency"));
-					console.warn("crossSurroundBacksFrequency =", JSON.parse(crossSurroundBacksFrequency));
-				}
-				console.warn("last_crossSurroundBacksFrequency_range =", localStorage.getItem("last_crossSurroundBacksFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossSurroundBacksFrequency_range")) != null) {
-					crossSurroundBacksFrequency_range = JSON.parse(localStorage.getItem("last_crossSurroundBacksFrequency_range"));
-					console.warn("crossSurroundBacksFrequency_range =", JSON.parse(crossSurroundBacksFrequency_range));
-				}
-				console.warn("last_startFrequencySurB =", localStorage.getItem("last_startFrequencySurB"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencySurB")) != null) {
-					startFrequencySurB = JSON.parse(localStorage.getItem("last_startFrequencySurB"));
-					console.warn("startFrequencySurB =", JSON.parse(startFrequencySurB));
-				}
-				console.warn("last_endFrequencySurB =", localStorage.getItem("last_endFrequencySurB"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencySurB")) != null) {
-					endFrequencySurB = JSON.parse(localStorage.getItem("last_endFrequencySurB"));
-					console.warn("endFrequencySurB =", JSON.parse(endFrequencySurB));
-				}
-				console.warn("last_MaxBoostSurroundRear =", localStorage.getItem("last_MaxBoostSurroundRear"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostSurroundRear")) != null) {
-					MaxBoostSurroundRear = JSON.parse(localStorage.getItem("last_MaxBoostSurroundRear"));
-					overallMaxBoostSurroundRear = JSON.parse(localStorage.getItem("last_MaxBoostSurroundRear"));
-					console.warn("MaxBoostSurroundRear =", JSON.parse(MaxBoostSurroundRear));
-				}
-				console.warn("last_forceLargeRearSurrounds =", localStorage.getItem("last_forceLargeRearSurrounds"));
-				if (JSON.parse(localStorage.getItem("last_forceLargeRearSurrounds")) != null) {
-					forceLargeRearSurrounds = JSON.parse(localStorage.getItem("last_forceLargeRearSurrounds"));
-					console.warn("forceLargeRearSurrounds =", JSON.parse(forceLargeRearSurrounds));
-				}
-				console.warn("last_surround_rear_left_nvexx_curvedirectory =", localStorage.getItem("last_surround_rear_left_nvexx_curvedirectory"));
-				console.warn("last_surround_rear_right_nvexx_curvedirectory =", localStorage.getItem("last_surround_rear_right_nvexx_curvedirectory"));
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirSurroundRearLeft = localStorage.getItem("last_surround_rear_left_nvexx_curvedirectory");
+				console.warn("last_surround_rear_left_nvexx_curvedirectory =", CurveDirSurroundRearLeft);
+				const CurveDirSurroundRearRight = localStorage.getItem("last_surround_rear_right_nvexx_curvedirectory");
+				console.warn("last_surround_rear_right_nvexx_curvedirectory =", CurveDirSurroundRearRight);
 				console.warn("");
 
-				console.warn("== SURROUND REAR (SINGLE) SETTINGS: ==");
-				console.warn("last_nvexx_crosssurroundrears_type_cbox_v =", localStorage.getItem("last_nvexx_crosssurroundrears_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crosssurroundrears_type_cbox_v")) != null) {
-					nvexx_crosssurroundrears_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crosssurroundrears_type_cbox_v"));
-					console.warn("nvexx_crosssurroundrears_type_cbox_v =", JSON.parse(nvexx_crosssurroundrears_type_cbox_v));
+
+				console.warn("== SURROUND REAR SINGLE: ==");
+				const SurroundRearSinglekeysMap = {
+					"last_nvexx_crosssurroundrears_type_cbox_v": "nvexx_crosssurroundrears_type_cbox_v",
+					"last_crossSurroundBFrequency": "crossSurroundBFrequency",
+					"last_crossSurroundBFrequency_range": "crossSurroundBFrequency_range",
+					"last_startFrequencySurBS": "startFrequencySurBS",
+					"last_endFrequencySurBS": "endFrequencySurBS",
+					"last_MaxBoostSurroundRearS": "MaxBoostSurroundRearS",
+					"last_forceLargeRearSurrounds": "forceLargeRearSurrounds"
+				};
+				for (const [storageKey, varName] of Object.entries(SurroundRearSinglekeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostSurroundRearS") {
+								window.overallMaxBoostSurroundRearS = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossSurroundBFrequency =", localStorage.getItem("last_crossSurroundBFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossSurroundBFrequency")) != null) {
-					crossSurroundBFrequency = JSON.parse(localStorage.getItem("last_crossSurroundBFrequency"));
-					console.warn("crossSurroundBFrequency =", JSON.parse(crossSurroundBFrequency));
-				}
-				console.warn("last_crossSurroundBFrequency_range =", localStorage.getItem("last_crossSurroundBFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossSurroundBFrequency_range")) != null) {
-					crossSurroundBFrequency_range = JSON.parse(localStorage.getItem("last_crossSurroundBFrequency_range"));
-					console.warn("crossSurroundBFrequency_range =", JSON.parse(crossSurroundBFrequency_range));
-				}
-				console.warn("last_startFrequencySurBS =", localStorage.getItem("last_startFrequencySurBS"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencySurBS")) != null) {
-					startFrequencySurBS = JSON.parse(localStorage.getItem("last_startFrequencySurBS"));
-					console.warn("startFrequencySurBS =", JSON.parse(startFrequencySurBS));
-				}
-				console.warn("last_endFrequencySurBS =", localStorage.getItem("last_endFrequencySurBS"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencySurBS")) != null) {
-					endFrequencySurBS = JSON.parse(localStorage.getItem("last_endFrequencySurBS"));
-					console.warn("endFrequencySurBS =", JSON.parse(endFrequencySurBS));
-				}
-				console.warn("last_MaxBoostSurroundRearS =", localStorage.getItem("last_MaxBoostSurroundRearS"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostSurroundRearS")) != null) {
-					MaxBoostSurroundRearS = JSON.parse(localStorage.getItem("last_MaxBoostSurroundRearS"));
-					overallMaxBoostSurroundRearS = JSON.parse(localStorage.getItem("last_MaxBoostSurroundRearS"));
-					console.warn("MaxBoostSurroundRearS =", JSON.parse(MaxBoostSurroundRearS));
-				}
-				console.warn("last_forceLargeRearSurrounds =", localStorage.getItem("last_forceLargeRearSurrounds"));
-				if (JSON.parse(localStorage.getItem("last_forceLargeRearSurrounds")) != null) {
-					forceLargeRearSurrounds = JSON.parse(localStorage.getItem("last_forceLargeRearSurrounds"));
-					console.warn("forceLargeRearSurrounds =", JSON.parse(forceLargeRearSurrounds));
-				}
-				console.warn("last_surround_rear_single_nvexx_curvedirectory =", localStorage.getItem("last_surround_rear_single_nvexx_curvedirectory"));
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirSurroundRearSingle = localStorage.getItem("last_surround_rear_single_nvexx_curvedirectory");
+				console.warn("last_surround_rear_single_nvexx_curvedirectory =", CurveDirSurroundRearSingle);
 				console.warn("");
+
 
 				console.warn("== FRONT WIDE SETTINGS: ==");
-				console.warn("last_nvexx_crossfrontwide_type_cbox_v =", localStorage.getItem("last_nvexx_crossfrontwide_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crossfrontwide_type_cbox_v")) != null) {
-					nvexx_crossfrontwide_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crossfrontwide_type_cbox_v"));
-					console.warn("nvexx_crossfrontwide_type_cbox_v =", JSON.parse(nvexx_crossfrontwide_type_cbox_v));
+				const FrontWidekeysMap = {
+					"last_nvexx_crossfrontwide_type_cbox_v": "nvexx_crossfrontwide_type_cbox_v",
+					"last_crossFrontWideFrequency": "crossFrontWideFrequency",
+					"last_crossFrontWideFrequency_range": "crossFrontWideFrequency_range",
+					"last_startFrequencyFW": "startFrequencyFW",
+					"last_endFrequencyFW": "endFrequencyFW",
+					"last_maxBoostFrontWide": "maxBoostFrontWide"
+				};
+				for (const [storageKey, varName] of Object.entries(FrontWidekeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_maxBoostFrontWide") {
+								window.overallmaxBoostFrontWide = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossFrontWideFrequency =", localStorage.getItem("last_crossFrontWideFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossFrontWideFrequency")) != null) {
-					crossFrontWideFrequency = JSON.parse(localStorage.getItem("last_crossFrontWideFrequency"));
-					console.warn("crossFrontWideFrequency =", JSON.parse(crossFrontWideFrequency));
-				}
-				console.warn("last_crossFrontWideFrequency_range =", localStorage.getItem("last_crossFrontWideFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossFrontWideFrequency_range")) != null) {
-					crossFrontWideFrequency_range = JSON.parse(localStorage.getItem("last_crossFrontWideFrequency_range"));
-					console.warn("crossFrontWideFrequency_range =", JSON.parse(crossFrontWideFrequency_range));
-				}
-				console.warn("last_startFrequencyFW =", localStorage.getItem("last_startFrequencyFW"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencyFW")) != null) {
-					startFrequencyFW = JSON.parse(localStorage.getItem("last_startFrequencyFW"));
-					console.warn("startFrequencyFW =", JSON.parse(startFrequencyFW));
-				}
-				console.warn("last_endFrequencyFW =", localStorage.getItem("last_endFrequencyFW"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencyFW")) != null) {
-					endFrequencyFW = JSON.parse(localStorage.getItem("last_endFrequencyFW"));
-					console.warn("endFrequencyFW =", JSON.parse(endFrequencyFW));
-				}
-				console.warn("last_maxBoostFrontWide =", localStorage.getItem("last_maxBoostFrontWide"));
-				if (JSON.parse(localStorage.getItem("last_maxBoostFrontWide")) != null) {
-					maxBoostFrontWide = JSON.parse(localStorage.getItem("last_maxBoostFrontWide"));
-					overallMaxBoostFrontWide = JSON.parse(localStorage.getItem("last_maxBoostFrontWide"));
-					console.warn("maxBoostFrontWide =", JSON.parse(maxBoostFrontWide));
-				}
-				console.warn("last_front_wide_left_nvexx_curvedirectory =", localStorage.getItem("last_front_wide_left_nvexx_curvedirectory"));
-				console.warn("last_front_wide_right_nvexx_curvedirector =", localStorage.getItem("last_front_wide_right_nvexx_curvedirector"));
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirFrontWideLeft = localStorage.getItem("last_front_wide_left_nvexx_curvedirectory");
+				console.warn("last_front_wide_left_nvexx_curvedirectory =", CurveDirFrontWideLeft);
+				const CurveDirFrontWideRight = localStorage.getItem("last_front_wide_right_nvexx_curvedirector");
+				console.warn("last_front_wide_right_nvexx_curvedirector =", CurveDirFrontWideRight);
 				console.warn("");
 
+
 				console.warn("== FRONT HEIGHT SETTINGS: ==");
-				console.warn("last_nvexx_crossfrontheight_type_cbox_v =", localStorage.getItem("last_nvexx_crossfrontheight_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crossfrontheight_type_cbox_v")) != null) {
-					nvexx_crossfrontheight_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crossfrontheight_type_cbox_v"));
-					console.warn("nvexx_crossfrontheight_type_cbox_v =", JSON.parse(nvexx_crossfrontheight_type_cbox_v));
+				const FrontHeightkeysMap = {
+					"last_nvexx_crossfrontheight_type_cbox_v": "nvexx_crossfrontheight_type_cbox_v",
+					"last_crossFrontHeightFrequency": "crossFrontHeightFrequency",
+					"last_crossFrontHeightFrequency_range": "crossFrontHeightFrequency_range",
+					"last_startFrequencyFH": "startFrequencyFH",
+					"last_endFrequencyFH": "endFrequencyFH",
+					"last_MaxBoostFrontHeight": "MaxBoostFrontHeight"
+				};
+				for (const [storageKey, varName] of Object.entries(FrontHeightkeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostFrontHeight") {
+								window.overallMaxBoostFrontHeight = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossFrontHeightFrequency =", localStorage.getItem("last_crossFrontHeightFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossFrontHeightFrequency")) != null) {
-					crossFrontHeightFrequency = JSON.parse(localStorage.getItem("last_crossFrontHeightFrequency"));
-					console.warn("crossFrontHeightFrequency =", JSON.parse(crossFrontHeightFrequency));
-				}
-				console.warn("last_crossFrontHeightFrequency_range =", localStorage.getItem("last_crossFrontHeightFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossFrontHeightFrequency_range")) != null) {
-					crossFrontHeightFrequency_range = JSON.parse(localStorage.getItem("last_crossFrontHeightFrequency_range"));
-					console.warn("crossFrontHeightFrequency_range =", JSON.parse(crossFrontHeightFrequency_range));
-				}
-				console.warn("last_startFrequencyFH =", localStorage.getItem("last_startFrequencyFH"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencyFH")) != null) {
-					startFrequencyFH = JSON.parse(localStorage.getItem("last_startFrequencyFH"));
-					console.warn("startFrequencyFH =", JSON.parse(startFrequencyFH));
-				}
-				console.warn("last_endFrequencyFH =", localStorage.getItem("last_endFrequencyFH"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencyFH")) != null) {
-					endFrequencyFH = JSON.parse(localStorage.getItem("last_endFrequencyFH"));
-					console.warn("endFrequencyFH =", JSON.parse(endFrequencyFH));
-				}
-				console.warn("last_MaxBoostFrontHeight =", localStorage.getItem("last_MaxBoostFrontHeight"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostFrontHeight")) != null) {
-					MaxBoostFrontHeight = JSON.parse(localStorage.getItem("last_MaxBoostFrontHeight"));
-					overallMaxBoostFrontHeight = JSON.parse(localStorage.getItem("last_MaxBoostFrontHeight"));
-					console.warn("MaxBoostFrontHeight =", JSON.parse(MaxBoostFrontHeight));
-				}
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirFrontHeightLeft = localStorage.getItem("last_front_height_left_nvexx_curvedirectory");
+				console.warn("last_front_height_left_nvexx_curvedirectory =", CurveDirFrontHeightLeft);
+				const CurveDirFrontHeightRight = localStorage.getItem("last_front_height_right_nvexx_curvedirectory");
+				console.warn("last_front_height_right_nvexx_curvedirectory =", CurveDirFrontHeightRight);
+				console.warn("");
+
 
 				console.warn("== SURROUND HEIGHT SETTINGS: ==");
-				console.warn("last_nvexx_crosssurroundheight_type_cbox_v =", localStorage.getItem("last_nvexx_crosssurroundheight_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crosssurroundheight_type_cbox_v")) != null) {
-					nvexx_crosssurroundheight_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crosssurroundheight_type_cbox_v"));
-					console.warn("nvexx_crosssurroundheight_type_cbox_v =", JSON.parse(nvexx_crosssurroundheight_type_cbox_v));
+				const SurroundHeightkeysMap = {
+					"last_nvexx_crosssurroundheight_type_cbox_v": "nvexx_crosssurroundheight_type_cbox_v",
+					"last_crossSurHeightFrequency": "crossSurHeightFrequency",
+					"last_crossSurHeightFrequency_range": "crossSurHeightFrequency_range",
+					"last_startFrequencySH": "startFrequencySH",
+					"last_endFrequencySH": "endFrequencySH",
+					"last_MaxBoostSurroundHeight": "MaxBoostSurroundHeight"
+				};
+				for (const [storageKey, varName] of Object.entries(SurroundHeightkeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostSurroundHeight") {
+								window.overallMaxBoostSurroundHeight = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossSurHeightFrequency =", localStorage.getItem("last_crossSurHeightFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossSurHeightFrequency")) != null) {
-					crossSurHeightFrequency = JSON.parse(localStorage.getItem("last_crossSurHeightFrequency"));
-					console.warn("crossSurHeightFrequency =", JSON.parse(crossSurHeightFrequency));
-				}
-				console.warn("last_crossSurHeightFrequency_range =", localStorage.getItem("last_crossSurHeightFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossSurHeightFrequency_range")) != null) {
-					crossSurHeightFrequency_range = JSON.parse(localStorage.getItem("last_crossSurHeightFrequency_range"));
-					console.warn("crossSurHeightFrequency_range =", JSON.parse(crossSurHeightFrequency_range));
-				}
-				console.warn("last_startFrequencySH =", localStorage.getItem("last_startFrequencySH"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencySH")) != null) {
-					startFrequencySH = JSON.parse(localStorage.getItem("last_startFrequencySH"));
-					console.warn("startFrequencySH =", JSON.parse(startFrequencySH));
-				}
-				console.warn("last_endFrequencySH =", localStorage.getItem("last_endFrequencySH"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencySH")) != null) {
-					endFrequencySH = JSON.parse(localStorage.getItem("last_endFrequencySH"));
-					console.warn("endFrequencySH =", JSON.parse(endFrequencySH));
-				}
-				console.warn("last_MaxBoostSurroundHeight =", localStorage.getItem("last_MaxBoostSurroundHeight"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostSurroundHeight")) != null) {
-					MaxBoostSurroundHeight = JSON.parse(localStorage.getItem("last_MaxBoostSurroundHeight"));
-					overallMaxBoostSurroundHeight = JSON.parse(localStorage.getItem("last_MaxBoostSurroundHeight"));
-					console.warn("MaxBoostSurroundHeight =", JSON.parse(MaxBoostSurroundHeight));
-				}
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirSurroundHeightLeft = localStorage.getItem("last_surround_height_left_nvexx_curvedirectory");
+				console.warn("last_surround_height_left_nvexx_curvedirectory =", CurveDirSurroundHeightLeft);
+				const CurveDirSurroundHeightRight = localStorage.getItem("last_surround_height_right_nvexx_curvedirectory");
+				console.warn("last_surround_height_right_nvexx_curvedirectory =", CurveDirSurroundHeightRight);
+				console.warn("");
+
 
 				console.warn("== SURROUND REAR HEIGHT SETTINGS: ==");
-				console.warn("last_nvexx_crosssurroundbackheight_type_cbox_v =", localStorage.getItem("last_nvexx_crosssurroundbackheight_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crosssurroundbackheight_type_cbox_v")) != null) {
-					nvexx_crosssurroundbackheight_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crosssurroundbackheight_type_cbox_v"));
-					console.warn("nvexx_crosssurroundbackheight_type_cbox_v =", JSON.parse(nvexx_crosssurroundbackheight_type_cbox_v));
+				const SurroundRearHeightkeysMap = {
+					"last_nvexx_crosssurroundbackheight_type_cbox_v": "nvexx_crosssurroundbackheight_type_cbox_v",
+					"last_crossRearHeightFrequency": "crossRearHeightFrequency",
+					"last_crossRearHeightFrequency_range": "crossRearHeightFrequency_range",
+					"last_startFrequencyRH": "startFrequencyRH",
+					"last_endFrequencyRH": "endFrequencyRH",
+					"last_MaxBoostSurroundBackHeight": "MaxBoostSurroundBackHeight"
+				};
+				for (const [storageKey, varName] of Object.entries(SurroundRearHeightkeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostSurroundBackHeight") {
+								window.overallMaxBoostSurroundBackHeight = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossRearHeightFrequency =", localStorage.getItem("last_crossRearHeightFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossRearHeightFrequency")) != null) {
-					crossRearHeightFrequency = JSON.parse(localStorage.getItem("last_crossRearHeightFrequency"));
-					console.warn("crossRearHeightFrequency =", JSON.parse(crossRearHeightFrequency));
-				}
-				console.warn("last_crossRearHeightFrequency_range =", localStorage.getItem("last_crossRearHeightFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossRearHeightFrequency_range")) != null) {
-					crossRearHeightFrequency_range = JSON.parse(localStorage.getItem("last_crossRearHeightFrequency_range"));
-					console.warn("crossRearHeightFrequency_range =", JSON.parse(crossRearHeightFrequency_range));
-				}
-				console.warn("last_startFrequencyRH =", localStorage.getItem("last_startFrequencyRH"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencyRH")) != null) {
-					startFrequencyRH = JSON.parse(localStorage.getItem("last_startFrequencyRH"));
-					console.warn("startFrequencyRH =", JSON.parse(startFrequencyRH));
-				}
-				console.warn("last_endFrequencyRH =", localStorage.getItem("last_endFrequencyRH"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencyRH")) != null) {
-					endFrequencyRH = JSON.parse(localStorage.getItem("last_endFrequencyRH"));
-					console.warn("endFrequencyRH =", JSON.parse(endFrequencyRH));
-				}
-				console.warn("last_MaxBoostSurroundBackHeight =", localStorage.getItem("last_MaxBoostSurroundBackHeight"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostSurroundBackHeight")) != null) {
-					MaxBoostSurroundBackHeight = JSON.parse(localStorage.getItem("last_MaxBoostSurroundBackHeight"));
-					overallMaxBoostSurroundBackHeight = JSON.parse(localStorage.getItem("last_MaxBoostSurroundBackHeight"));
-					console.warn("MaxBoostSurroundBackHeight =", JSON.parse(MaxBoostSurroundBackHeight));
-				}
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirSurroundRearHeightLeft = localStorage.getItem("last_surround_rear_height_left_nvexx_curvedirectory");
+				console.warn("last_surround_rear_height_left_nvexx_curvedirectory =", CurveDirSurroundRearHeightLeft);
+				const CurveDirSurroundRearHeightRight = localStorage.getItem("last_surround_rear_height_right_nvexx_curvedirectory");
+				console.warn("last_surround_rear_height_right_nvexx_curvedirectory =", CurveDirSurroundRearHeightRight);
+				console.warn("");
+
 
 				console.warn("== TOP FRONT SETTINGS: ==");
-				console.warn("last_nvexx_crosstopfront_type_cbox_v =", localStorage.getItem("last_nvexx_crosstopfront_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crosstopfront_type_cbox_v")) != null) {
-					nvexx_crosstopfront_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crosstopfront_type_cbox_v"));
-					console.warn("nvexx_crosstopfront_type_cbox_v =", JSON.parse(nvexx_crosstopfront_type_cbox_v));
+				const TopFrontkeysMap = {
+					"last_nvexx_crosstopfront_type_cbox_v": "nvexx_crosstopfront_type_cbox_v",
+					"last_crossTopFrontFrequency": "crossTopFrontFrequency",
+					"last_crossTopFrontFrequency_range": "crossTopFrontFrequency_range",
+					"last_startFrequencyTF": "startFrequencyTF",
+					"last_endFrequencyTF": "endFrequencyTF",
+					"last_MaxBoostTopFront": "MaxBoostTopFront"
+				};
+				for (const [storageKey, varName] of Object.entries(TopFrontkeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostTopFront") {
+								window.overallMaxBoostTopFront = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossTopFrontFrequency =", localStorage.getItem("last_crossTopFrontFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossTopFrontFrequency")) != null) {
-					crossTopFrontFrequency = JSON.parse(localStorage.getItem("last_crossTopFrontFrequency"));
-					console.warn("crossTopFrontFrequency =", JSON.parse(crossTopFrontFrequency));
-				}
-				console.warn("last_crossTopFrontFrequency_range =", localStorage.getItem("last_crossTopFrontFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossTopFrontFrequency_range")) != null) {
-					crossTopFrontFrequency_range = JSON.parse(localStorage.getItem("last_crossTopFrontFrequency_range"));
-					console.warn("crossTopFrontFrequency_range =", JSON.parse(crossTopFrontFrequency_range));
-				}
-				console.warn("last_startFrequencyTF =", localStorage.getItem("last_startFrequencyTF"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencyTF")) != null) {
-					startFrequencyTF = JSON.parse(localStorage.getItem("last_startFrequencyTF"));
-					console.warn("startFrequencyTF =", JSON.parse(startFrequencyTF));
-				}
-				console.warn("last_endFrequencyTF =", localStorage.getItem("last_endFrequencyTF"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencyTF")) != null) {
-					endFrequencyTF = JSON.parse(localStorage.getItem("last_endFrequencyTF"));
-					console.warn("endFrequencyTF =", JSON.parse(endFrequencyTF));
-				}
-				console.warn("last_MaxBoostTopFront =", localStorage.getItem("last_MaxBoostTopFront"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostTopFront")) != null) {
-					MaxBoostTopFront = JSON.parse(localStorage.getItem("last_MaxBoostTopFront"));
-					overallMaxBoostTopFront = JSON.parse(localStorage.getItem("last_MaxBoostTopFront"));
-					console.warn("MaxBoostTopFront =", JSON.parse(MaxBoostTopFront));
-				}
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirTopFrontLeft = localStorage.getItem("last_top_front_left_nvexx_curvedirectory");
+				console.warn("last_top_front_left_nvexx_curvedirectory =", CurveDirTopFrontLeft);
+				const CurveDirTopFrontRight = localStorage.getItem("last_top_front_right_nvexx_curvedirectory");
+				console.warn("last_top_front_right_nvexx_curvedirectory =", CurveDirTopFrontRight);
+				console.warn("");
+
 
 				console.warn("== TOP MIDDLE SETTINGS: ==");
-				console.warn("last_nvexx_crosstopmiddle_type_cbox_v =", localStorage.getItem("last_nvexx_crosstopmiddle_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crosstopmiddle_type_cbox_v")) != null) {
-					nvexx_crosstopmiddle_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crosstopmiddle_type_cbox_v"));
-					console.warn("nvexx_crosstopmiddle_type_cbox_v =", JSON.parse(nvexx_crosstopmiddle_type_cbox_v));
+				const TopMiddlekeysMap = {
+					"last_nvexx_crosstopmiddle_type_cbox_v": "nvexx_crosstopmiddle_type_cbox_v",
+					"last_crossTopMiddleFrequency": "crossTopMiddleFrequency",
+					"last_crossTopMiddleFrequency_range": "crossTopMiddleFrequency_range",
+					"last_startFrequencyTM": "startFrequencyTM",
+					"last_endFrequencyTM": "endFrequencyTM",
+					"last_MaxBoostTopMiddle": "MaxBoostTopMiddle"
+				};
+				for (const [storageKey, varName] of Object.entries(TopMiddlekeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostTopMiddle") {
+								window.overallMaxBoostTopMiddle = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossTopMiddleFrequency =", localStorage.getItem("last_crossTopMiddleFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossTopMiddleFrequency")) != null) {
-					crossTopMiddleFrequency = JSON.parse(localStorage.getItem("last_crossTopMiddleFrequency"));
-					console.warn("crossTopMiddleFrequency =", JSON.parse(crossTopMiddleFrequency));
-				}
-				console.warn("last_crossTopMiddleFrequency_range =", localStorage.getItem("last_crossTopMiddleFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossTopMiddleFrequency_range")) != null) {
-					crossTopMiddleFrequency_range = JSON.parse(localStorage.getItem("last_crossTopMiddleFrequency_range"));
-					console.warn("crossTopMiddleFrequency_range =", JSON.parse(crossTopMiddleFrequency_range));
-				}
-				console.warn("last_startFrequencyTM =", localStorage.getItem("last_startFrequencyTM"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencyTM")) != null) {
-					startFrequencyTM = JSON.parse(localStorage.getItem("last_startFrequencyTM"));
-					console.warn("startFrequencyTM =", JSON.parse(startFrequencyTM));
-				}
-				console.warn("last_endFrequencyTM =", localStorage.getItem("last_endFrequencyTM"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencyTM")) != null) {
-					endFrequencyTM = JSON.parse(localStorage.getItem("last_endFrequencyTM"));
-					console.warn("endFrequencyTM =", JSON.parse(endFrequencyTM));
-				}
-				console.warn("last_MaxBoostTopMiddle =", localStorage.getItem("last_MaxBoostTopMiddle"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostTopMiddle")) != null) {
-					MaxBoostTopMiddle = JSON.parse(localStorage.getItem("last_MaxBoostTopMiddle"));
-					overallMaxBoostTopMiddle = JSON.parse(localStorage.getItem("last_MaxBoostTopMiddle"));
-					console.warn("MaxBoostTopMiddle =", JSON.parse(MaxBoostTopMiddle));
-				}
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirTopMiddleLeft = localStorage.getItem("last_top_middle_left_nvexx_curvedirectory");
+				console.warn("last_top_middle_left_nvexx_curvedirectory =", CurveDirTopMiddleLeft);
+				const CurveDirTopMiddleRight = localStorage.getItem("last_top_middle_right_nvexx_curvedirectory");
+				console.warn("last_top_middle_right_nvexx_curvedirectory =", CurveDirTopMiddleRight);
+				console.warn("");
+
 
 				console.warn("== TOP REAR SETTINGS: ==");
-				console.warn("last_nvexx_crosstoprear_type_cbox_v =", localStorage.getItem("last_nvexx_crosstoprear_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crosstoprear_type_cbox_v")) != null) {
-					nvexx_crosstoprear_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crosstoprear_type_cbox_v"));
-					console.warn("nvexx_crosstoprear_type_cbox_v =", JSON.parse(nvexx_crosstoprear_type_cbox_v));
+				const TopRearkeysMap = {
+					"last_nvexx_crosstoprear_type_cbox_v": "nvexx_crosstoprear_type_cbox_v",
+					"last_crossTopRearFrequency": "crossTopRearFrequency",
+					"last_crossTopRearFrequency_range": "crossTopRearFrequency_range",
+					"last_startFrequencyTR": "startFrequencyTR",
+					"last_endFrequencyTR": "endFrequencyTR",
+					"last_MaxBoostTopRear": "MaxBoostTopRear"
+				};
+				for (const [storageKey, varName] of Object.entries(TopRearkeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostTopRear") {
+								window.overallMaxBoostTopRear = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossTopRearFrequency =", localStorage.getItem("last_crossTopRearFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossTopRearFrequency")) != null) {
-					crossTopRearFrequency = JSON.parse(localStorage.getItem("last_crossTopRearFrequency"));
-					console.warn("crossTopRearFrequency =", JSON.parse(crossTopRearFrequency));
-				}
-				console.warn("last_crossTopRearFrequency_range =", localStorage.getItem("last_crossTopRearFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossTopRearFrequency_range")) != null) {
-					crossTopRearFrequency_range = JSON.parse(localStorage.getItem("last_crossTopRearFrequency_range"));
-					console.warn("crossTopRearFrequency_range =", JSON.parse(crossTopRearFrequency_range));
-				}
-				console.warn("last_startFrequencyTR =", localStorage.getItem("last_startFrequencyTR"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencyTR")) != null) {
-					startFrequencyTR = JSON.parse(localStorage.getItem("last_startFrequencyTR"));
-					console.warn("startFrequencyTR =", JSON.parse(startFrequencyTR));
-				}
-				console.warn("last_endFrequencyTR =", localStorage.getItem("last_endFrequencyTR"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencyTR")) != null) {
-					endFrequencyTR = JSON.parse(localStorage.getItem("last_endFrequencyTR"));
-					console.warn("endFrequencyTR =", JSON.parse(endFrequencyTR));
-				}
-				console.warn("last_MaxBoostTopRear =", localStorage.getItem("last_MaxBoostTopRear"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostTopRear")) != null) {
-					MaxBoostTopRear = JSON.parse(localStorage.getItem("last_MaxBoostTopRear"));
-					overallMaxBoostTopRear = JSON.parse(localStorage.getItem("last_MaxBoostTopRear"));
-					console.warn("MaxBoostTopRear =", JSON.parse(MaxBoostTopRear));
-				}
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirTopRearLeft = localStorage.getItem("last_top_rear_left_nvexx_curvedirectory");
+				console.warn("last_top_rear_left_nvexx_curvedirectory =", CurveDirTopRearLeft);
+				const CurveDirTopRearRight = localStorage.getItem("last_top_rear_right_nvexx_curvedirectory");
+				console.warn("last_top_rear_right_nvexx_curvedirectory =", CurveDirTopRearRight);
+				console.warn("");
+
 
 				console.warn("== FRONT DOLBY (bounce) SETTINGS: ==");
-				console.warn("last_nvexx_crossfrontdolby_type_cbox_v =", localStorage.getItem("last_nvexx_crossfrontdolby_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crossfrontdolby_type_cbox_v")) != null) {
-					nvexx_crossfrontdolby_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crossfrontdolby_type_cbox_v"));
-					console.warn("nvexx_crossfrontdolby_type_cbox_v =", JSON.parse(nvexx_crossfrontdolby_type_cbox_v));
+				const FrontDolbykeysMap = {
+					"last_nvexx_crossfrontdolby_type_cbox_v": "nvexx_crossfrontdolby_type_cbox_v",
+					"last_crossFrontDolbyFrequency": "crossFrontDolbyFrequency",
+					"last_crossFrontDolbyFrequency_range": "crossFrontDolbyFrequency_range",
+					"last_startFrequencyFD": "startFrequencyFD",
+					"last_endFrequencyFD": "endFrequencyFD",
+					"last_MaxBoostFrontDolby": "MaxBoostFrontDolby"
+				};
+				for (const [storageKey, varName] of Object.entries(FrontDolbykeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostFrontDolby") {
+								window.overallMaxBoostFrontDolby = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossFrontDolbyFrequency =", localStorage.getItem("last_crossFrontDolbyFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossFrontDolbyFrequency")) != null) {
-					crossFrontDolbyFrequency = JSON.parse(localStorage.getItem("last_crossFrontDolbyFrequency"));
-					console.warn("crossFrontDolbyFrequency =", JSON.parse(crossFrontDolbyFrequency));
-				}
-				console.warn("last_crossFrontDolbyFrequency_range =", localStorage.getItem("last_crossFrontDolbyFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossFrontDolbyFrequency_range")) != null) {
-					crossFrontDolbyFrequency_range = JSON.parse(localStorage.getItem("last_crossFrontDolbyFrequency_range"));
-					console.warn("crossFrontDolbyFrequency_range =", JSON.parse(crossFrontDolbyFrequency_range));
-				}
-				console.warn("last_startFrequencyFD =", localStorage.getItem("last_startFrequencyFD"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencyFD")) != null) {
-					startFrequencyFD = JSON.parse(localStorage.getItem("last_startFrequencyFD"));
-					console.warn("startFrequencyFD =", JSON.parse(startFrequencyFD));
-				}
-				console.warn("last_endFrequencyFD =", localStorage.getItem("last_endFrequencyFD"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencyFD")) != null) {
-					endFrequencyFD = JSON.parse(localStorage.getItem("last_endFrequencyFD"));
-					console.warn("endFrequencyFD =", JSON.parse(endFrequencyFD));
-				}
-				console.warn("last_MaxBoostFrontDolby =", localStorage.getItem("last_MaxBoostFrontDolby"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostFrontDolby")) != null) {
-					MaxBoostFrontDolby = JSON.parse(localStorage.getItem("last_MaxBoostFrontDolby"));
-					overallMaxBoostFrontDolby = JSON.parse(localStorage.getItem("last_MaxBoostFrontDolby"));
-					console.warn("MaxBoostFrontDolby =", JSON.parse(MaxBoostFrontDolby));
-				}
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirFrontDolbyLeft = localStorage.getItem("last_front_dolby_left_nvexx_curvedirectory");
+				console.warn("last_front_dolby_left_nvexx_curvedirectory =", CurveDirFrontDolbyLeft);
+				const CurveDirFrontDolbyRight = localStorage.getItem("last_front_dolby_right_nvexx_curvedirectory");
+				console.warn("last_front_dolby_right_nvexx_curvedirectory =", CurveDirFrontDolbyRight);
+				console.warn("");
+
 
 				console.warn("== SURROUND DOLBY (bounce) SETTINGS: ==");
-				console.warn("last_nvexx_crosssurrounddolby_type_cbox_v =", localStorage.getItem("last_nvexx_crosssurrounddolby_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crosssurrounddolby_type_cbox_v")) != null) {
-					nvexx_crosssurrounddolby_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crosssurrounddolby_type_cbox_v"));
-					console.warn("nvexx_crosssurrounddolby_type_cbox_v =", JSON.parse(nvexx_crosssurrounddolby_type_cbox_v));
+				const SurroundDolbykeysMap = {
+					"last_nvexx_crosssurrounddolby_type_cbox_v": "nvexx_crosssurrounddolby_type_cbox_v",
+					"last_crossSurDolbyFrequency": "crossSurDolbyFrequency",
+					"last_crossSurDolbyFrequency_range": "crossSurDolbyFrequency_range",
+					"last_startFrequencySD": "startFrequencySD",
+					"last_endFrequencySD": "endFrequencySD",
+					"last_MaxBoostSurroundDolby": "MaxBoostSurroundDolby"
+				};
+				for (const [storageKey, varName] of Object.entries(SurroundDolbykeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostSurroundDolby") {
+								window.overallMaxBoostSurroundDolby = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossSurDolbyFrequency =", localStorage.getItem("last_crossSurDolbyFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossSurDolbyFrequency")) != null) {
-					crossSurDolbyFrequency = JSON.parse(localStorage.getItem("last_crossSurDolbyFrequency"));
-					console.warn("crossSurDolbyFrequency =", JSON.parse(crossSurDolbyFrequency));
-				}
-				console.warn("last_crossSurDolbyFrequency_range =", localStorage.getItem("last_crossSurDolbyFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossSurDolbyFrequency_range")) != null) {
-					crossSurDolbyFrequency_range = JSON.parse(localStorage.getItem("last_crossSurDolbyFrequency_range"));
-					console.warn("crossSurDolbyFrequency_range =", JSON.parse(crossSurDolbyFrequency_range));
-				}
-				console.warn("last_startFrequencySD =", localStorage.getItem("last_startFrequencySD"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencySD")) != null) {
-					startFrequencySD = JSON.parse(localStorage.getItem("last_startFrequencySD"));
-					console.warn("startFrequencySD =", JSON.parse(startFrequencySD));
-				}
-				console.warn("last_endFrequencySD =", localStorage.getItem("last_endFrequencySD"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencySD")) != null) {
-					endFrequencySD = JSON.parse(localStorage.getItem("last_endFrequencySD"));
-					console.warn("endFrequencySD =", JSON.parse(endFrequencySD));
-				}
-				console.warn("last_MaxBoostSurroundDolby =", localStorage.getItem("last_MaxBoostSurroundDolby"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostSurroundDolby")) != null) {
-					MaxBoostSurroundDolby = JSON.parse(localStorage.getItem("last_MaxBoostSurroundDolby"));
-					overallMaxBoostSurroundDolby = JSON.parse(localStorage.getItem("last_MaxBoostSurroundDolby"));
-					console.warn("MaxBoostSurroundDolby =", JSON.parse(MaxBoostSurroundDolby));
-				}
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirSurroundDolbyLeft = localStorage.getItem("last_surround_left_nvexx_curvedirectory");
+				console.warn("last_surround_left_nvexx_curvedirectory =", CurveDirSurroundDolbyLeft);
+				const CurveDirSurroundDolbyRight = localStorage.getItem("last_surround_right_nvexx_curvedirectory");
+				console.warn("last_surround_right_nvexx_curvedirectory =", CurveDirSurroundDolbyRight);
+				console.warn("");
+
 
 				console.warn("== SURROUND REAR DOLBY (bounce) SETTINGS: ==");
-				console.warn("last_nvexx_crossreardolby_type_cbox_v =", localStorage.getItem("last_nvexx_crossreardolby_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crossreardolby_type_cbox_v")) != null) {
-					nvexx_crossreardolby_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crossreardolby_type_cbox_v"));
-					console.warn("nvexx_crossreardolby_type_cbox_v =", JSON.parse(nvexx_crossreardolby_type_cbox_v));
+				const SurroundRearDolbykeysMap = {
+					"last_nvexx_crossreardolby_type_cbox_v": "nvexx_crossreardolby_type_cbox_v",
+					"last_crossBackDolbyFrequency": "crossBackDolbyFrequency",
+					"last_crossBackDolbyFrequency_range": "crossBackDolbyFrequency_range",
+					"last_startFrequencyBD": "startFrequencyBD",
+					"last_endFrequencyBD": "endFrequencyBD",
+					"last_MaxBoostRearDolby": "MaxBoostRearDolby"
+				};
+				for (const [storageKey, varName] of Object.entries(SurroundRearDolbykeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostRearDolby") {
+								window.overallMaxBoostRearDolby = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossBackDolbyFrequency =", localStorage.getItem("last_crossBackDolbyFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossBackDolbyFrequency")) != null) {
-					crossBackDolbyFrequency = JSON.parse(localStorage.getItem("last_crossBackDolbyFrequency"));
-					console.warn("crossBackDolbyFrequency =", JSON.parse(crossBackDolbyFrequency));
-				}
-				console.warn("last_crossBackDolbyFrequency_range =", localStorage.getItem("last_crossBackDolbyFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossBackDolbyFrequency_range")) != null) {
-					crossBackDolbyFrequency_range = JSON.parse(localStorage.getItem("last_crossBackDolbyFrequency_range"));
-					console.warn("crossBackDolbyFrequency_range =", JSON.parse(crossBackDolbyFrequency_range));
-				}
-				console.warn("last_startFrequencyBD =", localStorage.getItem("last_startFrequencyBD"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencyBD")) != null) {
-					startFrequencyBD = JSON.parse(localStorage.getItem("last_startFrequencyBD"));
-					console.warn("startFrequencyBD =", JSON.parse(startFrequencyBD));
-				}
-				console.warn("last_endFrequencyBD =", localStorage.getItem("last_endFrequencyBD"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencyBD")) != null) {
-					endFrequencyBD = JSON.parse(localStorage.getItem("last_endFrequencyBD"));
-					console.warn("endFrequencyBD =", JSON.parse(endFrequencyBD));
-				}
-				console.warn("last_MaxBoostRearDolby =", localStorage.getItem("last_MaxBoostRearDolby"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostRearDolby")) != null) {
-					MaxBoostRearDolby = JSON.parse(localStorage.getItem("last_MaxBoostRearDolby"));
-					overallMaxBoostRearDolby = JSON.parse(localStorage.getItem("last_MaxBoostRearDolby"));
-					console.warn("MaxBoostRearDolby =", JSON.parse(MaxBoostRearDolby));
-				}
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirSurroundRearDolbyLeft = localStorage.getItem("last_surround_rear_dolby_left_nvexx_curvedirectory");
+				console.warn("last_surround_rear_dolby_left_nvexx_curvedirectory =", CurveDirSurroundRearDolbyLeft);
+				const CurveDirSurroundRearDolbyRight = localStorage.getItem("last_surround_rear_dolby_right_nvexx_curvedirectory");
+				console.warn("last_surround_rear_dolby_right_nvexx_curvedirectory =", CurveDirSurroundRearDolbyRight);
+				console.warn("");
+
 
 				console.warn("== TOP SURROUND (AURO-3D) SETTINGS: ==");
-				console.warn("last_nvexx_crosstopsurround_type_cbox_v =", localStorage.getItem("last_nvexx_crosstopsurround_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crosstopsurround_type_cbox_v")) != null) {
-					nvexx_crosstopsurround_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crosstopsurround_type_cbox_v"));
-					console.warn("nvexx_crosstopsurround_type_cbox_v =", JSON.parse(nvexx_crosstopsurround_type_cbox_v));
+				const TopSurroundkeysMap = {
+					"last_nvexx_crosstopsurround_type_cbox_v": "nvexx_crosstopsurround_type_cbox_v",
+					"last_crossTopSurroundFrequency": "crossTopSurroundFrequency",
+					"last_crossTopSurroundFrequency_range": "crossTopSurroundFrequency_range",
+					"last_startFrequencyTS": "startFrequencyTS",
+					"last_endFrequencyTS": "endFrequencyTS",
+					"last_MaxBoostTopSurround": "MaxBoostTopSurround"
+				};
+				for (const [storageKey, varName] of Object.entries(TopSurroundkeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostTopSurround") {
+								window.overallMaxBoostTopSurround = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossTopSurroundFrequency =", localStorage.getItem("last_crossTopSurroundFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossTopSurroundFrequency")) != null) {
-					crossTopSurroundFrequency = JSON.parse(localStorage.getItem("last_crossTopSurroundFrequency"));
-					console.warn("crossTopSurroundFrequency =", JSON.parse(crossTopSurroundFrequency));
-				}
-				console.warn("last_crossTopSurroundFrequency_range =", localStorage.getItem("last_crossTopSurroundFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossTopSurroundFrequency_range")) != null) {
-					crossTopSurroundFrequency_range = JSON.parse(localStorage.getItem("last_crossTopSurroundFrequency_range"));
-					console.warn("crossTopSurroundFrequency_range =", JSON.parse(crossTopSurroundFrequency_range));
-				}
-				console.warn("last_startFrequencyTS =", localStorage.getItem("last_startFrequencyTS"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencyTS")) != null) {
-					startFrequencyTS = JSON.parse(localStorage.getItem("last_startFrequencyTS"));
-					console.warn("startFrequencyTS =", JSON.parse(startFrequencyTS));
-				}
-				console.warn("last_endFrequencyTS =", localStorage.getItem("last_endFrequencyTS"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencyTS")) != null) {
-					endFrequencyTS = JSON.parse(localStorage.getItem("last_endFrequencyTS"));
-					console.warn("endFrequencyTS =", JSON.parse(endFrequencyTS));
-				}
-				console.warn("last_MaxBoostTopSurround =", localStorage.getItem("last_MaxBoostTopSurround"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostTopSurround")) != null) {
-					MaxBoostTopSurround = JSON.parse(localStorage.getItem("last_MaxBoostTopSurround"));
-					overallMaxBoostTopSurround = JSON.parse(localStorage.getItem("last_MaxBoostTopSurround"));
-					console.warn("MaxBoostTopSurround =", JSON.parse(MaxBoostTopSurround));
-				}
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirTopSurround = localStorage.getItem("last_top_surround_nvexx_curvedirectory");
+				console.warn("last_top_surround_nvexx_curvedirectory =", CurveDirTopSurround);
+				console.warn("");
+
 
 				console.warn("== CENTER HEIGHT (AURO-3D) SETTINGS: ==");
-				console.warn("last_nvexx_crosscenterheight_type_cbox_v =", localStorage.getItem("last_nvexx_crosscenterheight_type_cbox_v"));
-				if (JSON.parse(localStorage.getItem("last_nvexx_crosscenterheight_type_cbox_v")) != null) {
-					nvexx_crosscenterheight_type_cbox_v = JSON.parse(localStorage.getItem("last_nvexx_crosscenterheight_type_cbox_v"));
-					console.warn("nvexx_crosscenterheight_type_cbox_v =", JSON.parse(nvexx_crosscenterheight_type_cbox_v));
+				const CenterHeightkeysMap = {
+					"last_nvexx_crosscenterheight_type_cbox_v": "nvexx_crosscenterheight_type_cbox_v",
+					"last_crossCenterHeightFrequency": "crossCenterHeightFrequency",
+					"last_crossCenterHeightFrequency_range": "crossCenterHeightFrequency_range",
+					"last_startFrequencyCH": "startFrequencyCH",
+					"last_endFrequencyCH": "endFrequencyCH",
+					"last_MaxBoostCenterHeight": "MaxBoostCenterHeight"
+				};
+				for (const [storageKey, varName] of Object.entries(CenterHeightkeysMap)) {
+					const raw = localStorage.getItem(storageKey);
+					console.warn(`${storageKey} =`, raw);
+					if (raw !== null) {
+						try {
+							const parsed = JSON.parse(raw);
+							window[varName] = parsed;
+							console.warn(`${varName} =`, parsed);
+							if (storageKey === "last_MaxBoostCenterHeight") {
+								window.overallMaxBoostCenterHeight = parsed;
+							}
+						} catch (e) {
+							console.error(`Failed to parse ${storageKey}:`, e);
+						}
+					}
 				}
-				console.warn("last_crossCenterHeightFrequency =", localStorage.getItem("last_crossCenterHeightFrequency"));
-				if (JSON.parse(localStorage.getItem("last_crossCenterHeightFrequency")) != null) {
-					crossCenterHeightFrequency = JSON.parse(localStorage.getItem("last_crossCenterHeightFrequency"));
-					console.warn("crossCenterHeightFrequency =", JSON.parse(crossCenterHeightFrequency));
-				}
-				console.warn("last_crossCenterHeightFrequency_range =", localStorage.getItem("last_crossCenterHeightFrequency_range"));
-				if (JSON.parse(localStorage.getItem("last_crossCenterHeightFrequency_range")) != null) {
-					crossCenterHeightFrequency_range = JSON.parse(localStorage.getItem("last_crossCenterHeightFrequency_range"));
-					console.warn("crossCenterHeightFrequency_range =", JSON.parse(crossCenterHeightFrequency_range));
-				}
-				console.warn("last_startFrequencyCH =", localStorage.getItem("last_startFrequencyCH"));
-				if (JSON.parse(localStorage.getItem("last_startFrequencyCH")) != null) {
-					startFrequencyCH = JSON.parse(localStorage.getItem("last_startFrequencyCH"));
-					console.warn("startFrequencyCH =", JSON.parse(startFrequencyCH));
-				}
-				console.warn("last_endFrequencyCH =", localStorage.getItem("last_endFrequencyCH"));
-				if (JSON.parse(localStorage.getItem("last_endFrequencyCH")) != null) {
-					endFrequencyCH = JSON.parse(localStorage.getItem("last_endFrequencyCH"));
-					console.warn("endFrequencyCH =", JSON.parse(endFrequencyCH));
-				}
-				console.warn("last_MaxBoostCenterHeight =", localStorage.getItem("last_MaxBoostCenterHeight"));
-				if (JSON.parse(localStorage.getItem("last_MaxBoostCenterHeight")) != null) {
-					MaxBoostCenterHeight = JSON.parse(localStorage.getItem("last_MaxBoostCenterHeight"));
-					overallMaxBoostCenterHeight = JSON.parse(localStorage.getItem("last_MaxBoostCenterHeight"));
-					console.warn("MaxBoostCenterHeight =", JSON.parse(MaxBoostCenterHeight));
-				}
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirCenterHeight = localStorage.getItem("last_center_height_nvexx_curvedirectory");
+				console.warn("last_center_height_nvexx_curvedirectory =", CurveDirCenterHeight);
+				console.warn("");
 
 				console.warn("== SUBWOOFER SETTINGS: ==");
 				if (JSON.parse(localStorage.getItem("last_noInversionForce")) != null) {
@@ -14000,7 +13922,10 @@
 					noInversion = JSON.parse(localStorage.getItem("last_noInversionForce"));
 					console.warn("last_noInversionForce =", JSON.parse(noInversionForce));
 				}
-				console.warn("last_sw1_nvexx_curvedirectory =", localStorage.getItem("last_sw1_nvexx_curvedirectory"));
+				// console.warn("last_sw1_nvexx_curvedirectory =", localStorage.getItem("last_sw1_nvexx_curvedirectory"));			
+				// Special case: Curve Directory string, no parsing needed!
+				const CurveDirSubs = localStorage.getItem("last_sw1_nvexx_curvedirectory");
+				console.warn("last_sw1_nvexx_curvedirectory =", CurveDirSubs);
 			})();
 		}
 
@@ -14008,7 +13933,6 @@
 		== #2 UPLOAD CALIBRATION TAB ==
 		**/
 		function nvexx_steps_nvexx_new_init_ady() {
-			// console.log("Screen: function nvexx_steps_nvexx_new_init_ady()");
 			active_step2_nvexx_new_init_ady();
 			// Pre setup
 			document.getElementById("nvexx_new_init_pre").style.display = "none";
@@ -14047,7 +13971,6 @@
 		== #3 VOLUME CALIBRATION TAB ==
 		**/
 		function nvexx_steps_nvexx_new_init_volume() {
-			// console.log("Screen: function nvexx_steps_nvexx_new_init_volume()");
 			active_step3_nvexx_new_init_volume();
 			// Pre setup
 			document.getElementById("nvexx_new_init_pre").style.display = "none";
@@ -14172,7 +14095,6 @@
 		== #4 SELECT ARRANGEMENT TAB ==
 		**/
 		function nvexx_steps_nvexx_new_init_arrangement() {
-			// console.log("Screen: function nvexx_steps_nvexx_new_init_arrangement()");
 			active_step4_nvexx_new_init_arrangement();
 			// Pre setup
 			const step1 = document.querySelector(".nvexx_new_init_pre");
@@ -14234,7 +14156,6 @@
 		 == #5 MEASUREMENTS TAB ==
 		**/
 		function nvexx_steps_nvexx_new_init_measurements() {
-			// console.log("Screen: function nvexx_steps_nvexx_new_init_measurements()");
 			active_step5_nvexx_new_init_measurements();
 			// Pre setup
 			const step1 = document.querySelector(".nvexx_new_init_pre");
@@ -14657,7 +14578,6 @@
 				clearInterval(CurvesTimerI);
 			}
 
-			// console.log("Screen: function nvexx_steps_nvexx_new_init_filters()");
 			active_step6_nvexx_new_init_filters();
 			// Pre setup
 			const step1 = document.querySelector(".nvexx_new_init_pre");
@@ -15085,7 +15005,6 @@
 		== #7 EXPORT TAB ==
 		**/
 		function nvexx_steps_nvexx_new_init_export() {
-			// console.log("Screen: function nvexx_steps_nvexx_new_init_export()");
 			active_step7_nvexx_new_init_export();
 			// Pre setup
 			const step1 = document.querySelector(".nvexx_new_init_pre");
