@@ -60,6 +60,10 @@ jobs:
               "icon_url": "https://avatars.githubusercontent.com/u/${{ github.actor_id }}?v=4"
             },
             "url": "https://github.com/NvexxNL/ClariQ/tree/dev"
+          },
+          {
+            "title": "Ko-fi",
+            "description": "Like the project? Why not get Nvexx a Ko-fi? https://ko-fi.com/nvexx",
           }
         ]
         }' ${{ secrets.WEBHOOK_URL }})
