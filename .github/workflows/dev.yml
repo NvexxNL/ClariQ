@@ -63,7 +63,7 @@ jobs:
           },
           {
             "title": "Ko-fi",
-            "description": "Like the project? Why not get Nvexx a Ko-fi? https://ko-fi.com/nvexx",
+            "description": "Like the project? Why not get Nvexx a Ko-fi? https://ko-fi.com/nvexx"
           }
         ]
         }' ${{ secrets.WEBHOOK_URL }})
