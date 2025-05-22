@@ -3,33 +3,33 @@ name: Webhook on Event
 # Make sure to change what triggers your action based on your needs
 # on: [milestone, create, delete, fork, issues, member, pull_request, pull_request_review, issue_comment, push]
 on: 
-  milestone:
-    branches: 
-    - dev
-  create:
-    branches: 
-    - dev
-  delete:
-    branches: 
-    - dev
-  fork:
-    branches: 
-    - dev
-  issues:
-    branches: 
-    - dev
-  member:
-    branches: 
-    - dev
-  pull_request:
-    branches: 
-    - dev
-  pull_request_review:
-    branches: 
-    - dev
-  issue_comment:
-    branches: 
-    - dev
+#  milestone:
+#    branches: 
+#    - dev
+#  create:
+#    branches: 
+#    - dev
+#  delete:
+#    branches: 
+#    - dev
+#  fork:
+#    branches: 
+#    - dev
+#  issues:
+#    branches: 
+#    - dev
+#  member:
+#    branches: 
+#    - dev
+#  pull_request:
+#    branches: 
+#    - dev
+#  pull_request_review:
+#    branches: 
+#    - dev
+#  issue_comment:
+#    branches: 
+#    - dev
   push:
     branches: 
     - dev
