@@ -64,11 +64,12 @@ jobs:
           {
             "type": "rich",
             "title": "Ko-fi",
-            "description": "Like the project? Why not get Nvexx a Ko-fi? https://ko-fi.com/nvexx".
+            "description": "Like the project? Why not get Nvexx a Ko-fi at https://ko-fi.com/nvexx",
             "color": 16711680,
             "thumbnail": {
               "url": "https://storage.ko-fi.com/cdn/useruploads/26713482-7aa8-48f3-9269-f50e74292477_d33a0b94-982a-4a4e-ac2e-dd6f28ae47ce.png"
-            },          
+            },
+            "url": "https://ko-fi.com/nvexx"
           }
         ]
         }' ${{ secrets.WEBHOOK_URL }})
