@@ -33,6 +33,8 @@ on:
   push:
     branches: 
     - dev
+    branches-ignore:
+    - main
 #jobs    
 jobs:
   # ID of our job
